@@ -34,7 +34,7 @@ app.use('/users', usersRouter);
 
 /* --- V2: Adding Web Pages --- */
 app.use('/about', aboutRouter);
-app.use('./page',pageRouter);
+app.use('./page', pageRouter);
 /* ---------------------------- */
 
 /* --- V3: Basic Template   --- */
@@ -43,12 +43,12 @@ app.use('/loops', loopsRouter);
 /* ---------------------------- */
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
