@@ -7,6 +7,16 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+/* --- V2: Adding Web Pages --- */
+var aboutRouter = require('./routes/about');
+var pageRouter = require('./routes/page');
+/* ---------------------------- */
+
+/* --- V3: Basic Template   --- */
+var tableRouter = require('./routes/table');
+var loopsRouter = require('./routes/loops');
+/* ---------------------------- */
+
 var app = express();
 
 // view engine setup
@@ -21,6 +31,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+/* --- V2: Adding Web Pages --- */
+app.use('/about', aboutRouter);
+app.use('./page',pageRouter);
+/* ---------------------------- */
+
+/* --- V3: Basic Template   --- */
+app.use('/table', tableRouter);
+app.use('/loops', loopsRouter);
+/* ---------------------------- */
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
