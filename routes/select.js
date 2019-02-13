@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const { Pool } = require('pg');
+
+
+/* 
+If you stuck at connection please ensure that your postreqsql is running 
+Run start postreqsql
+Ensure that the correct user, host, database, password, port is used  
+*/
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
