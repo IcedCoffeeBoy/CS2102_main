@@ -21,6 +21,10 @@ var loopsRouter = require('./routes/loops');
 var selectRouter = require('./routes/select');
 /* ---------------------------- */
 
+
+/*-----Connecting to db-------*/
+var db = require('./db');
+
 var app = express();
 
 // view engine setup

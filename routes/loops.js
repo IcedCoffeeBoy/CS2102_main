@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 router.get('/', function(req, res, next) {
   res.render('loops', { title: 'Loops', data: [
 		{matric: 'A0000001A', name: 'Leslie Cole'   , faculty: 'SOC'},
