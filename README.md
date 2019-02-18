@@ -4,6 +4,10 @@
 run `npm install express-generator -g` <br>
 run `npm install`
 
+## To start local host 
+run `npm start` <br>
+Go to any internet browser, enter `http://localhost:3000/`
+
 ## Postregsql connection error
 If you stuck at connection please ensure that your postreqsql is running  <br>
 Run start postreqsql <br>

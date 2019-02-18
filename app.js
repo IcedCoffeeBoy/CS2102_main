@@ -21,9 +21,13 @@ var loopsRouter = require('./routes/loops');
 var selectRouter = require('./routes/select');
 /* ---------------------------- */
 
+/* --- V5: Adding Forms     --- */
+var formsRouter = require('./routes/forms');
+/* ---------------------------- */
 
-/*-----Connecting to db-------*/
+/* -----Connecting to db------- */
 var db = require('./db');
+/* ---------------------------- */
 
 var app = express();
 
@@ -53,6 +57,12 @@ app.use('/loops', loopsRouter);
 /* --- V4: Database Connect --- */
 app.use('/select', selectRouter);
 /* ---------------------------- */
+
+
+/* --- V5: Adding Forms     --- */
+app.use('/forms', formsRouter);
+/* ---------------------------- */
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
