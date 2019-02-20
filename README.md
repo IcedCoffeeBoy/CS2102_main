@@ -7,6 +7,9 @@ run `npm install`
 run `npm start` <br>
 Go to any internet browser, enter `http://localhost:3000/`
 
+## Online depolyment 
+run `https://cs2102postreg.herokuapp.com`
+
 ## Postregsql connection error
 If you stuck at connection please ensure that your postreqsql is running  <br>
 Run start postreqsql <br>
