@@ -72,6 +72,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/insert', insertRouter);
 /* ---------------------------- */
 
+
+/* --- V6: Non-guide code  --- */
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
