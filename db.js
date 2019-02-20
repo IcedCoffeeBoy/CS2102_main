@@ -15,10 +15,8 @@ const pool = new Pool({
 pool.connect(function (err) {
     if (err) {
        console.log(err)
-       alert("Unable to connect to database")
     }
     else {
-        alert("Sucessfully connected to database")
         console.log("Sucessfully connected to database");
     }
 });
