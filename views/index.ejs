@@ -3,8 +3,8 @@
 
 <head>
   <!-- Page Title -->
-  <title>CS2102 Starter Guide</title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>Stuff Sharing</title>
+  <link rel='stylesheet' href='/stylesheets/index.css' />
 
   <!-- CSS for Styling -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -22,13 +22,32 @@
     crossorigin="anonymous"></script>
 </head>
 
-
 <body>
-  <h1>CS2102 Starter Guide</h1>
-  <p>Welcome to CS2102 Starter Guide</p><br />
-  <p>by: Adi Yoga S. Prabaw
+    <div class="login-page">
+      <div class="form">
+        <form class="register-form">
+          <input type="text" placeholder="name"/>
+          <input type="password" placeholder="password"/>
+          <input type="text" placeholder="email address"/>
+          <button>create</button>
+          <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form class="login-form">
+          <input type="text" placeholder="username"/>
+          <input type="password" placeholder="password"/>
+          <button>login</button>
+          <p class="message">Not registered? <a href="#">Create an account</a></p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+    $('.message a').click(function(){
+      $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+    </script>
+    
 </body>
-
-<button onclick="window.location.href='/about'" >click me to go about</button>
-
+   
+ 
 </html>
