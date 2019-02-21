@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../db')
+var db = require('../db');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -34,17 +34,17 @@ router.post('/reg', function (req, res, next) {
   var password = req.body.password;
   var email = req.body.email;
 
-  console.log(req.body)
+  console.log(req.body);
 
   var sqlquery = "insert into accounts(username,password,email) values($1,$2,$3)";
 
   db.query(sqlquery, [username, password, email], function (err, data) {
       if(err){
-        console.log(err)
-        res.send({valid: false})
+        console.log(err);
+        res.send({valid: false});
       } else {
-        console.log("Sucessfully created account")
-        res.redirect('/')
+        console.log("Sucessfully created account");
+        res.redirect('/');
       }
   })
 })
