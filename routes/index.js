@@ -10,24 +10,43 @@ router.get('/', function (req, res, next) {
 router.get('/login', function (req, res, next) {
   var username = req.query.username;
   var password = req.query.password;
-  var input = [username, password]
-  console.log(req.query)
-  console.log(input)
+  var input = [username, password];
+  console.log(req.query);
+  console.log(input);
   //To verify username and password with database
-  var sqlquery = "select 1 from accounts where username=$1 and password=$2"
+  var sqlquery = "select 1 from accounts where username=$1 and password=$2";
 
   db.query(sqlquery, [username, password], (err, data) => {
     if (err) {
-      console.log(err)
+      console.log(err);
     } else {
-      if(data.rowCount==1){
+      if (data.rowCount == 1) {
         res.redirect('/insert');
       } else {
         res.sendStatus(404);
       }
     }
   })
-  
+})
+
+router.post('/reg', function (req, res, next) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var email = req.body.email;
+
+  console.log(req.body);
+  console.log(req.query);
+
+  var sqlquery = "insert into accounts(username,password,email) values($1,$2,$3)";
+
+  db.query(sqlquery, [username, password, email], function (err, data) {
+      if(err){
+        console.log(err)
+      } else {
+        res.redirect('/')
+      }
+  })
+
 })
 
 module.exports = router;
