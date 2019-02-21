@@ -24,11 +24,11 @@
 <body>
     <div class="login-page">
         <div class="form">
-            <form class="register-form" id="register" action="reg" role="form" method="post">
+            <form class="register-form" id="register" action="reg"  role="form" method="post">
                 <input type="text" placeholder="name" name="username" />
                 <input type="password" placeholder="password" name="password" />
                 <input type="text" placeholder="email address" name="email"/>
-                <button type="submit">create</button>
+                <button type="submit" class="signup">create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form" id="login" action="login" role="form" method="get">
@@ -47,6 +47,21 @@
     <script type='text/javascript'>
         $('.message a').click(function () {
             $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+        });
+
+        $(function () {
+            $("#register").on("submit", function(e) {
+                e.preventDefault();
+                var data =  $(this).serialize();
+                $.post('/reg', data, function(result) {
+                    if(result.valid == false) {
+                        alert("Username or email taken");
+                    } else {
+                        alert("Sucessfully created account")
+                        window.location.href = '../';
+                    }
+                });
+            });
         });
     </script>
 
