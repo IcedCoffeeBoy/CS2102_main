@@ -3,17 +3,31 @@ var router = express.Router();
 var db = require('../db')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/login', function(req,res,next){
-  var username  = req.body.username;
-	var password  = req.body.password;
-
+router.get('/login', function (req, res, next) {
+  var username = req.query.username;
+  var password = req.query.password;
+  var input = [username, password]
+  console.log(req.query)
+  console.log(input)
   //To verify username and password with database
+  var sqlquery = "select 1 from accounts where username=$1 and password=$2"
 
-  res.redirect('/insert');
+  db.query(sqlquery, [username, password], (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      if(data.rowCount==1){
+        res.redirect('/insert');
+      } else {
+        res.sendStatus(404);
+      }
+    }
+  })
+  
 })
 
 module.exports = router;
