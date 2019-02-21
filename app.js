@@ -29,9 +29,12 @@ var formsRouter = require('./routes/forms');
 var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 
+var mainRouter = require('./routes/main');
+
 /* -----Connecting to db------- */
 var db = require('./db');
 /* ---------------------------- */
+
 
 var app = express();
 
@@ -73,7 +76,9 @@ app.use('/insert', insertRouter);
 /* ---------------------------- */
 
 
-/* --- V6: Non-guide code  --- */
+/* ------ Non-guide code  --- */
+app.use('/main',mainRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
