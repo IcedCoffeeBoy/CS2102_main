@@ -7,9 +7,9 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/login', function (req, res, next) {
-  var username = req.query.username;
-  var password = req.query.password;
+router.post('/login', function (req, res, next) {
+  var username = req.body.username;
+  var password = req.body.password;
   var input = [username, password];
   console.log(req.query);
   console.log(input);
@@ -23,7 +23,7 @@ router.get('/login', function (req, res, next) {
       if (data.rowCount == 1) {
         res.redirect('/main');
       } else {
-        res.send(500,'Unable to find user') 
+        res.send(500, 'Unable to find user')
       }
     }
   })
@@ -36,17 +36,28 @@ router.post('/reg', function (req, res, next) {
 
   console.log(req.body);
 
+  if (!validateEmail(email)) {
+    res.send({ valid: false , params: email});
+    return; 
+  }
+
   var sqlquery = "insert into accounts(username,password,email) values($1,$2,$3)";
 
   db.query(sqlquery, [username, password, email], function (err, data) {
-      if(err){
-        console.log(err);
-        res.send({valid: false});
-      } else {
-        console.log("Sucessfully created account");
-        res.redirect('/');
-      }
+    if (err) {
+      console.log(err);
+      res.send({ valid: false });
+    } else {
+      console.log("Sucessfully created account");
+      res.redirect('/');
+    }
   })
 })
+
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 
 module.exports = router;
