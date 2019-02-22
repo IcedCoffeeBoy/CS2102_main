@@ -11,6 +11,7 @@ const pool = new Pool({
     database: 'dd15caf96d7vac',
     password: '7eb2c774f7473c16e33e941002cbfcecfa94845782aaeb770001f79459e25cee',
     port: 5432,
+    ssl: true,
 });
 
 /* const pool = new Pool({
