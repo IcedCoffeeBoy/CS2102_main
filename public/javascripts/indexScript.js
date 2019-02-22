@@ -1,4 +1,17 @@
-function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
+$('.message a').click(function () {
+  $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+});
+
+$(".register-form").on("submit", function (e) {
+  e.preventDefault();
+  var data = $(this).serialize();
+  console.log(data.body);
+  $.post('/reg', data, function (result) {
+    if (result.valid == false) {
+      alert("Username or email taken");
+    } else {
+      alert("Sucessfully created account")
+      window.location.href = '../';
+    }
+  });
+});

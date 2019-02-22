@@ -36,11 +36,6 @@ router.post('/reg', function (req, res, next) {
 
   console.log(req.body);
 
-  if (!validateEmail(email)) {
-    res.send({ valid: false , params: email});
-    return; 
-  }
-
   var sqlquery = "insert into accounts(username,password,email) values($1,$2,$3)";
 
   db.query(sqlquery, [username, password, email], function (err, data) {
@@ -53,11 +48,5 @@ router.post('/reg', function (req, res, next) {
     }
   })
 })
-
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
 
 module.exports = router;
