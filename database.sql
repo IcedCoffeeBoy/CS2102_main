@@ -20,6 +20,7 @@ create table items(
 	description text, 
 	price integer, 
 	img varchar(200),
+	unique(title,description,price,img)
 );
 
 insert into items(title,description,price,img) values ('Good doggo','Dogs for sharing','99','https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
