@@ -98,6 +98,7 @@ app.use(bodyParser.urlencoded({
 app.use('/insert', userAuth, insertRouter);
 /* ---------------------------- */
 
+// Ming Liang: To prevent unauthorised user entering the page, pls added userAuth before the router 
 
 /* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
