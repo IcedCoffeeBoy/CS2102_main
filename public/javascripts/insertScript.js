@@ -1,3 +1,13 @@
+$(document).ready(
+	$(".html_form").submit((event) => { check(event); }
+	)
+)
+$(document).ready(
+	$("#header").click(() => { alert("header clicked") }
+	)
+)
+
+
 function check(event) {
 	// Get Values
 	var matric = document.getElementById('matric').value;
