@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
 
 
 var indexRouter = require('./routes/index');
@@ -36,6 +38,8 @@ var mainRouter = require('./routes/main');
 var db = require('./db');
 /* ---------------------------- */
 
+//Passport auth
+var userAuth = require('./userAuth');
 
 var app = express();
 
@@ -51,6 +55,19 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Use the session middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
+// Passport intialization
+app.use(passport.initialize());
+app.use(passport.session());
+
+var initpassport = require('./initpassport');
+initpassport();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -78,7 +95,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use('/insert', insertRouter);
+app.use('/insert', userAuth, insertRouter);
 /* ---------------------------- */
 
 
@@ -101,5 +118,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

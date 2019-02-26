@@ -31,6 +31,9 @@
                     class="glyphicon glyphicon-th"></span>Grid</a>
         </div>
     </div>
+    <%if(user != null){%>
+    <p> Welcome <%=user.username %> ! </p>
+    <%}%>
     <div id="products" class="row list-group">
         <% for(var i=0; i<data.length; i++) { %>
         <div class="item  col-xs-4 col-lg-4">

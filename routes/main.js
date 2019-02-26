@@ -13,8 +13,7 @@ router.get('/', function (req, res, next) {
     if (err) {
       console.log(err)
     } else {
-      console.log(data.row)
-      res.render('main', { title: 'main', data: data.rows });
+      res.render('main', { title: 'main', data: data.rows, user: req.user });
     }
   })
 });

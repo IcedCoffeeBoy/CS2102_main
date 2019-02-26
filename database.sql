@@ -28,7 +28,7 @@ create table if not exists items(
 
 --------------Entity------------------------
 create table if not exists categories (
-catname varchar(80) primary key
+	catname varchar(80) primary key
 );
 
 --------------Entity------------------------
@@ -133,6 +133,7 @@ insert into categories values ('Animals'),('Electronic');
 insert into items(title,description,price,img) values ('Good doggo','Dogs for sharing','99','https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 insert into items(title,description,price,img) values ('Cute cats', 'Cats for you to serve', '21', 'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
+select * from accounts where username='perry'
 
 
 
