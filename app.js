@@ -61,7 +61,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
 }))
 // Passport intialization
 app.use(passport.initialize());
