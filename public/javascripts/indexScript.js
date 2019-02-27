@@ -5,19 +5,24 @@ $('.message a').click(function () {
 $(".register-form").on("submit", function (e) {
   e.preventDefault();
   var data = $(this).serialize();
-  console.log(data.body);
   $.post('/reg', data, function (result) {
     if (result.valid == false) {
-      alert("Username or email taken");
+      $('#reg-alert').slideDown()
+      window.setTimeout(()=>$('#reg-alert').slideUp() , 2000);
     } else {
-      alert("Sucessfully created account")
+      alert("Sucessfully created account");
       window.location.href = '../';
     }
   });
 });
 
-window.setTimeout(function() {
-  $(".alert").fadeTo(500, 0).slideUp(500, function(){
-      $(this).remove(); 
+window.setTimeout(function () {
+  $("#login-alert").fadeTo(500, 0).slideUp(500, function () {
+    $(this).remove();
   });
 }, 1000);
+
+function checkUsername(username) {
+  var re = /^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/
+  return re.test(username)
+}

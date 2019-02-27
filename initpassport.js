@@ -22,7 +22,7 @@ module.exports = function () {
                         bcrypt.compare(password, hash, function (err, res) {
                             if (res == true) {
                                 console.log('match!')
-                                var user = data.rows[0]
+                                var user = { id: data.rows[0].accountid, username: data.rows[0].username };
                                 done(null, user);
                             } else {
                                 done(null, false, req.flash("message", "Incorrent password!"))
@@ -36,12 +36,17 @@ module.exports = function () {
         }
     )
     );
-
+    
+    // Serialized user object into an id to be store as a session
     passport.serializeUser(function (user, done) {
+        console.log("serialize called");
         done(null, user);
     });
 
+    // Deserialize cookie id params into user object to attach to res
+    // Do not call postgresql to retrieve the data as it too expensive!
     passport.deserializeUser(function (user, done) {
+        console.log("deserialize called")
         done(null, user);
     });
 }

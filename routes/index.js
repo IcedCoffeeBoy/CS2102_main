@@ -23,7 +23,6 @@ router.post('/reg', function (req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
   var email = req.body.email;
-  var saltRounds = "10";
   console.log(req.body);
 
   var sqlquery = "insert into accounts(username,password,email) values($1,$2,$3)";
@@ -37,7 +36,7 @@ router.post('/reg', function (req, res, next) {
       db.query(sqlquery, [username, hash, email], function (err, data) {
         if (err) {
           console.log(err);
-          res.send({ valid: false });
+          res.send({message:"username or email taken!", valid: false});
         } else {
           console.log("Sucessfully created account");
           res.redirect('/');

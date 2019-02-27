@@ -61,7 +61,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //  30 days
 }))
 // Passport intialization
 app.use(passport.initialize());
@@ -70,7 +70,7 @@ app.use(passport.session());
 var initpassport = require('./initpassport');
 initpassport();
 app.use(flash());
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
   res.locals.message = req.flash("message");
   next();
 })
@@ -107,10 +107,10 @@ app.use('/insert', userAuth, insertRouter);
 
 /* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
-app.use('/user',userAuth,userRouter)
-app.get('/logout', function (req, res){
+app.use('/user', userAuth, userRouter)
+app.get('/logout', function (req, res) {
   req.session.destroy(function (err) {
-    res.redirect('/'); 
+    res.redirect('/');
   });
 });
 

@@ -24,6 +24,9 @@
     <h1 class="heading">Stuff Sharing</h1>
     <div class="login-page">
         <div class="form">
+            <div class="alert alert-danger collapse" role="alert" id="reg-alert">
+                <p>Username or email is taken!</p>
+            </div>
             <form class="register-form" id="register" action="reg" role="form" method="post">
                 <input type="username" placeholder="name" name="username" />
                 <input type="password" placeholder="password" name="password" />
@@ -32,13 +35,12 @@
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form" id="login" action="login" role="form" method="post">
-            
-             <% if (message.length>0) { %>
-             <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <p><%= message%></p>
-             </div>
-             <% } %>
+                <% if (message.length>0) { %>
+                    <div class="alert alert-danger" role="alert" id="login-alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p><%= message%></p>
+                    </div>
+                <% } %>
                 <div class="form-group">
                     <input type="text" id="username" name="username" class="form-control" placeholder="username" />
                 </div>
