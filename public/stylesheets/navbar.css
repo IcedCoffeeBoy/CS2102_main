@@ -1,0 +1,93 @@
+body
+
+.m-red {
+    background:#43A047;
+    color:#fff;
+    text-decoration:none;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.m-nav {
+    width:85%; 
+    min-width:600px; 
+    max-width:1200px; 
+    height:55px; 
+    display:inline-block; 
+    margin-top:20px; 
+    text-align:right;}
+
+.m-nav input[type="text"] {
+    float:left; 
+    background:rgba(255,255,255,0.3); 
+    border:none; 
+    padding:8px; 
+    outline:none; 
+    color:#fff; 
+    margin-top:10px; 
+    margin-left:10px; 
+    font-family:"Roboto",Arial sans-serif; 
+    height:20px; 
+    display:inline-block; 
+    transition:0.5s ease all; 
+    width:30%; 
+    min-width:200px; 
+    max-width:600px;
+}
+
+.m-nav input[type="text"]:hover {
+    background:rgba(255,255,255,0.5); 
+    transition:0.5s ease all;
+}
+
+.m-nav input[type="text"]:focus {
+    background:#fff; 
+    color:#333; 
+    transition:0.5s ease all;
+}
+
+.m-nav input::-webkit-input-placeholder {
+    color:rgba(255,255,255,0.6); 
+    font-family:"Roboto",Arial sans-serif;
+}
+
+.m-nav input::-moz-input-placeholder {
+    color:rgba(255,255,255,0.6); 
+    font-family:"Roboto",Arial sans-serif;
+}
+
+.m-nav input:-moz-input-placeholder {
+    color:rgba(255,255,255,0.6); 
+    font-family:"Roboto",Arial sans-serif;
+}
+
+.m-nav input::-o-input-placeholder {
+    color:rgba(255,255,255,0.6); 
+    font-family:"Roboto",Arial sans-serif;
+}
+
+.m-nav li {
+    list-style:none; 
+    float:right; 
+    display:inline-block
+}
+
+.m-nav li a {
+    color:white; 
+    text-decoration:none; 
+    padding:6px 9px; 
+    transition:0.70s ease all; 
+    margin-top:2px; 
+    margin-right:7px; 
+    display:inline-block; 
+    cursor:pointer; 
+    font-size:100%
+}
+
+.m-nav li a:hover {
+    background:rgba(255,255,255,0.3);
+    transition:0.70s ease all;
+}
+
+
+
