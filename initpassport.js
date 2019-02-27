@@ -1,6 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
+var bcrypt = require('bcrypt');
 
 module.exports = function () {
     passport.use('local', new LocalStrategy({
@@ -16,14 +17,20 @@ module.exports = function () {
                     console.log(err);
                     done(err);
                 } else {
-                    if (data.rowCount == 1 && password == data.rows[0].password) {
-                        console.log('match!')
-                        var user = data.rows[0]
-                        done(null, user);
+                    if (data.rowCount == 1) {
+                        hash = data.rows[0].password;
+                        bcrypt.compare(password, hash, function (err, res) {
+                            if (res == true) {
+                                console.log('match!')
+                                var user = data.rows[0]
+                                done(null, user);
+                            } else {
+                                done(null, false, req.flash("message", "Incorrent password!"))
+                            }
+                        });
                     } else {
-                        done(null, false, req.flash("message","Incorrent username or password!"));
+                        done(null, false, req.flash("message", "Incorrent username or password!"));
                     }
-
                 }
             })
         }

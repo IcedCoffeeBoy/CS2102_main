@@ -4,10 +4,10 @@ create sequence accountsid_seq start 1000;
 create table if not exists accounts (
 	accountid integer NOT NULL DEFAULT nextval('accountsid_seq') primary key,
 	username varchar(16) not null unique,
-	password varchar(16) not null,
+	password varchar(80) not null,
 	email varchar(30) not null unique,
 	admin boolean default false,
-	status integer not null
+	status integer not null default 1
 );
 
 ALTER SEQUENCE accountsid_seq OWNED BY accounts.accountid;
