@@ -9,10 +9,10 @@ body
 }
 
 .m-nav {
-    width:85%; 
+    width:100%; 
     min-width:600px; 
     max-width:1200px; 
-    height:55px; 
+    height:40px; 
     display:inline-block; 
     margin-top:20px; 
     text-align:right;}

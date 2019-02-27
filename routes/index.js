@@ -11,8 +11,7 @@ router.get('/', function (req, res, next) {
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/main', // redirect to the secure profile section
   failureRedirect: '/', // redirect back to the signup page if there is an error
-})
-)
+}))
 
 router.post('/reg', function (req, res, next) {
   var username = req.body.username;

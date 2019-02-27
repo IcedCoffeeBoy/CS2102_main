@@ -2,46 +2,37 @@
 <html>
 
 <head>
-    <!-- Page Title -->
-    <title>CS2102 Modifying Database</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-
-    <!-- CSS for Styling -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <!-- JavaScript for Interactivity -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,latin-ext'
+        rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=latin,latin-ext' rel='stylesheet'
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/navbar.css' />
 </head>
 
+
 <body>
-    <h1 id="header">CS2102: <%= title%></h1>
-    <form class="html_form" action="insert" role="form" method="post">
-        <div class="form-group">
-            <label for="matric">Matric Number</label>
-            <input type="text" class="form-control" id="matric" name="matric" aria-describedby="matricHelp"
-                placeholder="Enter your matric number">
-            <small id="matricHelp" class="form-text text-muted">Do not share your matric number with anyone
-                else.</small>
+    <% if(user == null) {%>>
+    <center>
+        <div class="m-nav m-red">
+            <input type="text" placeholder="Search Box">
+            <li><a>Register</a></li>
+            <li><a>Login</a></li>
+            <li><a href="about:blank">Chats</a></li>
+            <li><a>List Item</a></li>
         </div>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+    </center>
+    <%} else {%>>
+    <center>
+        <div class="m-nav m-red">
+            <input type="text" placeholder="Search Box">
+            <li><a>Register</a></li>
+            <li><a>Login</a></li>
+            <li><a href="about:blank">Chats</a></li>
+            <li><a>List Item</a></li>
         </div>
-        <div class="form-group">
-            <label for="faculty">Faculty</label>
-            <input type="text" class="form-control" id="faculty" name="faculty" placeholder="Enter your faculty">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-    <script src="javascripts/insertScript.js"></script>
+    </center>
+    <%}%>>
+    <script src="javascripts/navbarScript.js"></script>
 </body>
-
 </html>

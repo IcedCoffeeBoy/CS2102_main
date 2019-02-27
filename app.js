@@ -8,7 +8,7 @@ var session = require('express-session');
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/user');
 
 /* --- V2: Adding Web Pages --- */
 var aboutRouter = require('./routes/about');
@@ -70,7 +70,6 @@ var initpassport = require('./initpassport');
 initpassport();
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 /* --- V2: Adding Web Pages --- */
 app.use('/about', aboutRouter);
@@ -102,6 +101,7 @@ app.use('/insert', userAuth, insertRouter);
 
 /* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
+app.use('/user',userAuth,userRouter)
 
 
 // catch 404 and forward to error handler
