@@ -21,7 +21,7 @@ module.exports = function () {
                         var user = data.rows[0]
                         done(null, user);
                     } else {
-                        done(null, false, { message: 'Incorrect username and password.' });
+                        done(null, false, req.flash("message","Incorrent username or password!"));
                     }
 
                 }

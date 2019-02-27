@@ -21,8 +21,8 @@
         crossorigin="anonymous"></script>
 </head>
 
-
-<div class="container">
+<body>
+<div class="container-fluid">
     <%- include navbar.ejs%>
     <div class="well well-sm">
         <strong>Display</strong>
@@ -66,5 +66,5 @@
             $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
         });
     </script>
-
+<body>
 </html>

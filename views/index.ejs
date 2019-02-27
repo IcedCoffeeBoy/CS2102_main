@@ -32,6 +32,9 @@
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form" id="login" action="login" role="form" method="post">
+             <% if (message) { %>
+                 <p id="msg"><%= message %></p>
+             <% } %>
                 <div class="form-group">
                     <input type="text" id="username" name="username" class="form-control" placeholder="username" />
                 </div>

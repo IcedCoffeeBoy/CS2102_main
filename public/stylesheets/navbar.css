@@ -11,10 +11,8 @@ body
 .m-nav {
     width:100%; 
     min-width:600px; 
-    max-width:1200px; 
     height:40px; 
     display:inline-block; 
-    margin-top:20px; 
     text-align:right;}
 
 .m-nav input[type="text"] {
