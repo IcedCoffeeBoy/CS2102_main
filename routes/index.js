@@ -5,7 +5,11 @@ var passport = require('passport')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  if (!req.isAuthenticated()) {
+    res.render('index', { title: 'Stuff Sharing' });
+  } else {
+    res.redirect('/main')
+  }
 });
 
 router.post('/login', passport.authenticate('local', {
