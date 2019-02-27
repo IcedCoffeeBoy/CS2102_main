@@ -102,6 +102,11 @@ app.use('/insert', userAuth, insertRouter);
 /* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
 app.use('/user',userAuth,userRouter)
+app.get('/logout', function (req, res){
+  req.session.destroy(function (err) {
+    res.redirect('/'); 
+  });
+});
 
 
 // catch 404 and forward to error handler
