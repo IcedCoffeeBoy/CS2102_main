@@ -5,7 +5,7 @@ If you stuck at connection please ensure that your postreqsql is running
 Run start postreqsql
 Ensure that the correct user, host, database, password, port is used  
 */
-/* const pool = new Pool({
+const pool = new Pool({
     user: 'ckdtnpmamiywyi',
     host: 'ec2-54-204-2-25.compute-1.amazonaws.com',
     database: 'dd15caf96d7vac',
@@ -13,14 +13,14 @@ Ensure that the correct user, host, database, password, port is used
     port: 5432,
     ssl: true,
 });
- */
-const pool = new Pool({
+
+/* const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
     //password: '********', My postregsql doesn't use any password
     port: 5432,
-});
+}); */
 
 pool.connect(function (err) {
     if (err) {
