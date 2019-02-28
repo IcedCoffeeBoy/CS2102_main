@@ -1,5 +1,7 @@
 # CS2102_main 
 
+[![Build Status](https://travis-ci.com/IcedCoffeeBoy/CS2102_main.svg?token=R58Qz9FF5hsKVa8iMxVV&branch=master)](https://travis-ci.com/IcedCoffeeBoy/CS2102_main)
+
 ## Instruction on how to start
 run `npm install`
 
