@@ -6,18 +6,19 @@ Run start postreqsql
 Ensure that the correct user, host, database, password, port is used  
 */
 
-const connectionString = process.env.DATABASE_URL
-const pool = new Pool({
-    connectionString: connectionString,
-})
-
-/* const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    //password: '********', My postregsql doesn't use any password
-    port: 5432,
-}); */
+if (process.env.DATABASE_URL) {
+    const connectionString = process.env.DATABASE_URL
+    var pool = new Pool({
+        connectionString: connectionString,
+    })
+} else {
+    var pool = new Pool({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'postgres',
+        port: 5432,
+    })
+}
 
 pool.connect(function (err) {
     if (err) {
