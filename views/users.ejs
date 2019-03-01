@@ -3,7 +3,7 @@
 
 <head>
     <!-- Page Title -->
-    <title>Stuff Sharing</title>
+    <title>Search Results</title>
 
     <!-- CSS for Styling -->
     <link rel='stylesheet' href='/stylesheets/main.css'/>
@@ -19,7 +19,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
-    <%- include navbar.ejs%>
+    <%- include ./navbar.ejs%>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
                 <img class="group list-group-image" src= "<%= data[i].imgurl %>" alt=""  />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading">
-                        <%= data[i].title %>
+                        <%= data[i].username %>
                     </h4>
                     <p class="group inner list-group-item-text">
                          <%= data[i].description %>
@@ -47,11 +47,11 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <p class="lead">
-                             $<%= data[i].price %>
+                             <%= data[i].price %>
                             </p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">See details</a>
                         </div>
                     </div>
                 </div>
