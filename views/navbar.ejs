@@ -8,6 +8,9 @@
         type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/navbar.css' />
+
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 
@@ -18,7 +21,7 @@
         <div class="m-nav m-red">
             <input type="text" placeholder="Search Box">
             <li><a href="/">Login/Register</a></li>
-            <li><a href="/main">Home</a></li>
+            <li><a class="active" href="/main"><i class="fa fa-fw fa-home"></i> Home</a></li>
         </div>
     </center>
     <%} else {%>
@@ -28,8 +31,8 @@
             <li><a href="/logout">Logout</a></li>
             <li><a href="about:blank">Chats</a></li>
             <li><a>List Item</a></li>
-            <li><a href="/user"> <%= user.username%></a></li>
-            <li><a href="/main">Home</a></li>
+            <li><a href="/user"><i class="fa fa-fw fa-user"></i> <%= user.username%></a></li>
+            <li><a class="active" href="/main"><i class="fa fa-fw fa-home"></i> Home</a></li>
         </div>
     </center>
     <%}%>

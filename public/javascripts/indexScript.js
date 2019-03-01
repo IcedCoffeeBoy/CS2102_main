@@ -8,7 +8,7 @@ $(".register-form").on("submit", function (e) {
   $.post('/reg', data, function (result) {
     if (result.valid == false) {
       $('#reg-alert').slideDown()
-      window.setTimeout(()=>$('#reg-alert').slideUp() , 2000);
+      window.setTimeout(()=>$('#reg-alert').slideUp() , 5000);
     } else {
       alert("Sucessfully created account");
       window.location.href = '../';
