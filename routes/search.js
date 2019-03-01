@@ -29,9 +29,14 @@ function search(req, res, next) {
     if (err) {
       console.log("SQL error: " + err);
     } else if (type == "Users") {
-      res.render('users', { title: 'User Search', data: data.rows, user: req.user });
+      if (req.isAuthenticated()) {
+        return res.render('users', { title: 'User Search', data: data.rows, user: req.user });
+      } else {
+        req.flash("message","Only login user can use this function");
+        return res.redirect("./");
+      }
     } else {
-      res.render('search', { title: 'search', data: data.rows, user: req.user });
+      return res.render('search', { title: 'search', data: data.rows, user: req.user });
     }
   })
 };
