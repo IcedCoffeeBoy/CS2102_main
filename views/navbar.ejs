@@ -7,6 +7,8 @@
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=latin,latin-ext' rel='stylesheet'
         type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/stylesheets/navbar.css' />
 
     <!-- Load an icon library -->
@@ -14,25 +16,48 @@
 </head>
 
 
+
 <body>
     
     <% if(user == null) {%>
     <center>
         <div class="m-nav m-red">
-            <input type="text" placeholder="Search Box">
-            <li><a href="/">Login/Register</a></li>
-            <li><a class="active" href="/main"><i class="fa fa-fw fa-home"></i> Home</a></li>
+          <form class="search-form" id="search" action="search" method="get"> 
+          <div class="dropdown">
+            <select name="searchdropdown" id="searchdropdown" class="dropdown-select">
+              <option value="Items">Items</option>
+              <option value="Users">Users</option>
+            </select>
+          </div>
+            <input type="text" placeholder="What are you looking for?" name="query" id="query" required="">
+            <button type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+          </form>
+          <li><a href="/">Login/Register</a></li>
+          <li><a href="/main">Home</a></li>
         </div>
     </center>
     <%} else {%>
     <center>
         <div class="m-nav m-red">
-            <input type="text" placeholder="Search Box">
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="about:blank">Chats</a></li>
-            <li><a>List Item</a></li>
-            <li><a href="/user"><i class="fa fa-fw fa-user"></i> <%= user.username%></a></li>
-            <li><a class="active" href="/main"><i class="fa fa-fw fa-home"></i> Home</a></li>
+          <form class="search-form" id="search" action="search" method="get">  
+            <div class="dropdown">
+              <select name="searchdropdown" id="searchdropdown" class="dropdown-select">
+                <option value="Items">Items</option>
+                <option value="Users">Users</option>
+              </select>
+            </div>
+            <input type="text" placeholder="What are you looking for?" name="query" id="query" required="">
+            <button type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="about:blank">Chats</a></li>
+          <li><a>List Item</a></li>
+          <li><a href="/user"> <%= user.username%></a></li>
+          <li><a href="/main">Home</a></li>
         </div>
     </center>
     <%}%>
