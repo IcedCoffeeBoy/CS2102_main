@@ -1,5 +1,5 @@
 --------------Entity------------------------
-create sequence accountsid_seq start 1000; 
+create sequence if not exists accountsid_seq start 1000; 
 
 create table if not exists accounts (
 	accountid integer NOT NULL DEFAULT nextval('accountsid_seq') primary key,
@@ -7,10 +7,15 @@ create table if not exists accounts (
 	password varchar(80) not null,
 	email varchar(30) not null unique,
 	admin boolean default false,
-	status integer not null default 1
+	status boolean not null default false
 );
 
 ALTER SEQUENCE accountsid_seq OWNED BY accounts.accountid;
+
+--------------Entity------------------------
+create table if not exists categories (
+	catname varchar(80) primary key
+);
 
 --------------Entity------------------------
 create table if not exists items(
@@ -21,15 +26,11 @@ create table if not exists items(
 	seller integer,
 	bidEndDate date,
 	catname varchar(80),
-	unique(title,description,price,img),
+	unique(title,description,price),
 	foreign key (seller) references accounts(accountid),
 	foreign key (catname) references categories(catname)
 );
 
---------------Entity------------------------
-create table if not exists categories (
-	catname varchar(80) primary key
-);
 
 --------------Entity------------------------
 create table if not exists images (
@@ -51,7 +52,7 @@ create table if not exists relationships (
 	foreign key (itemid) references items(itemid),
 	primary key(seller, buyer, itemid),
 	check(seller is distinct from buyer)
-)
+);
 
 
 --------------Entity------------------------
@@ -65,6 +66,15 @@ create table if not exists messages (
 );
 
 --------------Entity------------------------
+create table if not exists transactions(
+	transactionid serial primary key,
+	dateStart date,
+	dateEnd date,
+	amount numeric(32, 2),
+	rid varchar(128) not null
+);
+
+--------------Entity------------------------
 create table if not exists reviews(
 	reviewid serial primary key,
 	itemid integer,
@@ -72,7 +82,7 @@ create table if not exists reviews(
 	review text, 
 	foreign key (itemid) references items(itemid),
 	foreign key (transactionid) references transactions(transactionid)
-)
+);
 
 --------------Entity------------------------
 create table if not exists viewHistory(
@@ -82,7 +92,7 @@ create table if not exists viewHistory(
 	userid integer,
 	foreign key (itemid) references items(itemid),
 	foreign key (userid) references accounts(accountid)
-)
+);
 
 --------------Entity------------------------
 create table if not exists qnas(
@@ -93,7 +103,7 @@ create table if not exists qnas(
 	date date,
 	foreign key (itemid) references items(itemid),
 	foreign key (userid) references accounts(accountid)
-)
+);
 
 --------------Entity------------------------
 create table if not exists bids (
@@ -105,18 +115,9 @@ create table if not exists bids (
 	foreign key (userid) references accounts(accountid) 
 );
 
---------------Entity------------------------
-create table if not exists transactions(
-	transactionid serial primary key,
-	dateStart date,
-	dateEnd date,
-	amount numeric(32, 2),
-	rid varchar(128) not null
-);
-
 
 -------------Relationship-----------------------
-create table blocks (
+create table if not exists blocks (
 	blocker integer not null,
 	blockee integer not null,
 	primary key (blocker, blockee),
@@ -130,10 +131,14 @@ insert into accounts(username,password,email) values('perry','wang','perrywang@g
 
 insert into categories values ('Animals'),('Electronic');
 
-insert into items(title,description,price,img) values ('Good doggo','Dogs for sharing','99','https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
-insert into items(title,description,price,img) values ('Cute cats', 'Cats for you to serve', '21', 'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
-select * from accounts where username='perry'
+delete from items;
+delete from images;
+insert into items(title,description,price) values ('Good doggo','Dogs for sharing','99');
+insert into images(itemid,imgurl) values (1 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
+insert into items(title,description,price) values ('Cute cats', 'Cats for you to serve', '21');
+insert into images(itemid,imgurl) values (2 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
+select title, description, price, imgurl from items natural join images
 
 

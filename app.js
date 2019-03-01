@@ -7,7 +7,6 @@ var passport = require('passport');
 var session = require('express-session');
 var flash = require('connect-flash');
 
-
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 
@@ -34,6 +33,9 @@ var insertRouter = require('./routes/insert');
 /* ---------------------------- */
 
 var mainRouter = require('./routes/main');
+var searchRouter = require('./routes/search');
+// var searchItemRouter = require('./routes/search/items');
+// var searchUserRouter = require('./routes/search/users');
 
 /* -----Connecting to db------- */
 var db = require('./db');
@@ -107,8 +109,11 @@ app.use('/insert', userAuth, insertRouter);
 
 /* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
-app.use('/user', userAuth, userRouter)
-app.get('/logout', function (req, res) {
+app.use('/search', searchRouter);
+// app.use('/search/items', searchItemRouter);
+// app.use('/search/users', searchUserRouter);
+app.use('/user',userAuth,userRouter)
+app.get('/logout', function (req, res){
   req.session.destroy(function (err) {
     res.redirect('/');
   });
