@@ -29,7 +29,6 @@ CREATE TABLE Categories (
 	catname		VARCHAR(80) PRIMARY KEY
 );
 
-
 --------------Entity------------------------
 CREATE TABLE Items (
 	itemId		SERIAL PRIMARY KEY,
@@ -51,31 +50,30 @@ ALTER SEQUENCE Items_itemId_seq RESTART WITH 1000000;
 create table if not exists images (
 	imgurl varchar(256) primary key,
 	itemid integer not null,
-	foreign key (itemid) references items(itemid) on delete cascade   
+	foreign key (itemid) references items on delete cascade   
 );
-
-
 
 -------------Relationship-----------------------
 create table if not exists relationships (
-	rid varchar(128) unique not null,
+	rid serial primary key,
 	seller integer not null,
 	buyer integer not null,
 	itemid integer not null,
 	foreign key (seller) references accounts (accountid),
 	foreign key (buyer) references accounts(accountid),
-	foreign key (itemid) references items(itemid),
-	primary key(seller, buyer, itemid),
+	foreign key (itemid) references items on delete cascade,
+	unique(seller, buyer, itemid),
 	check(seller is distinct from buyer)
 );
 
+ALTER SEQUENCE relationships_rid_seq RESTART WITH 1000;
 
 --------------Entity------------------------
 create table if not exists messages (
 	msgid serial primary key,
 	userfrom integer,
-	timestamp timestamp,
-	rid varchar(128) not null,
+	timestamp timestamp default now(),
+	rid integer,
 	foreign key (userfrom) references accounts (accountid),
 	foreign key (rid) references relationships(rid)
 );
@@ -95,7 +93,7 @@ create table if not exists reviews(
 	itemid integer,
 	transactionid integer,
 	review text, 
-	foreign key (itemid) references items(itemid),
+	foreign key (itemid) references items on delete cascade,
 	foreign key (transactionid) references transactions(transactionid)
 );
 
@@ -105,7 +103,7 @@ create table if not exists viewHistory(
 	itemid integer,
 	timestamp timestamp,
 	userid integer,
-	foreign key (itemid) references items(itemid),
+	foreign key (itemid) references items on delete cascade,
 	foreign key (userid) references accounts(accountid)
 );
 
@@ -116,7 +114,7 @@ create table if not exists qnas(
 	userid integer,
 	comment text, 
 	date date,
-	foreign key (itemid) references items(itemid),
+	foreign key (itemid) references items on delete cascade,
 	foreign key (userid) references accounts(accountid)
 );
 
@@ -125,7 +123,7 @@ create table if not exists bids (
 	bidid integer primary key,
 	userid integer not null,
 	rid varchar(128) not null,
-	timestamp timestamp,
+	timestamp timestamp default now(),
 	amount numeric(32, 2),
 	foreign key (userid) references accounts(accountid) 
 );
@@ -141,19 +139,19 @@ create table if not exists blocks (
 	check(blocker is distinct from blockee)
 );
 
-insert into accounts(username,password,email) values('1234','1234','dog@gmail.com');
-insert into accounts(username,password,email) values('perry','wang','perrywang@gmail.com');
-
-insert into categories values ('Animals'),('Electronic');
-
+insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
 
 delete from items;
 delete from images;
-insert into items(title,description,price) values ('Good doggo','Dogs for sharing','99');
+
+insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
+insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
 insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
-insert into items(title,description,price) values ('Cute cats', 'Cats for you to serve', '21');
+insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
 insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
-select title, description, price, imgurl from items natural join images
+select * from accounts;
+select * from items;
+select * from images;
 
 
