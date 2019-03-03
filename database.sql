@@ -1,36 +1,51 @@
---------------Entity------------------------
-create sequence if not exists accountsid_seq start 1000; 
-
-create table if not exists accounts (
-	accountid integer NOT NULL DEFAULT nextval('accountsid_seq') primary key,
-	username varchar(16) not null unique,
-	password varchar(80) not null,
-	email varchar(30) not null unique,
-	admin boolean default false,
-	status boolean not null default false
-);
-
-ALTER SEQUENCE accountsid_seq OWNED BY accounts.accountid;
-
---------------Entity------------------------
-create table if not exists categories (
-	catname varchar(80) primary key
-);
+/* ----- DROP TABLES ----- */
+DROP TABLE IF EXISTS Accounts CASCADE;
+DROP TABLE IF EXISTS Categories CASCADE;
+DROP TABLE IF EXISTS Items 	CASCADE;
+DROP TABLE IF EXISTS Images CASCADE;
+DROP TABLE IF EXISTS bids 	CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS qnas CASCADE;
+DROP TABLE IF EXISTS relationships CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
+DROP TABLE IF EXISTS viewhistory CASCADE;
+DROP TABLE IF EXISTS blocks CASCADE;
 
 --------------Entity------------------------
-create table if not exists items(
-	itemid serial primary key,
-	title varchar(80),
-	description text, 
-	price integer,
-	seller integer,
-	bidEndDate date,
-	catname varchar(80),
-	unique(title,description,price),
-	foreign key (seller) references accounts(accountid),
-	foreign key (catname) references categories(catname)
+CREATE TABLE Accounts (
+	accountId	SERIAL PRIMARY KEY,
+	username	VARCHAR(16) NOT NULL UNIQUE,
+	password	VARCHAR(500) NOT NULL,
+	email		VARCHAR(30) NOT NULL UNIQUE,
+	admin		BOOLEAN DEFAULT FALSE,
+	status		VARCHAR(20) DEFAULT 'Active'
 );
 
+ALTER SEQUENCE Accounts_accountId_seq RESTART WITH 100;
+
+--------------Entity------------------------
+CREATE TABLE Categories (
+	catname		VARCHAR(80) PRIMARY KEY
+);
+
+
+--------------Entity------------------------
+CREATE TABLE Items (
+	itemId		SERIAL PRIMARY KEY,
+	title		VARCHAR(80),
+	description	TEXT,
+	price		NUMERIC(10,2),
+	seller		INTEGER,
+	timeListed	TIMESTAMP DEFAULT NOW(),
+	bidEndTime	TIMESTAMP,
+	catname		VARCHAR(80),
+	FOREIGN KEY (seller) REFERENCES Accounts,
+	FOREIGN KEY (catname) REFERENCES Categories
+);
+
+
+ALTER SEQUENCE Items_itemId_seq RESTART WITH 1000000;
 
 --------------Entity------------------------
 create table if not exists images (
@@ -135,9 +150,9 @@ insert into categories values ('Animals'),('Electronic');
 delete from items;
 delete from images;
 insert into items(title,description,price) values ('Good doggo','Dogs for sharing','99');
-insert into images(itemid,imgurl) values (1 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
+insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 insert into items(title,description,price) values ('Cute cats', 'Cats for you to serve', '21');
-insert into images(itemid,imgurl) values (2 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
+insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
 select title, description, price, imgurl from items natural join images
 
