@@ -6,7 +6,8 @@ Run start postreqsql
 Ensure that the correct user, host, database, password, port is used  
 */
 
-if (process.env.DATABASE_URL) {
+// if (process.env.DATABASE_URL) {
+if (false) {
     const connectionString = process.env.DATABASE_URL;
     var pool = new Pool({
         connectionString: connectionString,

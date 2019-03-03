@@ -37,6 +37,8 @@ var searchRouter = require('./routes/search');
 // var searchItemRouter = require('./routes/search/items');
 // var searchUserRouter = require('./routes/search/users');
 
+var newlistingRouter = require('./routes/newlisting');
+
 /* -----Connecting to db------- */
 var db = require('./db');
 /* ---------------------------- */
@@ -118,6 +120,8 @@ app.get('/logout', function (req, res){
     res.redirect('/');
   });
 });
+
+app.use('/newlisting', userAuth, newlistingRouter);
 
 
 // catch 404 and forward to error handler
