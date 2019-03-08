@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var passport = require('passport');
-var session = require('express-session');
+var session = require('cookie-session');
 var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
@@ -34,12 +34,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/p', express.static(path.join(__dirname, 'public')))
 
 // Use the session middleware
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //  30 days
+// }))
+
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //  30 days
+  name: 'session',
+  keys: ['cs2102'],
+  // Cookie Options
+  maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
 }))
+
+
 // Passport intialization
 app.use(passport.initialize());
 app.use(passport.session());
