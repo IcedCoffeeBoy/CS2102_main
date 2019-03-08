@@ -9,37 +9,11 @@ var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
-
-/* --- V2: Adding Web Pages --- */
-var aboutRouter = require('./routes/about');
-var pageRouter = require('./routes/page');
-/* ---------------------------- */
-
-/* --- V3: Basic Template   --- */
-var tableRouter = require('./routes/table');
-var loopsRouter = require('./routes/loops');
-/* ---------------------------- */
-
-/* --- V4: Database Connect --- */
-var selectRouter = require('./routes/select');
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-var formsRouter = require('./routes/forms');
-/* ---------------------------- */
-
-/* --- V6: Modify Database  --- */
-var insertRouter = require('./routes/insert');
-/* ---------------------------- */
-
 var mainRouter = require('./routes/main');
 var searchRouter = require('./routes/search');
 // var searchItemRouter = require('./routes/search/items');
 // var searchUserRouter = require('./routes/search/users');
-
 var newlistingRouter = require('./routes/newlisting');
-
-/* Add product page */
 var productRouter = require('./routes/product');
 
 /* -----Connecting to db------- */
@@ -113,7 +87,6 @@ app.use('/insert', userAuth, insertRouter);
 
 // Ming Liang: To prevent unauthorised user entering the page, pls added userAuth before the router 
 
-/* ------ Non-guide code  --- */
 app.use('/main', mainRouter)
 app.use('/search', searchRouter);
 // app.use('/search/items', searchItemRouter);
