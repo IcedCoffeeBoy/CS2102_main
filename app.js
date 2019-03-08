@@ -118,8 +118,8 @@ app.use('/main', mainRouter)
 app.use('/search', searchRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
-app.use('/user',userAuth,userRouter)
-app.get('/logout', function (req, res){
+app.use('/user', userAuth, userRouter)
+app.get('/logout', function (req, res) {
   req.session.destroy(function (err) {
     res.redirect('/');
   });
