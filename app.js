@@ -1,3 +1,4 @@
+/* Imports */
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,7 +7,10 @@ var logger = require('morgan');
 var passport = require('passport');
 var session = require('cookie-session');
 var flash = require('connect-flash');
+var db = require('./db');
+var initpassport = require('./initpassport');
 
+// View routes 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var mainRouter = require('./routes/main');
@@ -15,12 +19,11 @@ var searchRouter = require('./routes/search');
 // var searchUserRouter = require('./routes/search/users');
 var newlistingRouter = require('./routes/newlisting');
 var productRouter = require('./routes/product');
-var db = require('./db');
 var userAuth = require('./userAuth');
 
 var app = express();
 
-// view engine setup
+/* view engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -41,6 +44,7 @@ app.use('/p', express.static(path.join(__dirname, 'public')))
 //   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //  30 days
 // }))
 
+/* Using cookie session */
 app.use(session({
   name: 'session',
   keys: ['cs2102'],
@@ -49,25 +53,26 @@ app.use(session({
 }))
 
 
-// Passport intialization
+/* Passport intialization */
 app.use(passport.initialize());
 app.use(passport.session());
-
-var initpassport = require('./initpassport');
 initpassport();
+
+/* Flash connect  */
 app.use(flash());
 app.use(function (req, res, next) {
   res.locals.message = req.flash("message");
   next();
 })
 
+/* To handle post request  */
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-/*------------Routes-------------------*/
+/*----------Routes-----------------*/
 app.use('/', indexRouter);
 app.use('/main', mainRouter)
 app.use('/search', searchRouter);
@@ -81,7 +86,7 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
   });
 });
-
+/* ------------------------------- */
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
