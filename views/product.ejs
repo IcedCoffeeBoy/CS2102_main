@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>Product</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS for Styling -->
+    <link rel='stylesheet' href='/stylesheets/product.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- Imported Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <!-- JavaScript for Interactivity -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../javascripts/productScript.js"></script>
+
+    <%- include navbar.ejs%>
+</head>
+
+<body>
+  <div class="column-xs-12 ml-4 mr-4">
+    <nav>
+      <ol class="breadcrumb-list">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Pets</a></li>
+        <li class="breadcrumb-item active">Cat</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
+    <div class="d-flex align-items-stretch">
+      <div class="image-gallery">
+        <aside class="thumbnails">
+          <a href="#" class="selected thumbnail" big="123" data-big="http://placekitten.com/420/600">
+            <div class="thumbnail-image" style="background-image: url(http://placekitten.com/420/600)"></div>
+          </a>
+          <a href="#" class="thumbnail" data-big="http://placekitten.com/450/600">
+            <div class="thumbnail-image" style="background-image: url(http://placekitten.com/450/600)"></div>
+          </a>
+          <a href="#" class="thumbnail" data-big="http://placekitten.com/200/300">
+            <div class="thumbnail-image" style="background-image: url(http://placekitten.com/200/300)"></div>
+          </a>
+          <a href="#" class="thumbnail" data-big="http://placekitten.com/240/300">
+            <div class="thumbnail-image" style="background-image: url(http://placekitten.com/240/300)"></div>
+          </a>
+        </aside>
+
+        <main class="primary" style="background-image: url('http://placekitten.com/420/600');"></main>
+      </div>
+      <div class="text-container align-items-stretch">
+        <div class="text-title">Cat</div>
+        <div class="text-bid">Current Highest Bid: $320,000</div>
+        <div class="d-flex btn-container">
+            <a class="btn white-btn" href="#" role="button" style="flex:1">22 &#x2764</a>
+            <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
+            <a class="btn bid-btn" href="#" role="button" style="flex:2">Make Bid</a>
+        </div>
+        <div class="p-2 m-2">
+            Sold by <a class="text-seller" href="#">catseller</a>
+        </div>
+        <div class="text-desc p-2 m-2">
+            Item description: <br/>
+            <%= tparam %>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex align-items-stretch flex-column">
+        <div class="main-title">
+            <p>Reviews</p>
+        </div>
+        <div class="reviews">
+            <div class="review-details">
+            <img src="https://randomuser.me/api/portraits/med/men/29.jpg">
+            <div class="r-container">
+                <p class="review-author">krystal_kjy</p>
+                <p class="review-date">3 days ago</p>
+                <div class="review-rating">
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star">&#9733;</span>
+                <span class="review-star">&#9733;</span>
+                </div>
+            </div>
+            </div>
+            <div class="review-body">
+                <p>Pleasant transaction! Although first meetup didn't go as planned, seller mailed the item promptly with covered postage to make up for it, thanks!</p>
+            </div>
+        </div>
+        <div class="reviews">
+            <div class="review-details">
+            <img src="https://randomuser.me/api/portraits/med/women/30.jpg">
+            <div class="r-container">
+                <p class="review-author">starcloudd</p>
+                <p class="review-date">3 days ago</p>
+                <div class="review-rating">
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star review-star--active">&#9733;</span>
+                <span class="review-star">&#9733;</span>
+                <span class="review-star">&#9733;</span>
+                </div>
+            </div>
+            </div>
+            <div class="review-body">
+                <p>Seller was very friendly and on time. Highly recommend!!</p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-stretch flex-column">
+        <div class="main-title">
+            <p>You may also like</p>
+        </div>
+        <div class="container recomm-text">
+        <div id="products" class="flex-row list-group float-left">
+        <% for(var i=0; i<data.length; i++) { %>
+        <div class="item col-xs-4 col-lg-4">
+            <div class="product-thumbnail">
+                <img class="group list-group-image recomm-img" src= "<%= data[i].imgurl %>" alt=""  />
+                <div class="caption">
+                    <p class="group inner">
+                        <%= data[i].title %>
+                    </p>
+                    <div class="col">
+                        <div class="col-xs-12 col-md-6">
+                            <p>
+                             $<%= data[i].price %>
+                            </p>
+                        </div>
+                        <div class="d-flex">
+                            <a class="btn btn-success recomm-btn-text" href="http://www.jquery2dotnet.com">View Item</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+    </div>
+    </div>
+  </div>
+</body>

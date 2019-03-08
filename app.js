@@ -39,6 +39,9 @@ var searchRouter = require('./routes/search');
 
 var newlistingRouter = require('./routes/newlisting');
 
+/* Add product page */
+var productRouter = require('./routes/product');
+
 /* -----Connecting to db------- */
 var db = require('./db');
 /* ---------------------------- */
@@ -114,8 +117,8 @@ app.use('/main', mainRouter)
 app.use('/search', searchRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
-app.use('/user',userAuth,userRouter)
-app.get('/logout', function (req, res){
+app.use('/user', userAuth, userRouter)
+app.get('/logout', function (req, res) {
   req.session.destroy(function (err) {
     res.redirect('/');
   });
@@ -123,6 +126,7 @@ app.get('/logout', function (req, res){
 
 app.use('/newlisting', userAuth, newlistingRouter);
 
+app.use('/p', productRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
