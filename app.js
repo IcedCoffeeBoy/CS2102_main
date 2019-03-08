@@ -1,4 +1,4 @@
-/* Imports */
+/* -----------------Imports---------------- */
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -82,9 +82,8 @@ app.use('/p', productRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter)
 app.get('/logout', function (req, res) {
-  req.session.destroy(function (err) {
-    res.redirect('/');
-  });
+  req.session = null;
+  res.redirect('/');
 });
 /* ------------------------------- */
 
