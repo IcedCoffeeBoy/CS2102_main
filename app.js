@@ -15,12 +15,7 @@ var searchRouter = require('./routes/search');
 // var searchUserRouter = require('./routes/search/users');
 var newlistingRouter = require('./routes/newlisting');
 var productRouter = require('./routes/product');
-
-/* -----Connecting to db------- */
 var db = require('./db');
-/* ---------------------------- */
-
-//Passport auth
 var userAuth = require('./userAuth');
 
 var app = express();
@@ -57,38 +52,18 @@ app.use(function (req, res, next) {
   next();
 })
 
-app.use('/', indexRouter);
-
-/* --- V2: Adding Web Pages --- */
-app.use('/about', aboutRouter);
-/* ---------------------------- */
-
-/* --- V3: Basic Template   --- */
-app.use('/table', tableRouter);
-app.use('/loops', loopsRouter);
-/* ---------------------------- */
-
-/* --- V4: Database Connect --- */
-app.use('/select', selectRouter);
-/* ---------------------------- */
-
-/* --- V5: Adding Forms     --- */
-app.use('/forms', formsRouter);
-/* ---------------------------- */
-
-/* --- V6: Modify Database  --- */
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use('/insert', userAuth, insertRouter);
-/* ---------------------------- */
 
-// Ming Liang: To prevent unauthorised user entering the page, pls added userAuth before the router 
-
+/*------------Routes-------------------*/
+app.use('/', indexRouter);
 app.use('/main', mainRouter)
 app.use('/search', searchRouter);
+app.use('/newlisting', userAuth, newlistingRouter);
+app.use('/p', productRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter)
@@ -98,9 +73,6 @@ app.get('/logout', function (req, res) {
   });
 });
 
-app.use('/newlisting', userAuth, newlistingRouter);
-
-app.use('/p', productRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -112,11 +84,9 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;
