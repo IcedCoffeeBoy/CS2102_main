@@ -56,11 +56,10 @@ router.post('/upload', function(req, res, next) {
               if (err) {
                 console.log(err);
                 res.json({message: 'Error encountered :(', success: false});
-              } else {
-                res.redirect('/user');
               }
             })
           }
+          res.redirect('/user');
         }
       })
     }
