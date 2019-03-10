@@ -39,14 +39,12 @@ module.exports = function () {
     
     // Serialized user object into an id to be store as a session
     passport.serializeUser(function (user, done) {
-        console.log("serialize called");
         done(null, user);
     });
 
     // Deserialize cookie id params into user object to attach to res
     // Do not call postgresql to retrieve the data as it too expensive!
     passport.deserializeUser(function (user, done) {
-        console.log("deserialize called")
         done(null, user);
     });
 }

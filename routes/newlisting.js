@@ -32,6 +32,8 @@ var upload = multer({storage: storage}).array('image',4);
 router.post('/upload', function(req, res, next) {
   upload(req, res, function(err) {
     if (err) {
+      console.log("Upload error occur, below is the request")
+      console.log(req)
       console.log(err);
     } else {
       var title = req.body.title;
