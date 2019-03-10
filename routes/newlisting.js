@@ -26,7 +26,7 @@ var storage = multer.diskStorage({
   }
 });
 
-var upload = multer({storage: storage}).single('image');
+var upload = multer({storage: storage}).array('image',4);
 
 
 router.post('/upload', function(req, res, next) {
@@ -34,35 +34,31 @@ router.post('/upload', function(req, res, next) {
     if (err) {
       console.log(err);
     } else {
-      var imagePath = 'images/uploads/' + req.file.filename;
       var title = req.body.title;
       var description = req.body.description;
       var price = req.body.price;
       var category = req.body.category;
+      var seller = req.user.id;
       console.log(req.body);
-    
-      var sql_getAccountId = "SELECT accountid FROM Accounts WHERE username = $1";
+      
       var sql_insertItem = "INSERT INTO Items(title,description,price,seller,catname) VALUES ($1,$2,$3,$4,$5) RETURNING itemid";
-      var sql_insertImage = "INSERT INTO Images(imgurl,itemid) VALUES ($1,$2)";
+      var sql_insertImage = "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)";
     
-      db.query(sql_getAccountId, [req.user.username], function (err, data) {
+      db.query(sql_insertItem, [title, description, price, seller, category], function (err, data) {
         if (err) {
           console.log(err);
         } else {
-          db.query(sql_insertItem, [title, description, price, data.rows[0].accountid, category], function (err, data) {
-            if (err) {
-              console.log(err);
-            } else {
-              db.query(sql_insertImage, [imagePath, data.rows[0].itemid], function(err, data) {
-                if (err) {
-                  console.log(err);
-                  res.json({message: 'Error encountered :(', success: false});
-                } else {
-                  res.redirect('/user');
-                }
-              })
-            }
-          })
+          for (var i=0; i<req.files.length; i++) {
+            var imagePath = 'images/uploads/' + req.files[i].filename;
+            db.query(sql_insertImage, [imagePath, data.rows[0].itemid, i], function(err, data) {
+              if (err) {
+                console.log(err);
+                res.json({message: 'Error encountered :(', success: false});
+              } else {
+                res.redirect('/user');
+              }
+            })
+          }
         }
       })
     }

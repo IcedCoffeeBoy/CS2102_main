@@ -47,10 +47,11 @@ CREATE TABLE Items (
 ALTER SEQUENCE Items_itemId_seq RESTART WITH 1000000;
 
 --------------Entity------------------------
-create table if not exists images (
-	imgurl varchar(256) primary key,
-	itemid integer not null,
-	foreign key (itemid) references items on delete cascade   
+CREATE TABLE Images (
+	imgURL		VARCHAR(256) PRIMARY KEY,
+	itemId		INTEGER NOT NULL,
+	imgNo		INTEGER DEFAULT 0,
+	FOREIGN KEY (itemId) REFERENCES Items ON DELETE CASCADE
 );
 
 -------------Relationship-----------------------
@@ -140,9 +141,9 @@ create table if not exists blocks (
 );
 
 ------------- Triggers------------------------- 
-create trigger insertitem after insert items on relationships 
+-- create trigger insert item after insert items on relationships 
 
-create or replace function additems(title varchar, )
+-- create or replace function additems(title varchar, )
 
 
 
