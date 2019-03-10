@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
-var sql_getItems = 'SELECT * FROM Items NATURAL JOIN Images WHERE seller = $1 ORDER BY timeListed DESC;'
+var sql_getItems =
+'SELECT * ' +
+'FROM Items NATURAL JOIN Images ' +
+'WHERE seller = $1 AND imgno = 0' +
+'ORDER BY timeListed DESC;'
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

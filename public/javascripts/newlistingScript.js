@@ -1,39 +1,49 @@
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-    
+        
+        var id = input.id;
+        id = id.substring(id.length - 1, id.length);
         reader.onload = function(e) {
-        $('.image-upload-wrap').hide();
-    
-        $('.file-upload-image').attr('src', e.target.result);
-        $('.file-upload-content').show();
-    
-        $('.image-title').html(input.files[0].name);
+            $('#image-upload-wrap-'+id).hide();
+            $('#file-upload-image-'+id).attr('src', e.target.result);
+            $('#file-upload-content-'+id).show();
         };
     
         reader.readAsDataURL(input.files[0]);
     } else {
-        removeUpload();
+        removeUpload(id);
     }
 }
         
-function removeUpload() {
-    $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-    $('.file-upload-content').hide();
-    $('.image-upload-wrap').show();
+function removeUpload(input) {
+    var id = input.id;
+    id = id.substring(id.length - 1, id.length);
+    $('#file-upload-input-'+id).replaceWith($('#file-upload-input-'+id).clone());
+    $('#file-upload-content-'+id).hide();
+    $('#image-upload-wrap-'+id).show();
 }
 
 $(document).ready(function() {
-    $('.image-upload-wrap').bind('dragover', function () {
-        $('.image-upload-wrap').addClass('image-dropping');
-    });
+    var dropElems = document.getElementsByClassName("image-upload-wrap");
+    for (var i=0; i<dropElems.length; i++) {
+        elem = dropElems[i];
+        elem.addEventListener("dragover", function() {
+            this.classList.add("image-dropping");
+        });
+        elem.addEventListener("dragleave", function() {
+            this.classList.remove("image-dropping");
+        });
+    }
+});
 
-    $('.image-upload-wrap').bind('dragleave', function () {
-        $('.image-upload-wrap').removeClass('image-dropping');
-    });
 
+$(document).ready(function() {
     $('input:radio[name="category"]:first').attr('checked','checked');
+});
 
+
+$(document).ready(function() {
     $('#newlisting-form').submit(function (){
         $.ajax({
             complete: function() {
