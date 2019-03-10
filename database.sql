@@ -139,6 +139,15 @@ create table if not exists blocks (
 	check(blocker is distinct from blockee)
 );
 
+------------- Triggers------------------------- 
+create trigger insertitem after insert items on relationships 
+
+create or replace function additems(title varchar, )
+
+
+
+
+
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
 
 delete from items;
@@ -153,5 +162,8 @@ insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/
 select * from accounts;
 select * from items;
 select * from images;
+
+
+
 
 
