@@ -7,8 +7,10 @@ var logger = require('morgan');
 var passport = require('passport');
 var session = require('cookie-session');
 var flash = require('connect-flash');
+require('dotenv').load()
 var db = require('./db');
 var initpassport = require('./initpassport');
+
 
 // View routes 
 var indexRouter = require('./routes/index');
