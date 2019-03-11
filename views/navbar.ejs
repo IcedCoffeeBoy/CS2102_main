@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/stylesheets/navbar.css' />
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
 
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,7 +22,7 @@
     
     <% if(user == null) {%>
     <center>
-        <div class="m-nav m-red">
+        <div class="m-nav m-red primary-bg">
           <form class="search-form" id="search" action="search" method="get"> 
           <div class="dropdown">
             <select name="searchdropdown" id="searchdropdown" class="dropdown-select">
@@ -40,7 +41,7 @@
     </center>
     <%} else {%>
     <center>
-        <div class="m-nav m-red">
+        <div class="m-nav m-red primary-bg">
           <form class="search-form" id="search" action="search" method="get">  
             <div class="dropdown">
               <select name="searchdropdown" id="searchdropdown" class="dropdown-select">

@@ -1,0 +1,16 @@
+.primary-color {
+    color: #ee4d2d !important;
+}
+
+.primary-bg {
+    background-color: #ee4d2d !important;
+}
+
+.primary-border {
+    border-color: #ee4d2d !important;
+}
+
+.primary-bg-hover:hover {
+    background-color: #ca3a1d !important;
+    transition:0.5s ease all;
+}

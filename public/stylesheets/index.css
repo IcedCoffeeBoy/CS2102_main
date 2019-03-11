@@ -34,7 +34,6 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -53,7 +52,6 @@
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
   text-decoration: none;
 }
 .form .register-form {
@@ -112,7 +110,6 @@ body{
 .heading{
   text-align: center;
   padding-top: 5%;
-  color: #43A047;
   font-family: 'Merriweather', serif;
   font: bold;
 }
