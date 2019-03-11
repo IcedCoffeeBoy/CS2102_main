@@ -25,6 +25,7 @@ router.get('/', function (req, res, next) {
   })
 });
 
+
 router.post('/upload', upload.array('image', 4), function (req, res, next) {
   var title = req.body.title;
   var description = req.body.description;
