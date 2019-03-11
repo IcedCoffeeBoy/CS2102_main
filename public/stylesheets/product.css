@@ -36,7 +36,6 @@
 
 .bid-btn {
   color: #fff !important;
-  background: #43a047 !important;
 }
 
 .text-container {
@@ -70,6 +69,10 @@
 
 .text-desc {
   flex: 1;
+}
+
+.text-desc p {
+  font-weight:bold;
 }
 
 .image-gallery {
@@ -174,8 +177,9 @@
 }
 
 .recomm-img {
-  max-width: 128px;
-  max-height: 128px;
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
 }
 
 .item.list-group-item {
@@ -237,4 +241,14 @@
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
+}
+
+.reviews-none {
+  flex: 1;
+}
+
+.reviews-none p {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85em;
 }

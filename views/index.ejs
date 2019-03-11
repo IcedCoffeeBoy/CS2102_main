@@ -7,6 +7,7 @@
 
     <!-- CSS for Styling -->
     <link rel='stylesheet' href='/stylesheets/index.css' />
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
@@ -21,7 +22,7 @@
 </head>
 
 <body>
-    <h1 class="heading">Stuff Sharing</h1>
+    <h1 class="heading primary-color">Stuff Sharing</h1>
     <div class="login-page">
         <div class="form">
             <div class="alert alert-danger collapse" role="alert" id="reg-alert">
@@ -31,8 +32,8 @@
                 <input type="username" placeholder="name" name="username" />
                 <input type="password" placeholder="password" name="password" />
                 <input type="email" placeholder="email address" name="email" />
-                <button type="submit" class="signup">create</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
+                <button type="submit" class="signup btn btn-primary primary-bg">create</button>
+                <p class="message">Already registered? <a class="primary-color" href="#">Sign In</a></p>
             </form>
             <form class="login-form" id="login" action="login" role="form" method="post">
                 <% if (message.length>0) { %>
@@ -47,8 +48,8 @@
                 <div class="form-group">
                     <input type="password" id="password" name="password" class="form-control" placeholder="password" />
                 </div>
-                <button type="submit" class="btn btn-primary">login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <button type="submit" class="btn btn-primary primary-bg">login</button>
+                <p class="message">Not registered? <a class="primary-color" href="#">Create an account</a></p>
             </form>
         </div>
     </div>
