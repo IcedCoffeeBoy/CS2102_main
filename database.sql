@@ -48,9 +48,10 @@ ALTER SEQUENCE Items_itemId_seq RESTART WITH 1000000;
 
 --------------Entity------------------------
 CREATE TABLE Images (
-	imgURL		VARCHAR(256) PRIMARY KEY,
+	imgURL		VARCHAR(256),
 	itemId		INTEGER NOT NULL,
 	imgNo		INTEGER DEFAULT 0,
+	PRIMARY KEY itemId, imgNo
 	FOREIGN KEY (itemId) REFERENCES Items ON DELETE CASCADE
 );
 
@@ -147,18 +148,16 @@ create table if not exists blocks (
 
 
 
-
-
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
 
-delete from items;
-delete from images;
+-- delete from items;
+-- delete from images;
 
-insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
-insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
-insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
-insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
-insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
+-- insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
+-- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
+-- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
+-- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
+-- insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
 
 select * from accounts;
 select * from items;
