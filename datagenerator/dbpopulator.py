@@ -6,7 +6,7 @@ from faker import Faker
 
 
 def db_populate(n=100, add_users=True, add_items=True, add_reviews=True):
-    db = DBConnector(dbname="postgres", user="postgres", host="localhost", pw="123")
+    db = DBConnector(dbname="dd15caf96d7vac", user="ckdtnpmamiywyi", host="ec2-54-204-2-25.compute-1.amazonaws.com", pw="7eb2c774f7473c16e33e941002cbfcecfa94845782aaeb770001f79459e25cee")
 
     # Instantiate data generator
     gen = DataGenerator()
@@ -108,4 +108,5 @@ class DataGenerator:
 
     def create_imgurl(self, itemtype, imgno):
         return "https://loremflickr.com/400/240/" + itemtype + "?random=" + str(imgno)
+
 
