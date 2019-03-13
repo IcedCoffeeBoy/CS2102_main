@@ -18,6 +18,7 @@ CREATE TABLE Accounts (
 	username	VARCHAR(16) NOT NULL UNIQUE,
 	password	VARCHAR(500) NOT NULL,
 	email		VARCHAR(30) NOT NULL UNIQUE,
+	datejoined  date default CURRENT_DATE,
 	admin		BOOLEAN DEFAULT FALSE,
 	status		VARCHAR(20) DEFAULT 'Active'
 );
@@ -86,7 +87,7 @@ create table if not exists transactions(
 	dateStart date,
 	dateEnd date,
 	amount numeric(32, 2),
-	rid varchar(128) not null
+	rid integer not null
 );
 
 --------------Entity------------------------
@@ -162,6 +163,10 @@ insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFL
 select * from accounts;
 select * from items;
 select * from images;
+
+SELECT * FROM (Items NATURAL JOIN Images) INNER JOIN Accounts on Items.seller = Accounts.accountid
+WHERE seller = 100 AND imgno = 0
+ORDER BY timeListed desc;
 
 
 

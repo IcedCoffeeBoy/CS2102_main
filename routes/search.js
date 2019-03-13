@@ -8,7 +8,7 @@ var sql_getItems =
   'WHERE seller = $1 AND imgno = 0' +
   'ORDER BY timeListed DESC;'
 
-var sql_getDatejoined = 'select datejoined from accounts where accountid = $1'
+var sql_getuserinfo = 'select datejoined, username from accounts where accountid = $1'
 
 
 /*
@@ -51,19 +51,20 @@ function search(req, res, next) {
 
 router.get('/:userid', (req, res, next) => {
   console.log(req.params.userid)
-  db.query(sql_getDatejoined, [req.params.userid], (err, datejoined) => {
+  db.query(sql_getuserinfo, [req.params.userid], (err, userdata) => {
     if (err) {
       console.log(err)
     } else {
       var options = { year: 'numeric', month: 'long', day: 'numeric' };
-      datejoined = datejoined.rows[0].datejoined
-      datejoined = datejoined.toLocaleDateString("en-US", options)
+      datejoined = userdata.rows[0].datejoined
+      datejoined = userdata.toLocaleDateString("en-US", options)
+      user = userdata.rows[0] 
       db.query(sql_getItems, [req.params.userid], (err, data) => {
         console.log(data)
         if (err) {
           console.log(err);
         } else {
-          res.render('user', { title: 'User Page', data: data.rows, user: req.user, datejoined: datejoined });
+          res.render('user', { title: 'User Page', data: data.rows, user: user, datejoined: datejoined });
         }
       })
     }
