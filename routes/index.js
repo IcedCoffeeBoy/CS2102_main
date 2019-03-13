@@ -7,7 +7,7 @@ var bcrypt = require('bcrypt-nodejs');
 /* GET home page. */
 router.get('/', function (req, res, next) {
   if (!req.isAuthenticated()) {
-    res.render('index', { title: 'Stuff Sharing' });
+    res.render('index', { title: 'Stuff Sharing', user: null });
   } else {
     res.redirect('/main')
   }
