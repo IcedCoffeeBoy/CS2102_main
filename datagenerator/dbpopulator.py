@@ -5,8 +5,11 @@ import itemdata
 from faker import Faker
 
 
-def db_populate(n=100, add_users=True, add_items=True, add_reviews=True):
-    db = DBConnector(dbname="dd15caf96d7vac", user="ckdtnpmamiywyi", host="ec2-54-204-2-25.compute-1.amazonaws.com", pw="7eb2c774f7473c16e33e941002cbfcecfa94845782aaeb770001f79459e25cee")
+def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=None):
+    if (url is None):
+        db = DBConnector(dbname="postgres", user="postgres", host="localhost", pw="****")
+    else:
+        db = DBConnector(url=url)
 
     # Instantiate data generator
     gen = DataGenerator()
@@ -18,7 +21,9 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True):
         u = gen.create_user_profile()
         db.cursor.execute(base_sql_insert, (u["user"], 123, u["email"], False, "Active"))
 
+    print("Sucessfully create %i user accounts" % n)
     db.commit()
+    print("Successfully insert new user accounts")
 
     # --------- Add items ---------
     # Obtain list of user IDs
@@ -38,9 +43,10 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True):
             item["catname"].lower(), item["title"].lower())
 
         db.cursor.execute(base_sql_insert,
-                          (item["title"], itemdesc, random.randint(1,1000), random.choice(uid), random.choice(cats)))
+                          (item["title"], itemdesc, random.randint(1, 1000), random.choice(uid), random.choice(cats)))
 
     db.commit()
+    print("Successfully insert new items")
 
     # --------- Add images ---------
     # Obtain list of item ids
@@ -59,6 +65,10 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True):
             db.cursor.execute(base_sql_img_insert, (item[0], gen.create_imgurl(item[1].split(" ")[-1], inum), inum))
 
     db.commit()
+    print("Successfully insert new images")
+
+    # ------------- Closing connection ---------------
+    print("Closing connection...")
     db.close()
 
 
@@ -70,14 +80,18 @@ def build_empty_sql_insert(n_attr):
 
 
 class DBConnector:
-    def __init__(self, dbname, user, host, pw):
-        str_connection = "dbname = '{}' user = '{}' host = '{}' password = '{}' port = '5432'".format(dbname, user, host, pw)
+    def __init__(self, dbname=None, user=None, host=None, pw=None, url=None):
+        str_connection = "dbname = '{}' user = '{}' host = '{}' password = '{}' port = '5432'".format(dbname, user,
+                                                                                                      host, pw)
         try:
-            self.conn = psycopg2.connect(str_connection)
+            if (url is None):
+                self.conn = psycopg2.connect(str_connection)
+            else:
+                self.conn = psycopg2.connect(url)
+            print("Successfully Connected to DB")
         except psycopg2.DatabaseError as ex:
             print("Connection to database failed: {}".format(ex))
             sys.exit(1)
-
         self.cursor = self.conn.cursor()
 
     def commit(self):
@@ -108,5 +122,3 @@ class DataGenerator:
 
     def create_imgurl(self, itemtype, imgno):
         return "https://loremflickr.com/400/240/" + itemtype + "?random=" + str(imgno)
-
-
