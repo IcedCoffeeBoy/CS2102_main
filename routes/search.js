@@ -57,7 +57,7 @@ router.get('/:userid', (req, res, next) => {
     } else {
       var options = { year: 'numeric', month: 'long', day: 'numeric' };
       datejoined = userdata.rows[0].datejoined
-      datejoined = userdata.toLocaleDateString("en-US", options)
+      datejoined = datejoined .toLocaleDateString("en-US", options)
       user = userdata.rows[0] 
       db.query(sql_getItems, [req.params.userid], (err, data) => {
         console.log(data)
