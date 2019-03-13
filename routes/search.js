@@ -36,7 +36,7 @@ function search(req, res, next) {
         return res.redirect("./");
       }
     } else {
-      return res.render('search', { title: 'search', data: data.rows, user: req.user });
+      return res.render('main', { title: 'search', data: data.rows, user: req.user });
     }
   })
 };
