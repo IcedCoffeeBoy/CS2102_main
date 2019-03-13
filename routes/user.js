@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       if (err) {
         console.log(err);
       } else {
-        res.render('user', { title: 'User Page', data: data.rows, user: req.user, datejoined: datejoined });
+        res.render('user', { title: 'User Page', data: data.rows, user: req.user, username:req.user.username, datejoined: datejoined });
       }
     })
   })

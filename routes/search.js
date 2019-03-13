@@ -58,13 +58,13 @@ router.get('/:userid', (req, res, next) => {
       var options = { year: 'numeric', month: 'long', day: 'numeric' };
       datejoined = userdata.rows[0].datejoined
       datejoined = datejoined .toLocaleDateString("en-US", options)
-      user = userdata.rows[0] 
+      username = userdata.rows[0].username 
       db.query(sql_getItems, [req.params.userid], (err, data) => {
         console.log(data)
         if (err) {
           console.log(err);
         } else {
-          res.render('user', { title: 'User Page', data: data.rows, user: user, datejoined: datejoined });
+          res.render('user', { title: 'User Page', data: data.rows, user: req.user,username: username, datejoined: datejoined });
         }
       })
     }
