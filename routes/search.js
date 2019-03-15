@@ -22,9 +22,7 @@ router.get('/', function(req, res, next) {
 });
 */
 
-router.get('/', search);
-
-function search(req, res, next) {
+router.get('/', function (req, res, next) {
   var type = req.query.searchdropdown;
   var query = "%" + req.query.query.toLowerCase() + "%";
   var q = "";
@@ -47,7 +45,7 @@ function search(req, res, next) {
       return res.render('main', { title: 'search', data: data.rows, user: req.user });
     }
   })
-};
+});
 
 router.get('/:userid', (req, res, next) => {
   console.log(req.params.userid)
@@ -57,19 +55,18 @@ router.get('/:userid', (req, res, next) => {
     } else {
       var options = { year: 'numeric', month: 'long', day: 'numeric' };
       datejoined = userdata.rows[0].datejoined
-      datejoined = datejoined .toLocaleDateString("en-US", options)
-      username = userdata.rows[0].username 
+      datejoined = datejoined.toLocaleDateString("en-US", options)
+      username = userdata.rows[0].username
       db.query(sql_getItems, [req.params.userid], (err, data) => {
         console.log(data)
         if (err) {
           console.log(err);
         } else {
-          res.render('user', { title: 'User Page', data: data.rows, user: req.user,username: username, datejoined: datejoined });
+          res.render('user', { title: 'User Page', data: data.rows, user: req.user, username: username, datejoined: datejoined });
         }
       })
     }
   })
 })
-
 
 module.exports = router;
