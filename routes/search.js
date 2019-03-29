@@ -23,9 +23,9 @@ router.get('/', function(req, res, next) {
 */
 
 router.get('/', function (req, res, next) {
-  var type = req.query.searchdropdown;
-  var query = "%" + req.query.query.toLowerCase() + "%";
-  var q = "";
+  let type = req.query.searchdropdown;
+  let query = "%" + req.query.query.toLowerCase() + "%";
+  let q = "";
   if (type == "Users") {
     q = sql_query.query.search_users;
   } else {

@@ -39,14 +39,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/p', express.static(path.join(__dirname, 'public')))
 app.use('/search', express.static(path.join(__dirname, 'public')))
 
-// Use the session middleware
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } //  30 days
-// }))
-
 /* Using cookie session */
 app.use(session({
   name: 'session',
