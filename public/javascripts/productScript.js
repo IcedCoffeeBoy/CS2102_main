@@ -26,6 +26,7 @@ $(document).ready(() => {
       var url = $(this).attr('action');
       console.log(bidPrice)
       $.post(url, data, function (result) {
+        alert("Succesfully bidded")
         location.reload();
       }).fail(function(jqXHR, textStatus, errorThrown){
         if(jqXHR.status == 404) {

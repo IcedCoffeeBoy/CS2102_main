@@ -65,7 +65,7 @@ create table if not exists relationships (
 	foreign key (seller) references accounts (accountid),
 	foreign key (buyer) references accounts(accountid),
 	foreign key (itemid) references items on delete cascade,
-	unique(seller, buyer, itemid),
+	unique(seller,buyer,itemid),
 	check(seller is distinct from buyer)
 );
 
@@ -125,12 +125,10 @@ create table if not exists qnas(
 create table if not exists bids (
 	bidid serial primary key,
 	userid integer not null,
-	itemid integer not null,
 	rid varchar(128) not null,
 	timestamp timestamp default now(),
 	amount numeric(32, 2),
-	foreign key (userid) references accounts(accountid),
-	foreign key (itemid) references items(itemid)
+	foreign key (userid) references accounts(accountid)
 );
 
 alter sequence bids_bidid_seq restart with 10000; 
@@ -150,55 +148,58 @@ create table if not exists blocks (
 
 
 ------Trigger for inserting new bids-------------
-create or replace function insertBidfunc()
-returns trigger as $$
-declare newSeller integer; newBuyer integer; newrid integer;
-begin 
-	newBuyer := new.userid;
-	newSeller := (select seller from Items where Items.itemid = new.itemid);
-	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,new.itemid);
-	newrid := (select rid from relationships where seller=newSeller and buyer=newBuyer and itemid=new.itemid);
-	update Items set price = new.amount where Items.itemid = new.itemid;
-	insert into bids(userid,itemid,rid,amount) values (newBuyer,new.itemid, newrid,new.amount);
-	return null;
-end;
-$$ language plpgsql;
-
-create trigger insertBid 
-before insert or update on bids 
-for each row
-execute procedure insertBidfunc();
-
-
-insert into bids(userid,itemid,amount) values (123,1000000,1000.00);
-select  * from relationships;
-
-create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
-returns numeric as $$
-declare newSeller integer; newrid integer;
-begin 
-	newSeller := (select seller from Items where Items.itemid =newitemid);
-	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,newitemid); --Problem with existing relationship
-	newrid := (select rid from relationships(seller,buyer,itemid) where buyer=newBuyer and itemid=newitemid);
-	update Items set price = bidPrice where Items.itemid = newitemid;
-	insert into bids(userid,rid,amount) values (newBuyer, newrid,bidPrice);
-	return null;
-end;
-$$ language plpgsql;
-
-
-select insertBidshortcut(123,1000.00,1000000);
-
-select * from bids;
-select * from relationships;
-select * from items;
-
-insert into bids(userid,,amount,)
+--create or replace function insertBidfunc()
+--returns trigger as $$
+--declare newSeller integer; newBuyer integer; newrid integer;
+--begin 
+--	newBuyer := new.userid;
+--	newSeller := (select seller from Items where Items.itemid = new.itemid);
+--	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,new.itemid);
+--	newrid := (select rid from relationships where seller=newSeller and buyer=newBuyer and relationships.itemid=new.itemid);
+--	update Items set price = new.amount where Items.itemid = new.itemid;
+--	insert into bids(userid,itemid,rid,amount) values (newBuyer,new.itemid,newrid,new.amount);
+--	return null;
+--end;
+--$$ language plpgsql;
+--
+--create trigger insertBid 
+--before insert or update on bids 
+--for each row
+--execute procedure insertBidfunc();
+--
+--
+--insert into bids(userid,itemid,amount) values (125,1000000,1000.00);
+--insert into relationships(seller,buyer,itemid) values (101,123,1000000);
+--select  * from relationships;
+--select * from bids;
+--select rid from relationships where buyer=123 and itemid=1000000;
+--
+--create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
+--returns numeric as $$
+--declare newSeller integer; newrid integer;
+--begin 
+--	newSeller := (select seller from Items where Items.itemid =newitemid);
+--	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,newitemid); --Problem with existing relationship
+--	newrid := (select rid from relationships(seller,buyer,itemid) where buyer=newBuyer and itemid=newitemid);
+--	update Items set price = bidPrice where Items.itemid = newitemid;
+--	insert into bids(userid,rid,amount) values (newBuyer, newrid,bidPrice);
+--	return null;
+--end;
+--$$ language plpgsql;
+--
+--
+--select insertBidshortcut(123,1000.00,1000000);
+--
+--select * from bids;
+--select * from relationships;
+--select * from items;
+--
+--insert into bids(userid,,amount,)
 
 -------------------------------------------------
 
 
-
+delete from relationships;
 
 
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;

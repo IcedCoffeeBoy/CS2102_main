@@ -58,6 +58,8 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=Non
 
     for i in range(n):
         item = random.choice(items)
+        items.remove(item)
+
         for inum in range(random.randint(1, 4)):
             # Image titles are of the format (adj noun). The img url is created from the noun only.
             try:
