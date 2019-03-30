@@ -49,6 +49,6 @@ $(document).ready(() => {
 
 
 function checkbidPrice(bidPrice) {
-  var re = /^[0-9]*$/
+  let re = /^[0-9]*$/
   return re.test(bidPrice)
 }

@@ -24,6 +24,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/', function (req, res, next) {
   let type = req.query.searchdropdown;
+  console.log(req.query)
   let query = "%" + req.query.query.toLowerCase() + "%";
   let q = "";
   if (type == "Users") {
@@ -39,7 +40,7 @@ router.get('/', function (req, res, next) {
         return res.render('users', { title: 'User Search', data: data.rows, user: req.user });
       } else {
         req.flash("message", "Only login user can use this function");
-        return res.redirect("./");
+        return res.redirect("../");
       }
     } else {
       return res.render('main', { title: 'search', data: data.rows, user: req.user });
