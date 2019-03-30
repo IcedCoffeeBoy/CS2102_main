@@ -12,20 +12,23 @@ var sql_getItems =
 var sql_getDatejoined = 'select datejoined from accounts where accountid = $1'
 
 /* GET user listing. */
-router.get('/', function (req, res, next) {
-  db.query(sql_getDatejoined, [req.user.id], (err, datejoined) => {
-    var options = { year: 'numeric', month: 'long', day: 'numeric' };
-    datejoined = datejoined.rows[0].datejoined
-    datejoined = datejoined.toLocaleDateString("en-US", options)
-    db.query(sql_getItems, [req.user.id], (err, data) => {
-      console.log(data)
-      if (err) {
-        console.log(err);
-      } else {
-        res.render('user', { title: 'User Page', data: data.rows, user: req.user, username: req.user.username, datejoined: datejoined });
-      }
-    })
-  })
+router.get('/', async (req, res, next) => {
+  try {
+    // Attempt parallel SQL execution for speed
+    let results = await Promise.all([
+      db.db_promise(sql_getDatejoined, [req.user.id]),
+      db.db_promise(sql_getItems, [req.user.id])
+    ])
+    let options = { year: 'numeric', month: 'long', day: 'numeric' }
+    let datejoineds = results[0]
+    datejoined = datejoineds[0].datejoined.toLocaleDateString("en-US", options)
+
+    let data = results[1]
+    
+    res.render('user', { title: 'User Page', data: data, user: req.user, username: req.user.username, datejoined: datejoined });
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 router.use('/chat', chatRouter);
