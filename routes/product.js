@@ -61,29 +61,29 @@ router.get("/:productId", function (req, res, next) {
 
 router.post("/:productId/makebid", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
-  var getUserId = "select seller from items where items.itemId=$1";
-  var newRelationship = "insert into relationships(seller,buyer,itemid) values ($1,$2,$3) on conflict do nothing returning rid ";
-  var findExistRid = "select rid from relationships where seller=$1 and buyer=$2 and itemid=$3"
-  var insertBid = "insert into bids(userid,rid,amount) values ($1,$2,$3)"
-  var setNewPrice = "update items price set price=$1 where itemid=$2"
+  const GET_USERID = "select seller from items where items.itemId=$1";
+  const NEW_RELATIONSHIP = "insert into relationships(seller,buyer,itemid) values ($1,$2,$3) on conflict do nothing returning rid ";
+  const FIND_EXIST_RID = "select rid from relationships where seller=$1 and buyer=$2 and itemid=$3"
+  const INSERT_BID = "insert into bids(userid,rid,amount) values ($1,$2,$3)"
+  const SET_NEW_PRICE = "update items price set price=$1 where itemid=$2"
   /* ---------------------------------------------------------- */
 
-  var itemid = req.params.productId;
-  var bidPrice = req.body.bidPrice;
-  var buyerId = req.user.id;
+  let itemid = req.params.productId;
+  let bidPrice = req.body.bidPrice;
+  let buyerId = req.user.id;
 
   try {
-    var sellerRows = await db.db_promise(getUserId, [itemid]);
-    var sellerId = sellerRows[0].seller;
+    let sellerRows = await db.db_promise(GET_USERID, [itemid]);
+    let sellerId = sellerRows[0].seller;
 
-    var ridRows = await db.db_promise(newRelationship, [sellerId, buyerId, itemid]);
+    let ridRows = await db.db_promise(NEW_RELATIONSHIP, [sellerId, buyerId, itemid]);
     if (ridRows.length < 1) {
-      ridRows = await db.db_promise(findExistRid, [sellerId, buyerId, itemid]);
+      ridRows = await db.db_promise(FIND_EXIST_RID, [sellerId, buyerId, itemid]);
     }
-    var rid = ridRows[0].rid;
+    let rid = ridRows[0].rid;
 
-    await db.db_promise(insertBid, [buyerId, rid, bidPrice]);
-    await db.db_promise(setNewPrice, [bidPrice, itemid]);
+    await db.db_promise(INSERT_BID, [buyerId, rid, bidPrice]);
+    await db.db_promise(SET_NEW_PRICE, [bidPrice, itemid]);
   } catch (err) {
     res.sendStatus(404);
   }
