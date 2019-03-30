@@ -54,7 +54,6 @@ router.post('/upload', upload.array('image', 4), async function (req, res, next)
     console.log("SQL error when inserting item.")
     res.sendStatus(404);
   }
-
   req.flash("message", "Sucessfully added item.");
   res.redirect('/user');
 })

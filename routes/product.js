@@ -2,31 +2,20 @@ var express = require("express");
 var router = express.Router();
 var db = require("../db");
 
-function db_query(sql, args) {
-  return new Promise((resolve, reject) => {
-    db.query(sql, args, (err, data) => {
-      if (err) {
-        console.log("SQL error:" + err);
-        console.log(err)
-        return reject(err);
-      } else {
-        resolve(data.rows);
-      }
-    })
-  });
-}
 router.get("/", function (req, res, next) {
   res.send("<h1>No product listing code provided!</h1>");
 });
 
 router.get("/:productId", async (req, res, next) => {
-  let mainquery =
+  /* ------------------------- SQL QUERY STATEMENT------------------- */
+  const mainquery =
     "select title, description, price, username, catname, accountid from items join accounts on items.seller = accounts.accountid where itemid = $1";
-  let imgquery = "select imgurl from images where itemid = $1";
-  let revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
-  let sidequery =
+  const imgquery = "select imgurl from images where itemid = $1";
+  const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
+  const sidequery =
     "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
-
+  /* --------------------------------------------------------------- */
+  
   let itemid = req.params.productId;
 
   // SQL Query Parallel Execution
@@ -79,10 +68,10 @@ router.post("/:productId/makebid", async function (req, res, next) {
     }
     let rid = ridRows[0].rid;
 
-    await db.db_promise(INSERT_BID, [buyerId, rid, bidPrice]);
-    await db.db_promise(SET_NEW_PRICE, [bidPrice, itemid]);
+    let parallel = [db.db_promise(INSERT_BID, [buyerId, rid, bidPrice]),db.db_promise(SET_NEW_PRICE, [bidPrice, itemid])];
+    await Promise.all(parallel);
   } catch (err) {
-    res.sendStatus(404);
+    res.sendStatus(500);
   }
   res.sendStatus(200);
 })
