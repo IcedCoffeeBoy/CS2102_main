@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
 });
 */
 
+
 router.get('/', async function (req, res, next) {
   // Query processing
   try {
@@ -47,7 +48,7 @@ router.get('/', async function (req, res, next) {
         res.render('users', { title: 'User Search', data: data, user: req.user });
       } else {
         req.flash("message", "Only login user can use this function");
-        res.redirect("./");
+        return res.redirect("../");
       }
     } else {
       return res.render('main', { title: 'search', data: data, user: req.user });
