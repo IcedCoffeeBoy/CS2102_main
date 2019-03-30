@@ -6,7 +6,7 @@ Run start postreqsql
 Ensure that the correct user, host, database, password, port is used  
 */
 
-if (process.env.DATABASE_URL)  {
+if (process.env.DATABASE_URL) {
     const connectionString = process.env.DATABASE_URL;
     var pool = new Pool({
         connectionString: connectionString,
@@ -28,5 +28,21 @@ pool.connect(function (err) {
         console.log("Sucessfully connected to database");
     }
 });
+
+
+// Return a Promise object after a query is made 
+pool.db_promise = function (sql, args) {
+    return new Promise((resolve, reject) => {
+        pool.query(sql, args, (err, data) => {
+            if (err) {
+                console.log("SQL error:" + err);
+                console.log(err)
+                return reject(err);
+            } else {
+                resolve(data.rows);
+            }
+        })
+    });
+}
 
 module.exports = pool;  

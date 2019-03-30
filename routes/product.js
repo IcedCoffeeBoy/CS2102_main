@@ -71,18 +71,19 @@ router.post("/:productId/makebid", async function (req, res, next) {
   var itemid = req.params.productId;
   var bidPrice = req.body.bidPrice;
   var buyerId = req.user.id;
+
   try {
-    var sellerRows = await db_query(getUserId, [itemid]);
+    var sellerRows = await db.db_promise(getUserId, [itemid]);
     var sellerId = sellerRows[0].seller;
 
-    var ridRows = await db_query(newRelationship, [sellerId, buyerId, itemid]);
+    var ridRows = await db.db_promise(newRelationship, [sellerId, buyerId, itemid]);
     if (ridRows.length < 1) {
-      ridRows = await db_query(findExistRid, [sellerId, buyerId, itemid]);
+      ridRows = await db.db_promise(findExistRid, [sellerId, buyerId, itemid]);
     }
     var rid = ridRows[0].rid;
 
-    await db_query(insertBid, [buyerId, rid, bidPrice]);
-    await db_query(setNewPrice, [bidPrice, itemid]);
+    await db.db_promise(insertBid, [buyerId, rid, bidPrice]);
+    await db.db_promise(setNewPrice, [bidPrice, itemid]);
   } catch (err) {
     res.sendStatus(404);
   }
