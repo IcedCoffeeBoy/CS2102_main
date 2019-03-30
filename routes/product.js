@@ -87,7 +87,6 @@ router.post("/:productId/makebid", async function (req, res, next) {
   } catch (err) {
     res.sendStatus(404);
   }
-  req.flash("successfully bidded");
   res.sendStatus(200);
 })
 

@@ -26,18 +26,27 @@ $(document).ready(() => {
       var url = $(this).attr('action');
       console.log(bidPrice)
       $.post(url, data, function (result) {
-        alert("Succesfully bidded")
-        location.reload();
-      }).fail(function(jqXHR, textStatus, errorThrown){
-        if(jqXHR.status == 404) {
+        $('.hover_bkgr_fricc').show();
+        window.setTimeout(() => { location.reload() }, 5000)
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 404) {
           alert("Server Error")
         }
-    });
+      });
     } else {
       alert("invalid input")
     }
   })
+
+  $('.hover_bkgr_fricc').click(function () {
+    location.reload()
+  });
+
+  $('.popupCloseButton').click(function () {
+    location.reload()
+  });
 })
+
 
 function checkbidPrice(bidPrice) {
   var re = /^[0-9]*$/

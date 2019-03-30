@@ -5,7 +5,6 @@ If you stuck at connection please ensure that your postreqsql is running
 Run start postreqsql
 Ensure that the correct user, host, database, password, port is used  
 */
-
 if (process.env.DATABASE_URL) {
     const connectionString = process.env.DATABASE_URL;
     var pool = new Pool({
@@ -36,7 +35,6 @@ pool.db_promise = function (sql, args) {
         pool.query(sql, args, (err, data) => {
             if (err) {
                 console.log("SQL error:" + err);
-                console.log(err)
                 return reject(err);
             } else {
                 resolve(data.rows);
@@ -44,5 +42,24 @@ pool.db_promise = function (sql, args) {
         })
     });
 }
+
+// Return a true/false promise object to check if sql query return any rows
+pool.db_promise_check = function (sql, args) {
+    return new Promise((resolve, reject) => {
+        pool.query(sql, args, (err, data) => {
+            if (err) {
+                console.log("SQL error:" + err);
+                return reject(err);
+            } else {
+                if (data.rowCount < 1) {
+                    return resolve(false);
+                } else {
+                    return resolve(true);
+                }
+            }
+        })
+    });
+}
+
 
 module.exports = pool;  
