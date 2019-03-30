@@ -25,18 +25,13 @@ router.get('/', function(req, res, next) {
 
 router.get('/', async function (req, res, next) {
   // Query processing
-  try {
-    var type = req.query.searchdropdown;
-    var query = "%" + req.query.query.toLowerCase() + "%";
-    var q = "";
-    if (type == "Users") {
-      q = sql_query.query.search_users;
-    } else {
-      q = sql_query.query.search_items;
-    }
-  } catch (err) {
-    console.log(err)
-    return res.sendStatus(500)
+  var type = req.query.searchdropdown;
+  var query = "%" + req.query.query.toLowerCase() + "%";
+  var q = "";
+  if (type == "Users") {
+    q = sql_query.query.search_users;
+  } else {
+    q = sql_query.query.search_items;
   }
 
   // SQL query execution and page rendering
@@ -55,6 +50,7 @@ router.get('/', async function (req, res, next) {
     }
   } catch (err) {
     console.log(err);
+    res.sendStatus(404);
   }
 });
 
@@ -68,13 +64,13 @@ router.get('/:userid', async (req, res, next) => {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let datejoined = userdata[0].datejoined.toLocaleDateString("en-US", options)
     let username = userdata[0].username
-    
+
     // Retrieve user listing data
     let data = await db.db_promise(sql_getItems, [req.params.userid]);
 
     // res.render('user', { title: 'User Page', data: data, user: req.user, username: username, datejoined: datejoined });
     res.render('user', { title: 'User Page', data, user: req.user, username, datejoined });
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 })
