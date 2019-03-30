@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var chatRouter = require('./chat');
 
 var sql_getItems =
   'SELECT * ' +
@@ -10,7 +11,7 @@ var sql_getItems =
 
 var sql_getDatejoined = 'select datejoined from accounts where accountid = $1'
 
-/* GET users listing. */
+/* GET user listing. */
 router.get('/', function (req, res, next) {
   db.query(sql_getDatejoined, [req.user.id], (err, datejoined) => {
     var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -21,10 +22,12 @@ router.get('/', function (req, res, next) {
       if (err) {
         console.log(err);
       } else {
-        res.render('user', { title: 'User Page', data: data.rows, user: req.user, username:req.user.username, datejoined: datejoined });
+        res.render('user', { title: 'User Page', data: data.rows, user: req.user, username: req.user.username, datejoined: datejoined });
       }
     })
   })
 });
+
+router.use('/chat', chatRouter);
 
 module.exports = router;

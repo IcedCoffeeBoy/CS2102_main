@@ -75,7 +75,7 @@ app.use('/newlisting', userAuth, newlistingRouter);
 app.use('/p', productRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
-app.use('/user', userAuth, userRouter)
+app.use('/user', userAuth, userRouter);
 app.get('/logout', function (req, res) {
   req.session = null;
   res.redirect('/');
