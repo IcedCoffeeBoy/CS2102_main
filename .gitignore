@@ -5,3 +5,5 @@ node_modules
 datagenerator/.idea/workspace.xml
 datagenerator/__pycache__/dbpopulator.cpython-37.pyc
 datagenerator/__pycache__/itemdata.cpython-37.pyc
+.vscode
+
