@@ -12,19 +12,16 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage })
-
 var sqlQuery = 'SELECT * FROM Categories;'
 
 router.get('/', async function (req, res, next) {
   try {
     let categoryData = await db.db_promise(sqlQuery);
-
     res.render('newlisting', { title: 'New Listing', categoryData: categoryData, user: req.user });   
   } catch (err) {
     console.log(err);
     res.sendStatus(404);
   }
-  
 });
 
 router.post('/upload', upload.array('image', 4), async function (req, res, next) {

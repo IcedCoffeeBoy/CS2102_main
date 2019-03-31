@@ -10,18 +10,16 @@ module.exports = function () {
         passwordField: 'password'
     },
         function (req, username, password, done) {
-            console.log('called local');
             var sqlquery = "select * from accounts where username=$1";
             db.query(sqlquery, [username], (err, data) => {
                 if (err) {
-                    console.log(err);
+                    console.log("SQL error occur when authenticating user" + err);
                     done(err);
                 } else {
                     if (data.rowCount == 1) {
                         hash = data.rows[0].password;
                         bcrypt.compare(password, hash, function (err, res) {
                             if (res == true) {
-                                console.log('match!')
                                 var user = { id: data.rows[0].accountid, username: data.rows[0].username };
                                 done(null, user);
                             } else {
@@ -36,7 +34,7 @@ module.exports = function () {
         }
     )
     );
-    
+
     // Serialized user object into an id to be store as a session
     passport.serializeUser(function (user, done) {
         done(null, user);

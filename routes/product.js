@@ -47,11 +47,11 @@ router.get("/:productId", async (req, res, next) => {
 
 router.post("/:productId/makebid", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
-  const GET_USERID = "select seller from items where items.itemId=$1";
-  const NEW_RELATIONSHIP = "insert into relationships(seller,buyer,itemid) values ($1,$2,$3) on conflict do nothing returning rid ";
-  const FIND_EXIST_RID = "select rid from relationships where seller=$1 and buyer=$2 and itemid=$3"
-  const INSERT_BID = "insert into bids(userid,rid,amount) values ($1,$2,$3)"
-  const SET_NEW_PRICE = "update items price set price=$1 where itemid=$2"
+  const sql_getuserid = "select seller from items where items.itemId=$1";
+  const sql_formnewrelationship = "insert into relationships(seller,buyer,itemid) values ($1,$2,$3) on conflict do nothing returning rid ";
+  const sql_getexistrid = "select rid from relationships where seller=$1 and buyer=$2 and itemid=$3"
+  const sql_insertbid = "insert into bids(userid,rid,amount) values ($1,$2,$3)"
+  const sql_setnewprice = "update items price set price=$1 where itemid=$2"
   /* ---------------------------------------------------------- */
 
   let itemid = req.params.productId;
@@ -59,21 +59,33 @@ router.post("/:productId/makebid", async function (req, res, next) {
   let buyerId = req.user.id;
 
   try {
-    let sellerRows = await db.db_promise(GET_USERID, [itemid]);
+    let sellerRows = await db.db_promise(sql_getuserid, [itemid]);
     let sellerId = sellerRows[0].seller;
 
-    let ridRows = await db.db_promise(NEW_RELATIONSHIP, [sellerId, buyerId, itemid]);
+    let ridRows = await db.db_promise(sql_formnewrelationship, [sellerId, buyerId, itemid]);
     if (ridRows.length < 1) {
-      ridRows = await db.db_promise(FIND_EXIST_RID, [sellerId, buyerId, itemid]);
+      ridRows = await db.db_promise(sql_getexistrid, [sellerId, buyerId, itemid]);
     }
     let rid = ridRows[0].rid;
 
-    let parallel = [db.db_promise(INSERT_BID, [buyerId, rid, bidPrice]),db.db_promise(SET_NEW_PRICE, [bidPrice, itemid])];
+    let parallel = [db.db_promise(sql_insertbid, [buyerId, rid, bidPrice]),db.db_promise(sql_setnewprice, [bidPrice, itemid])];
     await Promise.all(parallel);
   } catch (err) {
     res.sendStatus(500);
   }
   res.sendStatus(200);
 })
+
+
+router.post("/:productId/review", async function (req, res, next) {
+  /*--------------------- SQL Query Statement -------------------*/
+  res.sendStatus(404);
+  /* ---------------------------------------------------------- */
+
+})
+
+
+
+
 
 module.exports = router;

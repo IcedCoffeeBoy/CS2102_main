@@ -10,19 +10,6 @@ var sql_getItems =
 
 var sql_getuserinfo = 'select datejoined, username from accounts where accountid = $1'
 
-
-/*
-router.get('/', function(req, res, next) {
-  var type = req.query.searchdropdown;
-  if (type == "Users") {
-    res.redirect('/search/users');
-  } else {
-    res.redirect('/search/items');
-  }
-});
-*/
-
-
 router.get('/', async function (req, res, next) {
   // Query processing
   var type = req.query.searchdropdown;
@@ -59,11 +46,10 @@ router.get('/:userid', async (req, res, next) => {
 
   try {
     // Retrieve user data
-    let userdata = await db.db_promise(sql_getuserinfo, [req.params.userid])
-
+    let userdata = await db.db_promise(sql_getuserinfo, [req.params.userid]);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    let datejoined = userdata[0].datejoined.toLocaleDateString("en-US", options)
-    let username = userdata[0].username
+    let datejoined = userdata[0].datejoined.toLocaleDateString("en-US", options);
+    let username = userdata[0].username;
 
     // Retrieve user listing data
     let data = await db.db_promise(sql_getItems, [req.params.userid]);
@@ -71,7 +57,7 @@ router.get('/:userid', async (req, res, next) => {
     // res.render('user', { title: 'User Page', data: data, user: req.user, username: username, datejoined: datejoined });
     res.render('user', { title: 'User Page', data, user: req.user, username, datejoined });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 })
 
