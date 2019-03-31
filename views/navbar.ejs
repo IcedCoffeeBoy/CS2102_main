@@ -23,18 +23,18 @@
     <% if(user == null) {%>
     <center>
         <div class="m-nav m-red primary-bg">
-          <form class="search-form" id="search" action="../search" method="get"> 
-          <div class="dropdown">
-            <select name="searchdropdown" id="searchdropdown" class="dropdown-select">
-              <option value="Items">Items</option>
-              <option value="Users">Users</option>
-            </select>
-          </div>
-            <input type="text" placeholder="What are you looking for?" name="query" id="query" required="">
-            <button type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-          </form>
+        <form class="search-form" id="search" action="../search" method="get">  
+        <div class="dropdown">
+          <select name="searchdropdown" id="searchdropdown" class="dropdown-select">
+            <option value="Items">Items</option>
+            <option value="Users">Users</option>
+          </select>
+        </div>
+        <input type="text" placeholder="What are you looking for?" name="query" id="query" required="">
+        <button type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
           <li><a href="/">Login/Register</a></li>
           <li><a href="/main"><i class="fa fa-fw fa-home"></i>Home</a></li>
         </div>
@@ -55,13 +55,13 @@
             </button>
           </form>
           <li><a href="/logout">Logout</a></li>
-          <li><a href="about:blank">Chats</a></li>
+          <li><a href="/user/chat">Chats</a></li>
           <li><a href="/newlisting">List Item</a></li>
           <li><a href="/user"><i class="fa fa-fw fa-user"></i> <%= user.username%></a></li>
           <li><a href="/main"><i class="fa fa-fw fa-home"></i>Home</a></li>
         </div>
     </center>
     <%}%>
-    <script src="javascripts/navbarScript.js"></script>
+    
 </body>
 </html>

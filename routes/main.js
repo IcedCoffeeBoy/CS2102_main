@@ -2,16 +2,16 @@ var express = require('express');
 var router = express.Router();
 var db = require("../db");
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
   var sqlquery = 'select itemid,title, description, price, imgurl from items natural join images where imgno = 0'
   
-  db.query(sqlquery, function (err, data) {
-    if (err) {
-      console.log("SQL error:" + err)
-    } else {
-      res.render('main', { title: 'main', data: data.rows, user: req.user });
-    }
-  })
+  try {
+    let data = await db.db_promise(sqlquery, null);
+
+    res.render('main', { title: 'main', data: data, user: req.user });
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 module.exports = router;

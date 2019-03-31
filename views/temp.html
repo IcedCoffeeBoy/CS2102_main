@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>Stuff Sharing</title>
+
+    <!-- CSS for Styling -->
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- JavaScript for Interactivity -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <%- include navbar.ejs%>
+    <% if (message.length>0) { %>
+    <div class="alert alert-success" role="alert" id="added-alert">
+        <button type="button" class="close" data-dismiss="success" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <p><%= message%></p>
+    </div>
+    <% } %>
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <h1><%= username %></h1>
+        <p>Joined since: <%=datejoined%></p>
+
+        <div class="well well-sm">
+            <strong>Display</strong>
+            <div class="btn-group">
+                <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+                    </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                        class="glyphicon glyphicon-th"></span>Grid</a>
+            </div>
+        </div>
+        <div id="products" class="row list-group">
+            <% for(var i=0; i<data.length; i++) { %>
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="<%= data[i].imgurl %>" alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            <%= data[i].title %>
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                            <%= data[i].description %>
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    $<%= data[i].price %>
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-success primary-bg primary-border primary-bg-hover"
+                                    href=<%= "../p/" + data[i].itemid %>>Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <div id="biditems" class="row list-group">
+            <% for(var i=0; i<biditems.length; i++) { %>
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="<%= data[i].imgurl %>" alt="" />
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            <%= data[i].title %>
+                        </h4>
+                        <p class="group inner list-group-item-text">
+                            <%= data[i].description %>
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    $<%= data[i].price %>
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <a class="btn btn-success primary-bg primary-border primary-bg-hover"
+                                    href=<%= "../p/" + data[i].itemid %>>Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
+            $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
+        });
+
+        window.setTimeout(function () {
+            $("#added-alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    </script>
+
+    <body>
+
+</html>
