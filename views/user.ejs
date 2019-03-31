@@ -75,7 +75,9 @@
         <%if(data.length>0){ %>
             <hr>
         <% } %>
-        <h1>Bidded items</h1>
+        <%if(biditems.length>0){ %>
+            <h1>Bidded items</h1>
+        <% } %>
         <div id="biditems" class="row list-group">
             <% for(var i=0; i<biditems.length; i++) { %>
             <div class="item  col-xs-4 col-lg-4">

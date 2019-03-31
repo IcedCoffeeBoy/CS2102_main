@@ -125,7 +125,7 @@ create table if not exists qnas(
 create table if not exists bids (
 	bidid serial primary key,
 	userid integer not null,
-	rid varchar(128) not null,
+	rid integer not null,
 	timestamp timestamp default now(),
 	amount numeric(32, 2),
 	foreign key (userid) references accounts(accountid)
