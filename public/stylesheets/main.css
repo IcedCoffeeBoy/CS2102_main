@@ -1,58 +1,69 @@
 .glyphicon { margin-right:5px; }
 
-.thumbnail
-{
-    margin-bottom: 20px;
-    padding: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 8px;
 }
 
-.item.list-group-item
-{
-    float: none;
+.item {
+    display: flex;
+    flex-flow: column;
+    border: 1px solid #AAAAAA;
+    padding: 20px;
+    border-radius: 16px;
+    color: #333333;
+    text-decoration: none;
+    font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: space-between;
+}
+
+.item:hover {
+    border: 1px solid #949494;
+    box-shadow: 0px 0px 4px 1px #555555;
+    text-decoration: none;
+    color: #333333;
+}
+
+.item-top {
+    flex-flow: column
+}
+
+.item img {
     width: 100%;
-    background-color: #fff;
-    margin-bottom: 10px;
-}
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
-    background: #428bca;
+    height: 240px;
+    object-fit: cover;
+    background-color: #AAAAAA;
 }
 
-.item.list-group-item .list-group-image
-{
-    margin-right: 10px;
-}
-.item.list-group-item .thumbnail
-{
-    margin-bottom: 0px;
-}
-.item.list-group-item .caption
-{
-    padding: 9px 9px 0px 9px;
-}
-.item.list-group-item:nth-of-type(odd)
-{
-    background: #eeeeee;
+.title {
+    font-size: 1.25em;
+    margin-bottom: 8px;
 }
 
-.item.list-group-item:before, .item.list-group-item:after
-{
-    display: table;
-    content: " ";
+.description {
+    font-size: 1em;
+    padding-bottom: 8px;
+    text-align: top;
+    color: #a0a0a0;
 }
 
-.item.list-group-item img
-{
-    float: left;
+.item-btm {
+    display:flex;
+    flex-flow: row wrap;
 }
-.item.list-group-item:after
-{
-    clear: both;
+
+.pricetag {
+    flex: 1;
+    font-size: 1em;
 }
-.list-group-item-text
-{
-    margin: 0 0 11px;
-} 
+
+.view-btn {
+    width:100px;
+    border-radius: 8px;
+    padding:4px;
+    text-align: center;
+    color: white;
+}
+
+

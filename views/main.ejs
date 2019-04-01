@@ -25,38 +25,30 @@
 <body>
 <div class="container-fluid">
     <div class="well well-sm">
-        <strong>Display</strong>
+        <strong>Filters</strong>
         <div class="btn-group">
             <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-                </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-th"></span>Grid</a>
+                </span>Most Popular</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                    class="glyphicon glyphicon-th"></span>Top Rated</a>
         </div>
     </div>
-    <div id="products" class="row list-group">
+    <div id="products" class="product-container">
         <% for(var i=0; i<data.length; i++) { %>
-        <div class="item col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src= "<%= data[i].imgurl %>" alt=""  />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
-                        <%= data[i].title %>
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                         <%= data[i].description %>
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                             $<%= data[i].price %>
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success primary-bg primary-bg-hover primary-border" href= <%= "../p/" + data[i].itemid %> >Add to cart</a>
-                        </div>
-                    </div>
+        <a class="item" href= <%= "../p/" + data[i].itemid %>>
+            <div class="item-top">
+                <div><img src= "<%= data[i].imgurl %>" alt="<%= data[i].title%>" /></div>
+                <div class="title"><%= data[i].title %></div>
+                <div class="description"><%= data[i].description %></div>
+            </div>
+            <div class="item-btm">
+                <div class="pricetag">
+                    $<%= data[i].price %>
+                </div>
+                <div class="view-btn primary-bg primary-bg-hover primary-border">
+                    View Item
                 </div>
             </div>
-        </div>
+        </a>
         <% } %>
     </div>
 
