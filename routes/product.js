@@ -15,7 +15,7 @@ router.get("/:productId", async (req, res, next) => {
   const sidequery =
     "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
   /* --------------------------------------------------------------- */
-  
+
   let itemid = req.params.productId;
 
   // SQL Query Parallel Execution
@@ -47,33 +47,21 @@ router.get("/:productId", async (req, res, next) => {
 
 router.post("/:productId/makebid", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
-  const sql_getuserid = "select seller from items where items.itemId=$1";
-  const sql_formnewrelationship = "insert into relationships(seller,buyer,itemid) values ($1,$2,$3) on conflict do nothing returning rid ";
-  const sql_getexistrid = "select rid from relationships where seller=$1 and buyer=$2 and itemid=$3"
-  const sql_insertbid = "insert into bids(userid,rid,amount) values ($1,$2,$3)"
-  const sql_setnewprice = "update items price set price=$1 where itemid=$2"
+  const sql_insertbid = "select insertBidshortcut($1,$2,$3)"
   /* ---------------------------------------------------------- */
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
 
   let itemid = req.params.productId;
   let bidPrice = req.body.bidPrice;
   let buyerId = req.user.id;
-
   try {
-    let sellerRows = await db.db_promise(sql_getuserid, [itemid]);
-    let sellerId = sellerRows[0].seller;
-
-    let ridRows = await db.db_promise(sql_formnewrelationship, [sellerId, buyerId, itemid]);
-    if (ridRows.length < 1) {
-      ridRows = await db.db_promise(sql_getexistrid, [sellerId, buyerId, itemid]);
-    }
-    let rid = ridRows[0].rid;
-
-    let parallel = [db.db_promise(sql_insertbid, [buyerId, rid, bidPrice]),db.db_promise(sql_setnewprice, [bidPrice, itemid])];
-    await Promise.all(parallel);
+    let rid = await db.db_promise(sql_insertbid, [buyerId, bidPrice, itemid])
   } catch (err) {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
-  res.sendStatus(200);
+  return res.sendStatus(200);
 })
 
 
@@ -83,9 +71,5 @@ router.post("/:productId/review", async function (req, res, next) {
   /* ---------------------------------------------------------- */
 
 })
-
-
-
-
 
 module.exports = router;

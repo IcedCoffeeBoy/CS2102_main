@@ -29,9 +29,9 @@ $(document).ready(() => {
         $('.hover_bkgr_fricc').show();
         window.setTimeout(() => { location.reload() }, 5000)
       }).fail(function (jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status == 404) {
+        if (jqXHR.status == 500 || jqXHR.status == 403) {
           alert("Server Error")
-        }
+        } 
       });
     } else {
       alert("invalid input")

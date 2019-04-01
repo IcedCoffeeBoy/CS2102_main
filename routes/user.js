@@ -7,12 +7,13 @@ var sql_getItems =
   'SELECT * ' +
   'FROM Items NATURAL JOIN Images ' +
   'WHERE seller = $1 AND imgno = 0' +
-  'ORDER BY timeListed DESC;'
+  'ORDER BY timeListed DESC';
 
 const sql_getDatejoined = 'select datejoined from accounts where accountid = $1';
-const sql_getBidItems = "select itemid, description, amount, title, price, imgurl " +
+const sql_getBidItems = "select itemid, description, max(amount) as amount, title, price, imgurl " +
   "from relationships natural join bids natural join items natural join images " +
-  "where imgNo=0 and buyer=$1 "
+  "where imgNo=0 and buyer=$1 " + 
+  "group by itemid, description, title, price, imgurl"
 
 /* GET user listing. */
 router.get('/', async (req, res, next) => {
