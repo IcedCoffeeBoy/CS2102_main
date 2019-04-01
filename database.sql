@@ -15,9 +15,9 @@ DROP TABLE IF EXISTS blocks CASCADE;
 --------------Entity------------------------
 CREATE TABLE Accounts (
 	accountId	SERIAL PRIMARY KEY,
-	username	VARCHAR(16) NOT NULL UNIQUE,
+	username	VARCHAR(32) NOT NULL UNIQUE,
 	password	VARCHAR(500) NOT NULL,
-	email		VARCHAR(30) NOT NULL UNIQUE,
+	email		VARCHAR(128) NOT NULL UNIQUE,
 	datejoined  date default CURRENT_DATE,
 	admin		BOOLEAN DEFAULT FALSE,
 	status		VARCHAR(20) DEFAULT 'Active'
