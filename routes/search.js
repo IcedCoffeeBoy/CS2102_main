@@ -42,8 +42,6 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/:userid', async (req, res, next) => {
-  console.log(req.params.userid)
-
   try {
     // Retrieve user data
     let userdata = await db.db_promise(sql_getuserinfo, [req.params.userid]);
@@ -54,8 +52,15 @@ router.get('/:userid', async (req, res, next) => {
     // Retrieve user listing data
     let data = await db.db_promise(sql_getItems, [req.params.userid]);
 
-    // res.render('user', { title: 'User Page', data: data, user: req.user, username: username, datejoined: datejoined });
-    res.render('user', { title: 'User Page', data, user: req.user, username, datejoined });
+    res.render('user', {
+      title: 'User Page',
+      data,
+      user: req.user,
+      username,
+      datejoined,
+      biditems: []
+    });
+
   } catch (err) {
     console.log(err);
   }

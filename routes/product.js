@@ -50,7 +50,6 @@ router.post("/:productId/makebid", async function (req, res, next) {
   const sql_insertbid = "select insertBidshortcut($1,$2,$3)"
   /* ---------------------------------------------------------- */
   if (!req.isAuthenticated()) {
-    console.log("user didnt login")
     return res.sendStatus(403);
   }
 
@@ -72,6 +71,5 @@ router.post("/:productId/review", async function (req, res, next) {
   /* ---------------------------------------------------------- */
 
 })
-
 
 module.exports = router;
