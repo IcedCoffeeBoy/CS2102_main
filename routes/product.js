@@ -12,14 +12,22 @@ router.get("/:productId", async (req, res, next) => {
     "select title, description, price, username, catname, accountid from items join accounts on items.seller = accounts.accountid where itemid = $1";
   const imgquery = "select imgurl from images where itemid = $1";
   const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
-  const sidequery =
-    "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
+  const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
+  const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
+
   /* --------------------------------------------------------------- */
 
   let itemid = req.params.productId;
+  let userid = req.user.id;
 
   // SQL Query Parallel Execution
   try {
+    db.query(sql_insertview,[itemid,userid],(err,data)=>{
+      if(err){
+        console.log("SQL error inserting view " + err);
+      }
+    });
+
     let promises = [
       db.db_promise(mainquery, [itemid]),
       db.db_promise(imgquery, [itemid]),
