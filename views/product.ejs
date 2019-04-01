@@ -74,12 +74,16 @@
         <div class="d-flex btn-container">
             <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
             <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
+            <%if (user == null) {%>
+                <a class="btn white-btn" href="../" role="button" style="flex:2">Login to bid</a>
+            <%} else {%>
             <form class="bid-form" action="<%=productId%>/makebid" role="form" method="post">
                 <div class="form-group">
                     <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="bid price">
                 </div>    
                 <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Make Bid</button>
             </form>
+            <% } %>
        
         </div>
         <div class="p-2 m-2">
