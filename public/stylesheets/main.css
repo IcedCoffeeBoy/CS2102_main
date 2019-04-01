@@ -4,6 +4,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 8px;
+    margin-bottom:32px;
 }
 
 .item {
@@ -12,6 +13,7 @@
     border: 1px solid #AAAAAA;
     padding: 20px;
     border-radius: 16px;
+    font-size: 0.8em;
     color: #333333;
     text-decoration: none;
     font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
@@ -37,6 +39,7 @@
 }
 
 .title {
+    font-weight: bold;
     font-size: 1.25em;
     margin-bottom: 8px;
 }
@@ -55,7 +58,7 @@
 
 .pricetag {
     flex: 1;
-    font-size: 1em;
+    font-size: 1.25em;
 }
 
 .view-btn {
@@ -66,4 +69,7 @@
     color: white;
 }
 
+#outbid-text {
+    color: #c00000
+}
 
