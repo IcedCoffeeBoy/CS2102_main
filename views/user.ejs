@@ -4,10 +4,12 @@
 <head>
     <!-- Page Title -->
     <title>Stuff Sharing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS for Styling -->
     <link rel='stylesheet' href='/stylesheets/themes.css' />
     <link rel='stylesheet' href='/stylesheets/user.css' />
+    <link rel='stylesheet' href='/stylesheets/main.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- JavaScript for Interactivity -->
@@ -44,32 +46,21 @@
                         class="glyphicon glyphicon-th"></span>Grid</a>
             </div>
         </div>
-        <div id="products" class="row list-group">
+        <div id="products" class="product-container">
             <% for(var i=0; i<data.length; i++) { %>
-            <div class="item  col-xs-4 col-lg-4">
-                <div class="thumbnail">
-                    <img class="group list-group-image" src="<%= data[i].imgurl %>" alt="" />
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading">
-                            <%= data[i].title %>
-                        </h4>
-                        <p class="group inner list-group-item-text">
-                            <%= data[i].description %>
-                        </p>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6">
-                                <p class="lead">
-                                    $<%= data[i].price %>
-                                </p>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success primary-bg primary-border primary-bg-hover"
-                                    href=<%= "../p/" + data[i].itemid %>>Add to cart</a>
-                            </div>
-                        </div>
+            <a class="item" href= <%= "../p/" + data[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= data[i].imgurl %>" alt="<%= data[i].title%>" /></div>
+                    <div class="title"><%= data[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        $<%= data[i].price %>
+                    </div>
+                    <div class="view-btn primary-bg primary-bg-hover primary-border">
+                        View Item
                     </div>
                 </div>
-            </div>
+            </a>
             <% } %>
         </div>
         <%if(data.length>0){ %>
@@ -78,38 +69,25 @@
         <%if(biditems.length>0){ %>
             <h1>Bidded items</h1>
         <% } %>
-        <div id="biditems" class="row list-group">
+        <div id="biditems" class="product-container">
             <% for(var i=0; i<biditems.length; i++) { %>
-            <div class="item  col-xs-4 col-lg-4">
-                <div class="thumbnail">
-                    <img class="group list-group-image" src="<%= biditems[i].imgurl %>" alt="" />
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading">
-                            <%= biditems[i].title %>
-                        </h4>
-                        <p class="group inner list-group-item-text">
-                            <%= biditems[i].description %>
-                        </p>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6 bidding">
-                                <% if(biditems[i].amount >= biditems[i].price) { %>
-                                    <p> You have the highest bid at $<%=biditems[i].amount%></p>
-                                <%} else { %>
-                                    <p>Current Highest bid: $<%= biditems[i].price %></p>
-                                    <p>Your bid is $<%=biditems[i].amount%></p>
-                                <% } %>    
-                            </div>
-                            <div class="col-xs-12 col-md-6 bidding">
-                                <a class="btn btn-success primary-bg primary-border primary-bg-hover"
-                                    href=<%= "../p/" + biditems[i].itemid %>>View</a>
-                            </div>
-                        </div>
+            <a class="item" href= <%= "../p/" + biditems[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= biditems[i].imgurl %>" alt="<%= biditems[i].title%>" /></div>
+                    <div class="title"><%= biditems[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                    <% if(biditems[i].amount >= biditems[i].price) { %>
+                        <p> You have the highest bid at $<%=biditems[i].amount%></p>
+                    <%} else { %>
+                        <p>Current Highest bid: $<%= biditems[i].price %></p>
+                        <p id="outbid-text">Your bid is $<%=biditems[i].amount%></p>
+                    <% } %>
                     </div>
                 </div>
-            </div>
+            </a>
             <% } %>
         </div>
-
     </div>
 
     <script>

@@ -9,6 +9,7 @@
 
     <!-- CSS for Styling -->
     <link rel='stylesheet' href='/stylesheets/themes.css' />
+    <link rel='stylesheet' href='/stylesheets/main.css' />
     <link rel='stylesheet' href='/stylesheets/product.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
@@ -74,12 +75,16 @@
         <div class="d-flex btn-container">
             <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
             <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
+            <%if (user == null) {%>
+                <a class="btn white-btn" href="../" role="button" style="flex:2">Login to bid</a>
+            <%} else {%>
             <form class="bid-form" action="<%=productId%>/makebid" role="form" method="post">
                 <div class="form-group">
                     <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="bid price">
                 </div>    
                 <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Make Bid</button>
             </form>
+            <% } %>
        
         </div>
         <div class="p-2 m-2">
@@ -127,28 +132,22 @@
         <div class="main-title">
             <p>You may also like</p>
         </div>
-        <div id="products" class="row">
-            <% for(var i=0; i<recs.length; i++) { %>
-            <div class="item col-lg-3">
-                <div class="thumbnail list-group-item">
-                    <img class="group list-group-image recomm-img" src= "<%= recs[i].imgurl %>" alt=""  />
-                <div class="caption">
-                        <h4 class="group inner list-group-item-heading">
-                            <%= recs[i].title %>
-                        </h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6">
-                                <p class="lead">
-                                $<%= recs[i].price %>
-                                </p>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success primary-bg primary-bg-hover primary-border" href= <%= "./" + recs[i].itemid %> >View Item</a>
-                            </div>
-                        </div>
+        <div id="products" class="product-container">
+        <% for(var i=0; i<recs.length; i++) { %>
+            <a class="item" href= <%= "../p/" + recs[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= recs[i].imgurl %>" alt="<%= recs[i].title%>" /></div>
+                    <div class="title"><%= recs[i].title %></div>
+                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        $<%= recs[i].price %>
+                    </div>
+                    <div class="view-btn primary-bg primary-bg-hover primary-border">
+                        View Item
                     </div>
                 </div>
-            </div>
+            </a>
             <% } %>
         </div>
     </div>
