@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../db');
 
 router.get('/', function (req, res, next) {
-    res.render('chat')
+    res.render('chat', { user: req.user })
 })
 
 module.exports = router;

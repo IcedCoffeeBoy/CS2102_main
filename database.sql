@@ -162,34 +162,35 @@ create table if not exists blocks (
 --end;
 --$$ language plpgsql;
 --
+
+--ALTER table bids disable trigger insertbid;
 --create trigger insertBid 
 --before insert or update on bids 
 --for each row
 --execute procedure insertBidfunc();
---
---
+
+
 --insert into bids(userid,itemid,amount) values (125,1000000,1000.00);
 --insert into relationships(seller,buyer,itemid) values (101,123,1000000);
 --select  * from relationships;
 --select * from bids;
 --select rid from relationships where buyer=123 and itemid=1000000;
---
---create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
---returns numeric as $$
---declare newSeller integer; newrid integer;
---begin 
---	newSeller := (select seller from Items where Items.itemid =newitemid);
---	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,newitemid); --Problem with existing relationship
---	newrid := (select rid from relationships(seller,buyer,itemid) where buyer=newBuyer and itemid=newitemid);
---	update Items set price = bidPrice where Items.itemid = newitemid;
---	insert into bids(userid,rid,amount) values (newBuyer, newrid,bidPrice);
---	return null;
---end;
---$$ language plpgsql;
---
---
---select insertBidshortcut(123,1000.00,1000000);
---
+
+create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
+returns integer as $$
+declare newSeller integer; newrid integer;
+begin 
+	newSeller := (select seller from Items where Items.itemid= newitemid);
+	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,newitemid) on conflict do nothing; 
+	newrid := (select rid from relationships where buyer=newBuyer and itemid=newitemid);
+	update Items set price = bidPrice where Items.itemid = newitemid;
+	insert into bids(userid,rid,amount) values (newBuyer, newrid,bidPrice);
+	return newrid;
+end;
+$$ language plpgsql;
+
+ 
+
 --select * from bids;
 --select * from relationships;
 --select * from items;
@@ -207,7 +208,7 @@ insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFL
 -- delete from items;
 -- delete from images;
 
--- insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
+ insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
 -- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
 -- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 -- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);

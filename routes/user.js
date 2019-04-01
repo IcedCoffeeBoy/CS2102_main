@@ -7,7 +7,7 @@ var sql_getItems =
   'SELECT * ' +
   'FROM Items NATURAL JOIN Images ' +
   'WHERE seller = $1 AND imgno = 0' +
-  'ORDER BY timeListed DESC;'
+  'ORDER BY timeListed DESC';
 
 const sql_getDatejoined = 'select datejoined from accounts where accountid = $1';
 const sql_getBidItems = "select itemid, description, amount, title, price, imgurl " +
