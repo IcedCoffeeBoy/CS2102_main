@@ -40,6 +40,7 @@ CREATE TABLE Items (
 	timeListed	TIMESTAMP DEFAULT NOW(),
 	bidEndTime	TIMESTAMP,
 	catname		VARCHAR(80),
+	sold        BOOLEAN DEFAULT false,
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );
@@ -84,8 +85,8 @@ create table if not exists messages (
 --------------Entity------------------------
 create table if not exists transactions(
 	transactionid serial primary key,
-	dateStart date,
-	dateEnd date,
+	dateStart date default CURRENT_DATE,
+	dateEnd date default CURRENT_DATE + 7,
 	amount numeric(32, 2),
 	rid integer not null
 );
@@ -179,7 +180,29 @@ begin
 	return newrid;
 end;
 $$ language plpgsql;
-------------------------------------------------------------------------------------------------------
+
+create or replace function insertTransactionShortcut (item integer)
+returns integer as $$ 
+declare newseller integer; newbuyer integer;declare newrid integer; newamount integer;
+begin
+	newseller := (select seller from items where itemid = item);
+	newbuyer  := (select b.userid from bids b join relationships r on b.rid = r.rid and r.itemid = item order by b.amount desc limit 1);
+	newamount := (select price from items where itemid = item);
+	if newbuyer = null then
+		return 0;
+	end if;
+	newrid := (select rid from relationships where buyer = newbuyer and seller = newseller and itemid = item);
+	update Items set sold = true where itemid = item;
+	insert into transactions(amount, rid) values (newamount,newrid);
+	return newrid;
+end;
+$$ language plpgsql;
+
+
+-------------------------------------------------
+
+
+delete from relationships;
 
 
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
@@ -187,7 +210,7 @@ insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFL
 -- delete from items;
 -- delete from images;
 
- insert into accounts values (100,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com',false,'Active');
+ insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
 -- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
 -- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 -- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
