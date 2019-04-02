@@ -14,7 +14,7 @@ router.get("/:productId", async (req, res, next) => {
   const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
   const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
   const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
-
+  const sql_getNoBidder = "select count(distinct rid) as counts from bids natural join relationships where itemid=$1"
   /* --------------------------------------------------------------- */
 
   let itemid = req.params.productId;
@@ -26,7 +26,8 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(mainquery, [itemid]),
       db.db_promise(imgquery, [itemid]),
       db.db_promise(revquery, [itemid]),
-      db.db_promise(sidequery)
+      db.db_promise(sidequery),
+      db.db_promise(sql_getNoBidder,[itemid])
     ]
 
     let results = await Promise.all(promises)
@@ -39,6 +40,7 @@ router.get("/:productId", async (req, res, next) => {
       revs: results[2],
       recs: results[3],
       productId: itemid,
+      noOfbidders: results[4][0].counts,
       user: req.user
     });
   } catch (err) {

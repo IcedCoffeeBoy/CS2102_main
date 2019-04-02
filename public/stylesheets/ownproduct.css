@@ -303,4 +303,14 @@
   display: inline-block;
   font-weight: bold;
 }
-/* Popup box BEGIN */
+
+.accept-offer {
+  display:flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.accept-offer button {
+  width: 100%;
+}
