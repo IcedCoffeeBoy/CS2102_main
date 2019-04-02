@@ -8,7 +8,8 @@ var sql = {
     sql_getDatejoined: 'select datejoined from accounts where accountid = $1',
     sql_getBidItems: "select itemid, description, max(amount) as amount, title, price, imgurl " +
         "from relationships natural join bids natural join items natural join images " +
-        "where imgNo=0 and buyer=$1 group by itemid, description, title, price, imgurl"
+        "where imgNo=0 and buyer=$1 group by itemid, description, title, price, imgurl",
+    sql_insertview: "insert into viewHistory(itemid,userid) values ($1,$2)"
 }
 
 module.exports = sql;

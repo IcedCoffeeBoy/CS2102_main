@@ -104,7 +104,7 @@ create table if not exists reviews(
 create table if not exists viewHistory(
 	viewid serial primary key,
 	itemid integer,
-	timestamp timestamp,
+	timestamp timestamp default now(),
 	userid integer,
 	foreign key (itemid) references items on delete cascade,
 	foreign key (userid) references accounts(accountid)
@@ -147,7 +147,32 @@ create table if not exists blocks (
 ------------- Triggers-------------------------
 
 
-------Trigger for inserting new bids-------------
+------Trigger for inserting new views-------------
+create or replace function checkSelleritem()
+returns trigger as $$
+declare itemseller integer; 
+begin 
+	itemseller := (select seller from items where items.itemid=new.itemid);
+	raise exception 'seller %',new.itemid ;
+	if(new.userid = itemseller) then raise exception 'same'; end if;
+	return new;
+end;
+$$ language plpgsql;
+
+create trigger viewhistorytrigger
+before insert or update on viewhistory
+for each row
+execute procedure checkSelleritem();
+
+drop trigger viewhistorytrigger on viewhistory;
+
+select * from items;
+select * from viewhistory;
+select seller from items where items.itemid=1000001;
+
+insert into viewhistory(itemid,userid) values (1000001,101);
+
+
 --create or replace function insertBidfunc()
 --returns trigger as $$
 --declare newSeller integer; newBuyer integer; newrid integer;
@@ -162,12 +187,13 @@ create table if not exists blocks (
 --end;
 --$$ language plpgsql;
 --
-
+--
 --ALTER table bids disable trigger insertbid;
 --create trigger insertBid 
 --before insert or update on bids 
 --for each row
 --execute procedure insertBidfunc();
+
 
 
 --insert into bids(userid,itemid,amount) values (125,1000000,1000.00);
@@ -189,7 +215,11 @@ begin
 end;
 $$ language plpgsql;
 
+
+
  
+select * from viewhistory;
+select * from relationships;
 
 --select * from bids;
 --select * from relationships;
@@ -222,7 +252,15 @@ SELECT * FROM (Items NATURAL JOIN Images) INNER JOIN Accounts on Items.seller = 
 WHERE seller = 100 AND imgno = 0
 ORDER BY timeListed desc;
 
-
+-------------------------------- Complex query ----------------------------------------
+select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 
+from (items natural join images) as r1 
+left join relationships on r1.itemid=relationships.itemid 
+left join viewhistory on r1.itemid = viewhistory.itemid
+where imgno=0
+group by r1.itemid,title,description,price,imgurl
+order by count(rid) desc, count(viewid) desc;
+----------------------------------------------------------------------------------------
 
 
 
