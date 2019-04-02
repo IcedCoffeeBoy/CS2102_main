@@ -21,6 +21,7 @@ var searchRouter = require('./routes/search');
 // var searchUserRouter = require('./routes/search/users');
 var newlistingRouter = require('./routes/newlisting');
 var productRouter = require('./routes/product');
+var chatRouter = require('./routes/chat');
 var userAuth = require('./userAuth');
 
 var app = express();
@@ -76,6 +77,7 @@ app.use('/p', productRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter);
+app.use('/chat', chatRouter);
 app.get('/logout', function (req, res) {
   req.session = null;
   res.redirect('/');

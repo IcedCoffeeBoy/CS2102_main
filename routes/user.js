@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
-var chatRouter = require('./chat');
 const sql = require('../sql/index');
 
 /* GET user listing. */
@@ -31,7 +30,5 @@ router.get('/', async (req, res, next) => {
     console.log(err)
   }
 });
-
-router.use('/chat', chatRouter);
 
 module.exports = router;

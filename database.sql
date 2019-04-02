@@ -110,6 +110,8 @@ create table if not exists viewHistory(
 	foreign key (userid) references accounts(accountid)
 );
 
+alter sequence viewHistory_viewid_seq restart with 10;
+
 --------------Entity------------------------
 create table if not exists qnas(
 	commentid serial primary key,
@@ -153,8 +155,7 @@ returns trigger as $$
 declare itemseller integer; 
 begin 
 	itemseller := (select seller from items where items.itemid=new.itemid);
-	raise exception 'seller %',new.itemid ;
-	if(new.userid = itemseller) then raise exception 'same'; end if;
+	if(new.userid = itemseller) then return null; end if;
 	return new;
 end;
 $$ language plpgsql;
@@ -164,44 +165,8 @@ before insert or update on viewhistory
 for each row
 execute procedure checkSelleritem();
 
-drop trigger viewhistorytrigger on viewhistory;
 
-select * from items;
-select * from viewhistory;
-select seller from items where items.itemid=1000001;
-
-insert into viewhistory(itemid,userid) values (1000001,101);
-
-
---create or replace function insertBidfunc()
---returns trigger as $$
---declare newSeller integer; newBuyer integer; newrid integer;
---begin 
---	newBuyer := new.userid;
---	newSeller := (select seller from Items where Items.itemid = new.itemid);
---	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,new.itemid);
---	newrid := (select rid from relationships where seller=newSeller and buyer=newBuyer and relationships.itemid=new.itemid);
---	update Items set price = new.amount where Items.itemid = new.itemid;
---	insert into bids(userid,itemid,rid,amount) values (newBuyer,new.itemid,newrid,new.amount);
---	return null;
---end;
---$$ language plpgsql;
---
---
---ALTER table bids disable trigger insertbid;
---create trigger insertBid 
---before insert or update on bids 
---for each row
---execute procedure insertBidfunc();
-
-
-
---insert into bids(userid,itemid,amount) values (125,1000000,1000.00);
---insert into relationships(seller,buyer,itemid) values (101,123,1000000);
---select  * from relationships;
---select * from bids;
---select rid from relationships where buyer=123 and itemid=1000000;
-
+--------------------- Single function for inserting bid----------------------------------------------
 create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
 returns integer as $$
 declare newSeller integer; newrid integer;
@@ -214,23 +179,7 @@ begin
 	return newrid;
 end;
 $$ language plpgsql;
-
-
-
- 
-select * from viewhistory;
-select * from relationships;
-
---select * from bids;
---select * from relationships;
---select * from items;
---
---insert into bids(userid,,amount,)
-
--------------------------------------------------
-
-
-delete from relationships;
+------------------------------------------------------------------------------------------------------
 
 
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;

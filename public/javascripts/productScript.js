@@ -21,10 +21,10 @@ $(document).ready(() => {
   $(".bid-form").submit(function (event) {
     event.preventDefault();
     let bidPrice = $("#bidPrice").val()
-    if (checkbidPrice(bidPrice)) {
+    let price= $("#price").val()
+    if (checkbidPrice(bidPrice) && bidPrice>price) {
       var data = $(this).serialize();
       var url = $(this).attr('action');
-      console.log(bidPrice)
       $.post(url, data, function (result) {
         $('.hover_bkgr_fricc').show();
         window.setTimeout(() => { location.reload() }, 5000)
@@ -49,6 +49,7 @@ $(document).ready(() => {
 
 
 function checkbidPrice(bidPrice) {
-  let re = /^[0-9]*$/
+  console.log(price)
+  let re = /[0-9]+(\.[0-9][0-9]?)?/
   return re.test(bidPrice)
 }
