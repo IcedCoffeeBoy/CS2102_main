@@ -31,12 +31,8 @@ router.get("/:productId", async (req, res, next) => {
 
     let results = await Promise.all(promises)
 
-    if (results[0][0].accountid == req.user.id) {
-      return res.redirect("../op/" + itemid)
-    }
-
     // Render page once all data is collected 
-    res.render("product", {
+    res.render("ownproduct", {
       title: "productlisting",
       data: results[0][0],
       imgs: results[1],
@@ -60,25 +56,26 @@ router.get("/:productId", async (req, res, next) => {
   }
 });
 
-router.post("/:productId/makebid", async function (req, res, next) {
+
+router.post("/:productId/acceptoffer", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
-  const sql_insertbid = "select insertBidshortcut($1,$2,$3)"
+  const sql_insertTran = "select insertTransactionShortcut($1)"
   /* ---------------------------------------------------------- */
   if (!req.isAuthenticated()) {
     return res.sendStatus(403);
   }
 
   let itemid = req.params.productId;
-  let bidPrice = req.body.bidPrice;
-  let buyerId = req.user.id;
   try {
-    let rid = await db.db_promise(sql_insertbid, [buyerId, bidPrice, itemid])
+    let rid = await db.db_promise(sql_insertTran, [itemid])
+    if (rid == 0) {
+      return res.sendStatus(404);
+    }
   } catch (err) {
     return res.sendStatus(500);
   }
   return res.sendStatus(200);
 })
-
 
 router.post("/:productId/review", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/

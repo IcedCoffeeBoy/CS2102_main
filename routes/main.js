@@ -10,7 +10,7 @@ router.get('/', async function (req, res, next) {
     'select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) from (items natural join images) as r1 ' +
     'left join relationships on r1.itemid = relationships.itemid ' +
     'left join viewhistory on r1.itemid = viewhistory.itemid ' +
-    'where imgno=0 ' +
+    'where imgno=0 and sold=false ' +
     'group by r1.itemid,title,description,price,imgurl ' +
     'order by count(rid) desc, count(viewid) desc';
 

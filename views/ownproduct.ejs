@@ -10,7 +10,7 @@
     <!-- CSS for Styling -->
     <link rel='stylesheet' href='/stylesheets/themes.css' />
     <link rel='stylesheet' href='/stylesheets/main.css' />
-    <link rel='stylesheet' href='/stylesheets/product.css' />
+    <link rel='stylesheet' href='/stylesheets/ownproduct.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
     <!-- Imported Fonts -->
@@ -25,7 +25,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="javascripts/productScript.js"></script>
+    <script src="javascripts/ownproductScript.js"></script>
 
     <%- include navbar.ejs%>
     <%
@@ -39,11 +39,29 @@
 </head>
 
 <body>
-    <div class="hover_bkgr_fricc">
+    <div class="accept_offer_class">
         <span class="helper"></span>
         <div>   
             <div class="popupCloseButton">X</div>
-            <p>Success!<br />Successfully added bid</p>
+            <p>Confirm Accept Offer?</p><br>
+            <div class="confirm-offer" action="<%=productId%>/acceptoffer">
+                <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Yes</button>
+            </div>&nbsp;
+            <div class="cancel-offer">
+                <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="hover_bkgr_fricc">
+        <span class="helper"></span>
+        <div>   
+            <p>Successful Transaction</p>
+            <div class="review-page">
+                <a href="about:blank">
+                    <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Leave a Review Now</button>
+                </a>    
+            </div>
         </div>
     </div>
 
@@ -77,13 +95,10 @@
             <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
             <%if (user == null) {%>
                 <a class="btn white-btn" href="../" role="button" style="flex:2">Login to bid</a>
-            <%} else {%>
-            <form class="bid-form" action="<%=productId%>/makebid" role="form" method="post">
-                <div class="form-group">
-                    <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="bid price">
-                    </div>    
-                <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Make Bid</button>
-            </form>
+            <%} else {%>   
+                <div class="accept-offer">
+                    <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Accept Offer</button>
+                </div>
             <% } %>
        
         </div>

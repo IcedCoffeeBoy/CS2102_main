@@ -21,6 +21,7 @@ var searchRouter = require('./routes/search');
 // var searchUserRouter = require('./routes/search/users');
 var newlistingRouter = require('./routes/newlisting');
 var productRouter = require('./routes/product');
+var ownproductRouter = require('./routes/ownproduct');
 var userAuth = require('./userAuth');
 
 var app = express();
@@ -37,6 +38,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/p', express.static(path.join(__dirname, 'public')))
+app.use('/op', express.static(path.join(__dirname, 'public')))
 app.use('/search', express.static(path.join(__dirname, 'public')))
 
 /* Using cookie session */
@@ -73,6 +75,7 @@ app.use('/main', mainRouter)
 app.use('/search', searchRouter);
 app.use('/newlisting', userAuth, newlistingRouter);
 app.use('/p', productRouter);
+app.use('/op', ownproductRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter);
