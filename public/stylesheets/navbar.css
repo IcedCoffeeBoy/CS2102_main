@@ -13,7 +13,7 @@ body
     height:60px; 
     display:inline-block; 
     text-align:right;
-    font-family: Verdana, Geneva, sans-serif
+    font-family: Nunito, Verdana, Geneva, sans-serif
 }
 
 .m-nav input[type="text"] {
@@ -25,7 +25,7 @@ body
     color:#fff; 
     margin-top:10px; 
     margin-left:0; 
-    font-family:"Roboto",Arial sans-serif; 
+    font-family: Nunito, Arial sans-serif; 
     font-size: 16px;
     height:40px; 
     display:inline-block; 
@@ -145,7 +145,7 @@ body
   width: 110px;
   margin-top:10px; 
   margin-left:16px;
-  font-family: Georgia, serif;
+  font-family: Nunito, Georgia, serif;
   float: left;
   background:rgba(255,255,255,0.3);
   border-radius: 4px 0 0 4px;
