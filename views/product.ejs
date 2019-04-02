@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel='stylesheet' href='/stylesheets/themes.css' />
     <link rel='stylesheet' href='/stylesheets/main.css' />
     <link rel='stylesheet' href='/stylesheets/product.css' />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
     <!-- Imported Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
 
     <!-- JavaScript for Interactivity -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -72,21 +73,26 @@
       <div class="text-container align-items-stretch">
         <div class="text-title"><%=data.title%></div>
         <div class="text-bid">Current Highest Bid: $<%=data.price%></div>
-        <div class="d-flex btn-container">
-            <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
-            <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
-            <%if (user == null) {%>
+        <%if (user == null) {%>
+            <div class="d-flex btn-container">
+                <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
+                <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
                 <a class="btn white-btn" href="../" role="button" style="flex:2">Login to bid</a>
-            <%} else {%>
-            <form class="bid-form" action="<%=productId%>/makebid" role="form" method="post">
-                <div class="form-group">
-                    <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="bid price">
-                </div>    
-                <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Make Bid</button>
+            </div>
+        <%} else {%>
+        <form class="bid-form" action="<%=productId%>/makebid" role="form" method="post">
+            <div class="form-group">
+                <strong>S$</strong>
+                <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="Your bid">
+            </div>
+            <div class="d-flex btn-container">
+                <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
+                <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
+                <button type="submit" class="btn bid-btn primary-bg primary-bg-hover" href="#" role="button" style="flex:2">Make Bid</button>
+            </div>
             </form>
-            <% } %>
-       
-        </div>
+
+        <% } %>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a>
         </div>
