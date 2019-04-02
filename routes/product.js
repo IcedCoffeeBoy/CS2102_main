@@ -9,7 +9,7 @@ router.get("/", function (req, res, next) {
 router.get("/:productId", async (req, res, next) => {
   /* ------------------------- SQL QUERY STATEMENT------------------- */
   const mainquery =
-    "select title, description, price, username, catname, accountid from items join accounts on items.seller = accounts.accountid where itemid = $1";
+    "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1";
   const imgquery = "select imgurl from images where itemid = $1";
   const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
   const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";

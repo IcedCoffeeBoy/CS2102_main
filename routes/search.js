@@ -51,7 +51,8 @@ router.get('/:userid', async (req, res, next) => {
       user: req.user,
       username,
       datejoined,
-      biditems: []
+      biditems: [],
+      solditems: []
     });
 
   } catch (err) {

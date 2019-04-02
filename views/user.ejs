@@ -66,6 +66,30 @@
         <%if(data.length>0){ %>
             <hr>
         <% } %>
+
+        <%if(solditems.length>0){ %>
+            <h1>Shared items</h1>
+        <% } %>
+        <div id="biditems" class="product-container">
+            <% for(var i=0; i<solditems.length; i++) { %>
+            <a class="item" href= <%= "../op/" + solditems[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= solditems[i].imgurl %>" alt="<%= solditems[i].title%>" /></div>
+                    <div class="title"><%= solditems[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        <p> This item is shared at $<%=solditems[i].price%></p>
+                        <p> From <%=solditems[i].datestart.toLocaleDateString("en-US", options)%> 
+                            to <%=solditems[i].dateend.toLocaleDateString("en-US", options)%></p>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+        <%if(solditems.length>0){ %>
+            <hr>
+        <% } %>
         <%if(biditems.length>0){ %>
             <h1>Bidded items</h1>
         <% } %>

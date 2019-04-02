@@ -9,12 +9,13 @@ router.get("/", function (req, res, next) {
 router.get("/:productId", async (req, res, next) => {
   /* ------------------------- SQL QUERY STATEMENT------------------- */
   const mainquery =
-    "select title, description, price, username, catname, accountid from items join accounts on items.seller = accounts.accountid where itemid = $1";
+    "select title, description, price, username, catname, accountid, sold from items join accounts on items.seller = accounts.accountid where itemid = $1";
   const imgquery = "select imgurl from images where itemid = $1";
   const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
   const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
   const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
   const sql_getNoBidder = "select count(distinct rid) as counts from bids natural join relationships where itemid=$1"
+  const soldquery = "select buyer, username as buyername from (items join relationships on items.sold <> 0 and items.sold = relationships.rid) join accounts on buyer = accountid where items.itemid = $1"
   /* --------------------------------------------------------------- */
 
   let itemid = req.params.productId;
@@ -27,11 +28,16 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(imgquery, [itemid]),
       db.db_promise(revquery, [itemid]),
       db.db_promise(sidequery),
-      db.db_promise(sql_getNoBidder,[itemid])
+      db.db_promise(sql_getNoBidder,[itemid]),
+      db.db_promise(soldquery, [itemid])
     ]
 
     let results = await Promise.all(promises)
 
+    // Avoid non-owner access the owner-product page
+    if (results[0][0].accountid != req.user.id) {
+      return res.sendStatus(404)
+    }
     // Render page once all data is collected 
     res.render("ownproduct", {
       title: "productlisting",
@@ -41,7 +47,8 @@ router.get("/:productId", async (req, res, next) => {
       recs: results[3],
       productId: itemid,
       noOfbidders: results[4][0].counts,
-      user: req.user
+      user: req.user,
+      sold: results[5][0]
     });
   } catch (err) {
     console.log(err)

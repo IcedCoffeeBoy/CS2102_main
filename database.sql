@@ -40,7 +40,7 @@ CREATE TABLE Items (
 	timeListed	TIMESTAMP DEFAULT NOW(),
 	bidEndTime	TIMESTAMP,
 	catname		VARCHAR(80),
-	sold        BOOLEAN DEFAULT false,
+	sold        INTEGER DEFAULT 0,
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );
@@ -192,7 +192,7 @@ begin
 		return 0;
 	end if;
 	newrid := (select rid from relationships where buyer = newbuyer and seller = newseller and itemid = item);
-	update Items set sold = true where itemid = item;
+	update Items set sold = newrid where itemid = item;
 	insert into transactions(amount, rid) values (newamount,newrid);
 	return newrid;
 end;
@@ -210,7 +210,8 @@ insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFL
 -- delete from items;
 -- delete from images;
 
- insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
 -- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
 -- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 -- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
@@ -234,5 +235,4 @@ group by r1.itemid,title,description,price,imgurl
 order by count(rid) desc, count(viewid) desc;
 ----------------------------------------------------------------------------------------
 
-
-
+--select buyer, username from (items join relationships on items.sold <> 0 and items.sold = relationships.rid) join accounts on buyer = accountid where items.itemid = 1000007
