@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require("../db");
-var sql_query = require('../sql/index');
+var sql = require('../sql/index');
 
 router.get('/', async function (req, res, next) {
   // Query processing
@@ -9,9 +9,9 @@ router.get('/', async function (req, res, next) {
   var query = "%" + req.query.query.toLowerCase() + "%";
   var q = "";
   if (type == "Users") {
-    q = sql_query.search_users;
+    q = sql.search_users;
   } else {
-    q = sql_query.search_items;
+    q = sql.search_items;
   }
 
   // SQL query execution and page rendering
@@ -37,13 +37,13 @@ router.get('/', async function (req, res, next) {
 router.get('/:userid', async (req, res, next) => {
   try {
     // Retrieve user data
-    let userdata = await db.db_promise(sql_query.sql_getuserinfo, [req.params.userid]);
+    let userdata = await db.db_promise(sql.sql_getuserinfo, [req.params.userid]);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let datejoined = userdata[0].datejoined.toLocaleDateString("en-US", options);
     let username = userdata[0].username;
 
     // Retrieve user listing data
-    let data = await db.db_promise(sql_query.sql_getItems, [req.params.userid]);
+    let data = await db.db_promise(sql.sql_getItems, [req.params.userid]);
 
     res.render('user', {
       title: 'User Page',

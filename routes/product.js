@@ -18,16 +18,20 @@ router.get("/:productId", async (req, res, next) => {
   /* --------------------------------------------------------------- */
 
   let itemid = req.params.productId;
-  let userid = req.user.id;
+  let userid;
 
-  // SQL Query Parallel Execution
-  try {
-    db.query(sql_insertview,[itemid,userid],(err,data)=>{
-      if(err){
+  if (req.isAuthenticated()) {
+    userid = req.user.id;
+    db.query(sql_insertview, [itemid, userid], (err, data) => {
+      if (err) {
         console.log("SQL error inserting view " + err);
       }
     });
+  }
 
+
+  // SQL Query Parallel Execution
+  try {
     let promises = [
       db.db_promise(mainquery, [itemid]),
       db.db_promise(imgquery, [itemid]),
