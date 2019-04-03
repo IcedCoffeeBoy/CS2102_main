@@ -87,13 +87,35 @@
 
         <main class="primary" style="background-image: url('<%= imgs[0].imgurl %>');"></main>
       </div>
+
+      <% if (data.sold != 0) {%>
+        <div class="text-container align-items-stretch">
+        <div class="text-title"><%=data.title%></div>
+        <div class="text-bid">Sold Price: $<%=data.price%></div>
+        <div class="bidding-closed"> 
+            <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">Bidding Closed</button>
+        </div>
+        <div class="p-2 m-2">
+            Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Sold to <a class="text-seller" href="/search/<%=sold.buyer%>"><%=sold.buyername%></a>
+        </div>
+        <div>
+            No. of bidders: <%=noOfbidders%>
+        </div class="p-2 m-2">
+        <div class="text-desc p-2 m-2">
+            <b>Item description:</b> <br/>
+            <%= data.description %>
+        </div>
+        </div>
+        </div>
+      <% } else {%>
       <div class="text-container align-items-stretch">
         <div class="text-title"><%=data.title%></div>
         <div class="text-bid">Current Highest Bid: $<%=data.price%></div>
         <div class="accept-offer"> 
             <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">Accept Offer</button>
         </div>
-
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a>
         </div>
@@ -104,8 +126,10 @@
             <b>Item description:</b> <br/>
             <%= data.description %>
         </div>
+       </div>
       </div>
-    </div>
+      <% } %>
+
     <div class="d-flex align-items-stretch flex-column">
         <div class="main-title">
             <p>Reviews</p>

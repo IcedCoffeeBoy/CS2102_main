@@ -290,4 +290,7 @@
   display: inline-block;
   font-weight: bold;
 }
-/* Popup box BEGIN */
+
+.bidding-closed button {
+  width: 100%;
+}
