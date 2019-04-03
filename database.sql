@@ -162,12 +162,12 @@ end;
 $$ language plpgsql;
 
 create trigger viewhistorytrigger
-before insert or update on viewhistory
+before insert or update on viewhistory 
 for each row
 execute procedure checkSelleritem();
 
 
---------------------- Single function for inserting bid----------------------------------------------
+---------------------------------- Function ----------------------------------------------
 create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
 returns integer as $$
 declare newSeller integer; newrid integer;
@@ -197,7 +197,6 @@ begin
 	return newrid;
 end;
 $$ language plpgsql;
-
 
 -------------------------------------------------
 

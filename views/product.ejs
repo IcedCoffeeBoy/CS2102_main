@@ -109,9 +109,12 @@
                 <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
                 <button type="submit" class="btn bid-btn primary-bg primary-bg-hover" href="#" role="button" style="flex:2">Make Bid</button>
             </div>
-            </form>
-
+        </form>
         <% } %>
+
+        <%if (bid > 0){%>
+            <div class="p-2 m-2">Your current bid: $<%=bid%></div>
+        <%}%>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a>
         </div>

@@ -14,11 +14,11 @@ router.get("/:productId", async (req, res, next) => {
   const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
   const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
   const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
-
+  const sql_getcurrentbid = "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2"
   /* --------------------------------------------------------------- */
 
   let itemid = req.params.productId;
-  let userid;
+  let userid = req.user.id;
 
   // SQL Query Parallel Execution
   try {
@@ -26,12 +26,13 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(mainquery, [itemid]),
       db.db_promise(imgquery, [itemid]),
       db.db_promise(revquery, [itemid]),
-      db.db_promise(sidequery)
+      db.db_promise(sidequery),
+      db.db_promise(sql_getcurrentbid,[itemid,userid])
     ]
 
     let results = await Promise.all(promises)
 
-    if (results[0][0].accountid == req.user.id) {
+    if (results[0][0].accountid == userid) {
       return res.redirect("../op/" + itemid)
     }
 
@@ -42,8 +43,9 @@ router.get("/:productId", async (req, res, next) => {
       imgs: results[1],
       revs: results[2],
       recs: results[3],
+      bid: results[4][0].amount,
       productId: itemid,
-      user: req.user
+      user: req.user,
     });
   } catch (err) {
     console.log(err)
