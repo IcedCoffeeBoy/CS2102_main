@@ -201,16 +201,12 @@ $$ language plpgsql;
 
 -------------------------------------------------
 
-
-delete from relationships;
-
-
 insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
 
 -- delete from items;
 -- delete from images;
 
- insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+-- insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
 -- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
 -- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
 -- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
