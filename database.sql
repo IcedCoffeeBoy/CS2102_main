@@ -198,27 +198,9 @@ begin
 end;
 $$ language plpgsql;
 
--------------------------------------------------
 
-insert into categories values ('Animals'),('Electronic'),('Automobile') ON CONFLICT DO NOTHING;
-
--- delete from items;
--- delete from images;
-
-insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
-update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
--- insert into items(title,description,price,seller) values ('Good doggo','Dogs for sharing','99',100);
--- insert into images(itemid,imgurl) values (1000000 ,'https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all');
--- insert into items(title,description,price,seller) values ('Cute cats', 'Cats for you to serve', '21',100);
--- insert into images(itemid,imgurl) values (1000001 ,'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=978&q=80');
-
-select * from accounts;
-select * from items;
-select * from images;
-
-SELECT * FROM (Items NATURAL JOIN Images) INNER JOIN Accounts on Items.seller = Accounts.accountid
-WHERE seller = 100 AND imgno = 0
-ORDER BY timeListed desc;
+------------------------Insert mocking data -------------------------
+insert into categories values ('Animals'),('Electronic'),('Automobile'),('Household') ON CONFLICT DO NOTHING;
 
 -------------------------------- Complex query ----------------------------------------
 select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 
@@ -230,4 +212,3 @@ group by r1.itemid,title,description,price,imgurl
 order by count(rid) desc, count(viewid) desc;
 ----------------------------------------------------------------------------------------
 
---select buyer, username from (items join relationships on items.sold <> 0 and items.sold = relationships.rid) join accounts on buyer = accountid where items.itemid = 1000007
