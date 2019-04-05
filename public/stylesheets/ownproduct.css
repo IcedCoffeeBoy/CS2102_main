@@ -1,11 +1,14 @@
-.container{
-  flex-flow: column wrap;
-  align-items: center;
+.chart-container {
+  width: 100%;
+  text-align: center;
 }
 
 #chart_div {
-  align-self: center;
-  width: minmax(80%, 300px)
+  width: 70%;
+  height: 240px;
+  display: inline-block;
+  margin: 0 auto;
+  background-color: #fafafa;
 }
 
 .grid {

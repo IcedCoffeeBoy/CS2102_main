@@ -59,9 +59,6 @@ function drawBackgroundColor() {
   data.addColumn('date', 'time');
   data.addColumn('number', 'bid value');
   $.get(path + '/getbiddinghistory', function (result) {
-    if(result.length<2){
-      return null;
-    }
     result.forEach((element) => {
       data.addRows([[new Date(element.timestamp), parseFloat(element.amount)]]);
     });
