@@ -10,6 +10,8 @@ var sql = {
     sql_getBidItems: "select itemid, description, max(amount) as amount, title, price, imgurl " +
         "from relationships natural join bids natural join items natural join images " +
         "where imgNo=0 and buyer=$1 group by itemid, description, title, price, imgurl",
+    sql_getSuccessfulBids: "SELECT * FROM (((Items i NATURAL JOIN Images) join transactions t on i.sold = t.rid) natural join relationships) join accounts on accountid = seller " + 
+        "WHERE buyer = $1 AND imgno = 0 AND i.sold <> 0 ORDER BY datestart",
     sql_insertview: "insert into viewHistory(itemid,userid) values ($1,$2)"
 }
 

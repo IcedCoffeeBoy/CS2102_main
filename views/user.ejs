@@ -90,6 +90,32 @@
         <%if(solditems.length>0){ %>
             <hr>
         <% } %>
+
+        <%if(successfulbids.length>0){ %>
+            <h1>Successful Bids</h1>
+        <% } %>
+        <div id="biditems" class="product-container">
+            <% for(var i=0; i<successfulbids.length; i++) { %>
+            <a class="item">
+                <div class="item-top">
+                    <div><img src= "<%= successfulbids[i].imgurl %>" alt="<%= successfulbids[i].title%>" /></div>
+                    <div class="title"><%= successfulbids[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        <p> Successful bidded at $<%=successfulbids[i].amount%></p>
+                        <button type="submit" class="btn bid-btn primary-bg" href="about:blank" role="button">
+                                Leave a Review to <%=successfulbids[i].username%>?
+                        </button>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+        <%if(successfulbids.length>0){ %>
+            <hr>
+        <% } %>
+
         <%if(biditems.length>0){ %>
             <h1>Bidded items</h1>
         <% } %>

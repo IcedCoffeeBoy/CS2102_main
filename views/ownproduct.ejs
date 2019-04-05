@@ -93,7 +93,11 @@
         <div class="text-title"><%=data.title%></div>
         <div class="text-bid">Sold Price: $<%=data.price%></div>
         <div class="bidding-closed"> 
-            <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">Bidding Closed</button>
+            <a href="about:blank">
+            <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">
+                Bidding Closed. Leave a Review to <%=sold.buyername%>?
+            </button>
+            </a>
         </div>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a> 
