@@ -201,6 +201,8 @@ $$ language plpgsql;
 
 ------------------------Insert mocking data -------------------------
 insert into categories values ('Animals'),('Electronic'),('Automobile'),('Household') ON CONFLICT DO NOTHING;
+insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
 
 -------------------------------- Complex query ----------------------------------------
 select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 
