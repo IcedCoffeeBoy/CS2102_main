@@ -82,6 +82,7 @@ router.post("/:productId/makebid", async function (req, res, next) {
 })
 
 
+
 router.post("/:productId/review", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
   res.sendStatus(404);

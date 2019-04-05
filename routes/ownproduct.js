@@ -86,6 +86,36 @@ router.post("/:productId/acceptoffer", async function (req, res, next) {
   return res.sendStatus(200);
 })
 
+
+router.get("/:productId/getbiddinghistory", async function (req,res,next){
+  /* ------------------ SQL query ---------------------- */
+  const sql_getsellerid = "select seller from items where itemid=$1"
+  const get_biddinghistory = "select timestamp,amount from bids natural join relationships where itemid=$1 "
+  /* -------------------------------------------------- */
+  console.log("API for bidding history used!")
+  
+  if (!req.isAuthenticated()) {
+    console.log("user is not authericated")
+    return res.sendStatus(403);
+  }
+
+  let userid = req.user.id;
+  let itemid= req.params.productId;
+
+  // Verify user is the seller
+  let sellerRows = await db.db_promise(sql_getsellerid,[itemid]);
+  let sellerid = sellerRows[0].seller;
+  if(sellerid != userid){
+    console.log("user is not seller")
+    return res.sendStatus(403);
+  }
+
+  let bidData = await db.db_promise(get_biddinghistory,[itemid]);
+
+  res.send(bidData);
+
+})
+
 router.post("/:productId/review", async function (req, res, next) {
   /*--------------------- SQL Query Statement -------------------*/
   res.sendStatus(404);
