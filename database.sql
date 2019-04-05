@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS viewhistory CASCADE;
 DROP TABLE IF EXISTS blocks CASCADE;
 
+
 --------------Entity------------------------
 CREATE TABLE Accounts (
 	accountId	SERIAL PRIMARY KEY,
@@ -78,6 +79,7 @@ create table if not exists messages (
 	userfrom integer,
 	timestamp timestamp default now(),
 	rid integer,
+	msg text,
 	foreign key (userfrom) references accounts (accountid),
 	foreign key (rid) references relationships(rid)
 );
@@ -195,6 +197,19 @@ begin
 	update Items set sold = newrid where itemid = item;
 	insert into transactions(amount, rid) values (newamount,newrid);
 	return newrid;
+end;
+$$ language plpgsql;
+
+DROP FUNCTION insertmessageshortcut(integer,integer,integer,integer,text);
+
+create or replace function insertMessageShortcut (fromId integer, buyerId integer, sellerId integer, relItemId integer, msgContent text)
+returns integer as $$
+declare relId integer;
+begin
+	insert into relationships(seller,buyer,itemid) values (sellerId, buyerId, relItemId) on conflict do nothing; 
+	relId := (select rid from relationships where buyer = buyerId and seller = sellerId);
+	insert into messages(userfrom, rid, msg) values (fromId, relId, msgContent);
+	return relId;
 end;
 $$ language plpgsql;
 
