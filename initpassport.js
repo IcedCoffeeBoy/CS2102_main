@@ -23,11 +23,11 @@ module.exports = function () {
                                 var user = { id: data.rows[0].accountid, username: data.rows[0].username };
                                 done(null, user);
                             } else {
-                                done(null, false, req.flash("message", "Incorrent password!"))
+                                done(null, false, req.flash("message", "Incorrect password!"))
                             }
                         });
                     } else {
-                        done(null, false, req.flash("message", "Incorrent username or password!"));
+                        done(null, false, req.flash("message", "Incorrect username or password!"));
                     }
                 }
             })
