@@ -1,3 +1,8 @@
+$(document).ready(() => {
+  google.charts.load('current', { packages: ['corechart', 'line'] });
+  google.charts.setOnLoadCallback(drawBackgroundColor);
+})
+
 $(document).ready(() =>
   $(".thumbnail").on("click", (event) => {
     var clicked = $(event.target).parent();
@@ -46,10 +51,6 @@ $(document).ready(() => {
   });
 })
 
-$(document).ready(() => {
-  google.charts.load('current', { packages: ['corechart', 'line'] });
-  google.charts.setOnLoadCallback(drawBackgroundColor);
-})
 
 
 function drawBackgroundColor() {
@@ -58,25 +59,24 @@ function drawBackgroundColor() {
   data.addColumn('date', 'time');
   data.addColumn('number', 'bid value');
   $.get(path + '/getbiddinghistory', function (result) {
+    if(result.length<2){
+      return null;
+    }
     result.forEach((element) => {
-      console.log(element.timestamp)
-      data.addRows([[new Date(element.timestamp),parseInt(element.amount)]]);
+      data.addRows([[new Date(element.timestamp), parseFloat(element.amount)]]);
     });
+    var options = {
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Bid Price'
+      },
+      backgroundColor: '#FFFFFF',
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
   })
-  console.log(data)
-
-  var options = {
-    hAxis: {
-      title: 'Time'
-    },
-    vAxis: {
-      title: 'Popularity'
-    },
-    backgroundColor: '#f1f8e9'
-  };
-
-  var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
 }
 
 
