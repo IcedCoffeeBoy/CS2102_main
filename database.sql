@@ -96,11 +96,14 @@ create table if not exists transactions(
 --------------Entity------------------------
 create table if not exists reviews(
 	reviewid serial primary key,
-	itemid integer,
-	transactionid integer,
-	review text, 
-	foreign key (itemid) references items on delete cascade,
-	foreign key (transactionid) references transactions(transactionid)
+	reviewerid integer,
+	revieweeid integer,
+	transactionid integer not null,
+	review text not null, 
+	star integer not null,
+	timestamp timestamp default now(),
+	foreign key (transactionid) references transactions(transactionid),
+	unique(reviewerid, transactionid)
 );
 
 --------------Entity------------------------
@@ -197,6 +200,26 @@ begin
 	update Items set sold = newrid where itemid = item;
 	insert into transactions(amount, rid) values (newamount,newrid);
 	return newrid;
+end;
+$$ language plpgsql;
+
+create or replace function insertReviewShortcutB (star integer, review text, tid integer, reviewer integer)
+returns integer as $$ 
+declare reviewee integer;
+begin
+	reviewee := (select seller from transactions natural join relationships where tid = transactionid);
+	insert into reviews(reviewerid, revieweeid, transactionid, review, star) values (reviewer, reviewee, tid, review, star);
+	return (select reviewid from reviews where transactionid = tid and reviewerid = reviewer);
+end;
+$$ language plpgsql;
+
+create or replace function insertReviewShortcutS (star integer, review text, tid integer, reviewer integer)
+returns integer as $$ 
+declare reviewee integer;
+begin
+	reviewee := (select buyer from transactions natural join relationships where tid = transactionid);
+	insert into reviews(reviewerid, revieweeid, transactionid, review, star) values (reviewer, reviewee, tid, review, star);
+	return (select reviewid from reviews where transactionid = tid and reviewerid = reviewer);
 end;
 $$ language plpgsql;
 
