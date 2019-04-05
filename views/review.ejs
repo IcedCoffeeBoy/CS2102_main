@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>Review <%=title%></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel='stylesheet' href='/stylesheets/review.css' />
+
+    <!-- Imported Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
+
+    <!-- JavaScript for Interactivity -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script
+        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="javascripts/reviewScript.js"></script>
+    <%- include navbar.ejs%>
+</head>
+
+<body>
+    <div class="hover_bkgr_fricc">
+        <span class="helper"></span>
+        <div>   
+            <p>Successful Review!</p>
+        </div>
+    </div>
+
+    <form id="review-form" method="post" action=<%=submitreview + "/submitreview" %>>
+        <h2>How would you rate <strong><%=username%></strong>?</h2>
+        <div id="rating">
+            <svg class="star" id="1" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" style="fill: #f39c12;">
+            <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566"></polygon>
+            </svg>
+            <svg class="star" id="2" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" style="fill: #f39c12;">
+            <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566"></polygon>
+            </svg>
+            <svg class="star" id="3" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" style="fill: #f39c12;">
+            <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566"></polygon>
+            </svg>
+            <svg class="star" id="4" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" style="fill: #f39c12;">
+            <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566"></polygon>
+            </svg>
+            <svg class="star" id="5" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" style="fill: #808080;">
+            <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566"></polygon>
+            </svg>
+        </div>
+        <span id="starsInfo" class="help-block">
+            Click on a star to change your rating 1 - 5, where 5 = great! and 1 = really bad
+        </span>
+        <div class="form-group">
+            <label class="control-label" for="review">Your Review:</label>
+            <textarea class="form-control" rows="15" placeholder="Your Reivew" name="review" id="review" required></textarea>
+            <span id="reviewInfo" class="help-block pull-right">
+            <span id="remaining">999</span> Characters remaining
+            </span><br>
+            <a href="#" id="submit" class="btn bid-btn primary-bg">Submit</a>
+            <input id="submitForm" type="submit" style="display:none;"> 
+            <span id="submitInfo" class="help-block">
+                    By clicking <strong>Submit</strong>, I authorize the sharing of my review on the web.
+            </span>
+        </div>     
+</form>
+</body>

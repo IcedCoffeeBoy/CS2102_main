@@ -11,7 +11,8 @@ router.get("/:productId", async (req, res, next) => {
   const mainquery =
     "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1";
   const imgquery = "select imgurl from images where itemid = $1";
-  const revquery = "select review, username from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) where itemid = $1";
+  const revquery = "select star, review, username, timestamp as rtime from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) " + 
+    "where itemid = $1 and reviewerid = buyer order by timestamp";
   const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
   const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
   const sql_getcurrentbid = "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2"
@@ -31,7 +32,7 @@ router.get("/:productId", async (req, res, next) => {
     ]
 
     let results = await Promise.all(promises)
-
+    let options = { year: 'numeric', month: 'long', day: 'numeric' }
     if (results[0][0].accountid == userid) {
       return res.redirect("../op/" + itemid)
     }
@@ -46,6 +47,7 @@ router.get("/:productId", async (req, res, next) => {
       bid: results[4][0].amount,
       productId: itemid,
       user: req.user,
+      options: options 
     });
   } catch (err) {
     console.log(err)

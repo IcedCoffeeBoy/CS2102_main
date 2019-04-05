@@ -23,6 +23,7 @@ var newlistingRouter = require('./routes/newlisting');
 var productRouter = require('./routes/product');
 var chatRouter = require('./routes/chat');
 var ownproductRouter = require('./routes/ownproduct');
+var reviewRouter = require('./routes/review');
 var userAuth = require('./userAuth');
 
 var app = express();
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/p', express.static(path.join(__dirname, 'public')))
 app.use('/op', express.static(path.join(__dirname, 'public')))
 app.use('/search', express.static(path.join(__dirname, 'public')))
+app.use('/review', express.static(path.join(__dirname, 'public')))
 
 /* Using cookie session */
 app.use(session({
@@ -81,6 +83,7 @@ app.use('/op', ownproductRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter);
 app.use('/chat', chatRouter);
+app.use('/review', reviewRouter);
 app.get('/logout', function (req, res) {
   req.session = null;
   res.redirect('/');
