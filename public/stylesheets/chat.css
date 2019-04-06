@@ -1,0 +1,133 @@
+
+
+.hidden-element {
+    display: none;
+}
+
+.absolute {
+    position: fixed;
+    bottom: 0;
+    right: 3vw;
+
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+
+    width: 320px;
+    height: 450px;
+    border: 1px solid #bebebe;
+    background-color: white;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333333;
+}
+
+.absolute-btn {
+    position: fixed;
+    bottom: 0;
+    right: 3vw;
+
+    padding: 10px;
+    padding-bottom: 8px;
+
+    background-color: #ee4d2d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    font-size: 1.5em;
+}
+
+.chat-top {
+    height: 3em;
+    background-color: #ee4d2d;
+    padding: 8px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.chat-name {
+    color: white;
+    margin-left: 1em;
+    flex: 1;
+}
+
+.chat-close {
+    width:32px;
+    height:32px;
+    padding:8px;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.chat-close:focus {
+    outline: none;
+}
+
+.chat-img {
+    height: 100%;
+    width: 29px;
+    border-radius: 50%;
+    background-color: #f5765c;
+}
+
+.chatwindow {
+    flex-flow: column wrap;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    font-size: 1em;
+    flex: 1;
+}
+
+
+
+.msg-container {
+    width: 100%;
+}
+
+.msg {
+    display: inline-block;
+    margin: 8px 12px 4px 12px;
+    max-width: 70%;
+    padding: 12px;
+    border-radius: 16px;
+    clear: both;
+    font-size: 0.85em;
+}
+
+.msg-yours {
+    background-color: #e0ffe6;
+    float: right;
+}
+
+.msg-theirs {
+    background-color: #ececec;
+    float: left;
+}
+
+.chatbox {
+    width: 100%;
+    height: 3em;
+    border-top: 2px solid #bebebe;
+    flex-flow: row;
+}
+
+.chatbox:hover {
+    border-top: 2px solid #ee4d2d;
+    transition: 0.6s ease all;
+}
+
+.chatbox input {
+    width: 100%;
+    padding: 16px;
+    font-size: 0.9em;
+    border: none;
+}
+
+.chatbox input:focus {
+    outline: none;
+}
+
