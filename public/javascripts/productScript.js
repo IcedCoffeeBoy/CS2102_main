@@ -26,15 +26,18 @@ $(document).ready(() => {
       var data = $(this).serialize();
       var url = $(this).attr('action');
       $.post(url, data, function (result) {
+        $('#popout-msg').html("<p>Success!<br />Successfully added bid</p>");
         $('.hover_bkgr_fricc').show();
         window.setTimeout(() => { location.reload() }, 5000)
       }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 500 || jqXHR.status == 403) {
-          alert("Server Error")
+          $('#popout-msg').html("<p>Failure!<br />Something has went wrong</p>");
+          $('.hover_bkgr_fricc').show();
         } 
       });
     } else {
-      alert("invalid input")
+      $('#popout-msg').html("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>");
+      $('.hover_bkgr_fricc').show();
     }
   })
 
@@ -48,10 +51,8 @@ $(document).ready(() => {
 })
 
 $(document).ready(() => {
-  var url = "<%=productId/like%>";
   $("#like-btn").one("click", function() {
-    var url = window.location.href.toString().split("#")[0] + "/like";
-    
+    var url = window.location.href.toString() + "/like";
     $.post(url, function(results){
       document.getElementById("like-btn").style.color = "red";
       updated_likes = parseInt($('#like-btn').html().split(" ")[1]) + 1;
