@@ -11,13 +11,33 @@ router.get("/:productId", async (req, res, next) => {
   let itemid = req.params.productId;
   let userid = req.user.id;
 
+  // Insert view first
+  if (req.isAuthenticated()) {
+    userid = req.user.id;
+    db.query(sql.sql_insertview, [itemid, userid], (err, data) => {
+      if (err) {
+        console.log("SQL error inserting view " + err);
+      } else {
+
+        // NEED TO IMPLEMENT UPDATE TRIGGER SIMILAR TO VIEWHISTORY
+        db.query(sql.sql_updateViews, [itemid], (err, data) => {
+          if (err) {
+            console.log("SQL error updating view " + err);
+          }
+        });
+
+      }
+    });
+  }
+
   // SQL Query Parallel Execution
   try {
     let promises = [
       db.db_promise(sql.sql_getProductInfo, [itemid]),
       db.db_promise(sql.sql_getProductImg, [itemid]),
       db.db_promise(sql.sql_getSellerReview, [itemid]),
-      db.db_promise(sql.sql_getYouMayAlsoLike),
+      // db.db_promise(sql.sql_getYouMayAlsoLike),
+      db.db_promise(sql.sql_getRecommended, [userid,itemid]),
       db.db_promise(sql.sql_getCurrentBid,[itemid,userid]),
       db.db_promise(sql.sql_getLikes, [itemid])
     ]
@@ -27,6 +47,9 @@ router.get("/:productId", async (req, res, next) => {
     if (results[0][0].accountid == userid) {
       return res.redirect("../op/" + itemid)
     }
+
+    results[0][0].loanstart = results[0][0].loanstart.toLocaleDateString("en-US", options);
+    results[0][0].loanend = results[0][0].loanend.toLocaleDateString("en-US", options);
 
     // Render page once all data is collected 
     res.render("product", {
@@ -39,21 +62,15 @@ router.get("/:productId", async (req, res, next) => {
       like: results[5][0].likes,
       productId: itemid,
       user: req.user,
-      options: options 
+      options: options
     });
+
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
   }
 
-  if (req.isAuthenticated()) {
-    userid = req.user.id;
-    db.query(sql.sql_insertview, [itemid, userid], (err, data) => {
-      if (err) {
-        console.log("SQL error inserting view " + err);
-      }
-    });
-  }
+
 });
 
 router.post("/:productId/makebid", async function (req, res, next) {
