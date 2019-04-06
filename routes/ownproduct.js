@@ -47,7 +47,7 @@ router.get("/:productId", async (req, res, next) => {
 
   if (req.isAuthenticated()) {
     userid = req.user.id;
-    db.query(sql_insertview, [itemid, userid], (err, data) => {
+    db.query(sql.sql_insertview, [itemid, userid], (err, data) => {
       if (err) {
         console.log("SQL error inserting view " + err);
       }
