@@ -38,6 +38,13 @@
 </head>
 
 <body>
+    <div class="hover_bkgr_fricc">
+        <span class="helper"></span>
+        <div>   
+            <div class="popupCloseButton">X</div>
+            <p>Successful Transaction</p>
+        </div>
+    </div>
     <div class="accept_offer_class">
         <span class="helper"></span>
         <div>   
@@ -48,18 +55,6 @@
             </div>&nbsp;
             <div class="cancel-offer">
                 <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="hover_bkgr_fricc">
-        <span class="helper"></span>
-        <div>   
-            <p>Successful Transaction</p>
-            <div class="review-page">
-                <a href="about:blank">
-                    <button type="submit" class="btn bid-btn primary-bg" href="#" role="button" style="flex:2">Leave a Review Now</button>
-                </a>    
             </div>
         </div>
     </div>
@@ -92,11 +87,11 @@
         <div class="text-title"><%=data.title%></div>
         <div class="text-bid">Sold Price: $<%=data.price%></div>
         <div class="bidding-closed"> 
-            <a href="about:blank">
-            <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">
-                Bidding Closed. Leave a Review to <%=sold.buyername%>?
-            </button>
-            </a>
+            <form method="post" action= <%= "/review/s" + sold.transactionid %>>
+                <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">
+                    Bidding Closed. Leave a Review to <%=sold.buyername%>?
+                </button>
+            </form>
         </div>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a> 
@@ -138,7 +133,7 @@
     </div>
     <div class="d-flex align-items-stretch flex-column">
         <div class="main-title">
-            <p>Reviews</p>
+            <p>Reviews for You</p>
         </div>
         <% if (revs.length == 0) {%>
         <div class="reviews-none">
@@ -150,14 +145,16 @@
             <div class="review-details">
             <img src="<%=getPlaceholderImg()%>">
             <div class="r-container">
-                <p class="review-author"><%=revs[i].username%></p>
-                <p class="review-date">3 days ago</p>
-                <div class="review-rating">
-                <span class="review-star review-star--active">&#9733;</span>
-                <span class="review-star review-star--active">&#9733;</span>
-                <span class="review-star review-star--active">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
+                    <p class="review-author"><%=revs[i].username%></p>
+                    <p class="review-date"><%=revs[i].rtime.toLocaleDateString("en-US", options)%></p>
+                    <div class="review-rating">
+                    <% for(var j=0; j<revs[i].star; j++) { %>
+                        <span class="review-star review-star--active">&#9733;</span>
+                    <% } %>
+                    <% for(var j=revs[i].star; j<5; j++) { %>
+                        <span class="review-star">&#9733;</span>
+                    <% } %>
+                    </div>
                 </div>
             </div>
             </div>
@@ -167,29 +164,6 @@
         </div>
         <% } %>
     </div>
-    </div>
-    <div class="container">
-        <div class="main-title">
-            <p>You may also like</p>
-        </div>
-        <div id="products" class="product-container">
-        <% for(var i=0; i<recs.length; i++) { %>
-            <a class="item" href= <%= "../p/" + recs[i].itemid %>>
-                <div class="item-top">
-                    <div><img src= "<%= recs[i].imgurl %>" alt="<%= recs[i].title%>" /></div>
-                    <div class="title"><%= recs[i].title %></div>
-                </div>
-                <div class="item-btm">
-                    <div class="pricetag">
-                        $<%= recs[i].price %>
-                    </div>
-                    <div class="view-btn primary-bg primary-bg-hover primary-border">
-                        View Item
-                    </div>
-                </div>
-            </a>
-            <% } %>
-        </div>
     </div>
   </div>
 </body>

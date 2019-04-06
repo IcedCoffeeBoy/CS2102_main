@@ -41,6 +41,7 @@ $(document).ready(() => {
     var url = $(this).attr('action');
     $.post(url, function (result) {
       $('.hover_bkgr_fricc').show();
+      window.setTimeout(() => { location.reload() }, 1000)
     }).fail(function (jqXHR, textStatus, errorThrown) {
       if (jqXHR.status = 404) {
         alert("No bidding is found for this item")
