@@ -45,6 +45,7 @@ CREATE TABLE Items (
 	sold        INTEGER DEFAULT 0,
 	loanStart	TIMESTAMP,
 	loanEnd		TIMESTAMP,
+	views		INTEGER DEFAULT 0,
 	location	VARCHAR(128),
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
@@ -150,6 +151,7 @@ create table if not exists likes (
 	likeid serial primary key,
 	likerid integer not null,
 	itemid integer not null,
+	timestamp timestamp default now(),
 	foreign key (likerid) references accounts(accountid),
 	foreign key (itemid) references items on delete cascade,
 	unique(likerid, itemid)
