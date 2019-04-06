@@ -27,7 +27,7 @@ module.exports = function () {
                             }
                         });
                     } else {
-                        done(null, false, req.flash("message", "Incorrent username or password!"));
+                        done(null, false, req.flash("message", "Incorrect username or password!"));
                     }
                 }
             })
