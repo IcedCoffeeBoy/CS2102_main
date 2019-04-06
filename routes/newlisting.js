@@ -12,11 +12,11 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage })
-var sqlQuery = 'SELECT * FROM Categories;'
+const sql = require('../sql/index');
 
 router.get('/', async function (req, res, next) {
   try {
-    let categoryData = await db.db_promise(sqlQuery);
+    let categoryData = await db.db_promise(sql.sql_getCategories);
     res.render('newlisting', { title: 'New Listing', categoryData: categoryData, user: req.user });   
   } catch (err) {
     console.log(err);
@@ -25,26 +25,26 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/upload', upload.array('image', 4), async function (req, res, next) {
+  var seller = req.user.id;
   var title = req.body.title;
   var description = req.body.description;
   var price = req.body.price;
   var category = req.body.category;
-  var seller = req.user.id;
+  var loanStart = req.body.loan_start;
+  var loanEnd = req.body.loan_end;
+  var location = req.body.location;
   console.log(req.body);
-
-  var sqlInsertItem = "INSERT INTO Items(title,description,price,seller,catname) VALUES ($1,$2,$3,$4,$5) RETURNING itemid";
-  var sqlInsertImage = "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)";
 
   try {
     // Insert item entry
-    let sqlInsertArgs = [title, description, price, seller, category];
-    var data = await db.db_promise(sqlInsertItem, sqlInsertArgs);
+    let sqlInsertArgs = [title, description, price, seller, category, loanStart, loanEnd, location];
+    var data = await db.db_promise(sql.sql_insertItem, sqlInsertArgs);
 
     // Insert image entries in parallel.
     // All SQL queries must be complete (via Promise.all) before this step is deemed successful.
     let promises = req.files.map(async (img, idx) => {
       let imagePath = 'images/uploads/' + img.filename;
-      db.db_promise(sqlInsertImage, [imagePath, data[0].itemid, idx]);
+      db.db_promise(sql.sql_insertImage, [imagePath, data[0].itemid, idx]);
     })
     await Promise.all(promises);
   } catch (err) {

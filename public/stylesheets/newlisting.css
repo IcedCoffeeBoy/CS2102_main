@@ -47,7 +47,7 @@ textarea {
 }
 
 .image-upload-wrap {
-  border: 4px dashed #1FB264;
+  border: 4px dashed #A0A0A0;
   position: relative;
   text-align: center;
 }
@@ -55,13 +55,13 @@ textarea {
 .image-upload-wrap h1 {
   font-weight: 100;
   text-transform: uppercase;
-  color: #15824B;
+  color: #C0C0C0;
   padding: 40px;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: #1FB264;
+  background-color: #C0C0C0;
   border: 4px dashed #ffffff;
 }
 

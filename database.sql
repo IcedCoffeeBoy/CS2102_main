@@ -42,6 +42,9 @@ CREATE TABLE Items (
 	bidEndTime	TIMESTAMP,
 	catname		VARCHAR(80),
 	sold        INTEGER DEFAULT 0,
+	loanStart	TIMESTAMP,
+	loanEnd		TIMESTAMP,
+	location	VARCHAR(128),
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );

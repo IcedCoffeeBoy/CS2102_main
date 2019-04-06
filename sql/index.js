@@ -32,7 +32,12 @@ var sql = {
     "join accounts on buyer = accountid natural join transactions where items.itemid = $1",
     sql_insertTran: "select insertTransactionShortcut($1)",
     sql_getSellerId: "select seller from items where itemid=$1",
-    sql_getBiddingHistory: "select timestamp,amount from bids natural join relationships where itemid=$1 "
+    sql_getBiddingHistory: "select timestamp,amount from bids natural join relationships where itemid=$1 ",
+
+    // New Listing
+    sql_getCategories: "SELECT * FROM Categories",
+    sql_insertItem: "INSERT INTO Items(title,description,price,seller,catname,loanstart,loanend,location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING itemid",
+    sql_insertImage: "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)"
 
 }
 
