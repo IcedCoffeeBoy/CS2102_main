@@ -82,7 +82,7 @@ app.use('/op', ownproductRouter);
 // app.use('/search/items', searchItemRouter);
 // app.use('/search/users', searchUserRouter);
 app.use('/user', userAuth, userRouter);
-app.use('/chat', chatRouter);
+app.use('/chat', userAuth, chatRouter);
 app.use('/review', reviewRouter);
 app.get('/logout', function (req, res) {
   req.session = null;

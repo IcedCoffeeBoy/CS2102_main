@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>Messenger</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS for Styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel='stylesheet' href='stylesheets/chatpage.css' />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Imported Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <!-- JavaScript for Interactivity -->
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="javascripts/chatpageScript.js"></script>
+
+    <% include navbar.ejs %>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-window container">
+            <div class="chat-list-window">
+                <div class="chat-search">
+                    <input placeholder="Search" />
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="chat-list">
+                    <div class="user">
+                        <img src="https://placekitten.com/320/240" />
+                        <div class="user-details">
+                            bob
+                        </div>
+                    </div>
+                    <div class="user">
+                        <img src="https://placekitten.com/350/240" />
+                        <div class="user-details">
+                            1234
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-content">
+                <div class="chat-title">
+                    <img src="https://placekitten.com/320/240" />
+                    <div class="user-details">
+                        bob
+                    </div>
+                </div>
+                <div id="cwnd" class="chatwindow">
+                    <div class="msg msg-yours">
+                        Still under construction...
+                    </div>
+                </div>
+                <div class="chatbox">
+                    <input placeholder="Enter text here..." />
+                    <div class="chat-send-btn">
+                        <span class="fa fa-angle-right"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
