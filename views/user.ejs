@@ -22,6 +22,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+    <script src="javascripts/userScript.js"></script>
+
     <%- include navbar.ejs%>
     <% if (message.length>0) { %>
     <div class="alert alert-success" role="alert" id="added-alert">
@@ -103,9 +105,11 @@
                 <div class="item-btm">
                     <div class="pricetag">
                         <p> Successful bidded at $<%=successfulbids[i].amount%></p>
-                        <button type="submit" class="btn bid-btn primary-bg" href="about:blank" role="button">
+                        <form method="post" action= <%= "review/b" + successfulbids[i].transactionid %>>
+                            <button class="btn bid-btn primary-bg">
                                 Leave a Review to <%=successfulbids[i].username%>?
-                        </button>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>
