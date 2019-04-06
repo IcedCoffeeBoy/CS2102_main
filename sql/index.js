@@ -67,6 +67,10 @@ var sql = {
     sql_insertReviewB:"select insertReviewShortcutB($1,$2,$3,$4)",
     sql_insertReviewS:"select insertReviewShortcutS($1,$2,$3,$4)",
 
+    sql_getCategories: 'SELECT * FROM Categories',
+    sql_insertItem: "INSERT INTO Items(title,description,price,seller,catname,loanstart,loanend,location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING itemid",
+    sql_insertImage: "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)",
+
 }
 
 module.exports = sql;
