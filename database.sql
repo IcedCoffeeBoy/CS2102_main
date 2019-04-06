@@ -77,7 +77,7 @@ ALTER SEQUENCE relationships_rid_seq RESTART WITH 1000;
 create table if not exists messages (
 	msgid serial primary key,
 	userfrom integer,
-	timestamp timestamp default now(),
+	timestamp timestamp default (now() at time zone 'utc'),
 	rid integer,
 	msg text,
 	foreign key (userfrom) references accounts (accountid),
@@ -216,7 +216,7 @@ $$ language plpgsql;
 
 ------------------------Insert mocking data -------------------------
 insert into categories values ('Animals'),('Electronic'),('Automobile'),('Household') ON CONFLICT DO NOTHING;
-insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+insert into accounts values (999,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
 update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
 
 -------------------------------- Complex query ----------------------------------------
