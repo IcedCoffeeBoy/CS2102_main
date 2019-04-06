@@ -8,14 +8,9 @@
 
 .bid-btn {
     color: #fff !important;
+    width: 100%;
 }
 
 .btn-container > * {
     font-size: 0.8em !important;
 }
-
-.pricetag button {
-    width: 100%;
-}
-  
-  

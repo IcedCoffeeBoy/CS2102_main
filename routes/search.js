@@ -52,7 +52,8 @@ router.get('/:userid', async (req, res, next) => {
       username,
       datejoined,
       biditems: [],
-      solditems: []
+      solditems: [],
+      successfulbids: []
     });
 
   } catch (err) {
