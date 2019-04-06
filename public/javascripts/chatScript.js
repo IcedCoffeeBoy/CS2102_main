@@ -3,7 +3,7 @@ $(document).ready(() => {
     var currentTimestamp = false;
 
     $('.chatbox>input').keypress(async (e) => {	
-		if(e.which == 13) {
+		if(e.which == 13 && $('.chatbox>input').val() != "") {
             let msg = {
                 'itemId': pid,
                 'msg': $('.chatbox>input').val()

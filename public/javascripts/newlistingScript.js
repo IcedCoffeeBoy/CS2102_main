@@ -52,3 +52,15 @@ $(document).ready(function() {
         });
     });
 });
+
+$(document).ready(function() {
+    $('#rangestart').calendar({
+        type: 'date',
+        endCalendar: $('#rangeend'),
+        minDate: new Date()
+    });
+    $('#rangeend').calendar({
+        type: 'date',
+        startCalendar: $('#rangestart')
+    });
+});
