@@ -42,7 +42,8 @@
             </a>
         </div>
     </div>
-    <div id="products" class="product-container">
+
+    <div id="products-popular" class="product-container">
         <% for(var i=0; i<data.length; i++) { %>
         <a class="item" href= <%= "../p/" + data[i].itemid %>>
             <div class="item-top">
@@ -61,5 +62,25 @@
         </a>
         <% } %>
     </div>
+    <div id="products-rated" class="product-container hide">
+        <% for(var i=0; i<data2.length; i++) { %>
+        <a class="item" href= <%= "../p/" + data2[i].itemid %>>
+            <div class="item-top">
+                <div><img src= "<%= data2[i].imgurl %>" alt="<%= data2[i].title%>" /></div>
+                <div class="title"><%= data2[i].title %></div>
+                <div class="description"><%= data2[i].description %></div>
+            </div>
+            <div class="item-btm">
+                <div class="pricetag">
+                    $<%= data2[i].price %>
+                </div>
+                <div class="view-btn primary-bg primary-bg-hover primary-border">
+                    View Item
+                </div>
+            </div>
+        </a>
+        <% } %>
+    </div>
+
 <body>
 </html>

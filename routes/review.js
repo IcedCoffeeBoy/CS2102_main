@@ -1,17 +1,13 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../db");
+var sql = require("../sql/index");
 
 router.get("/", function (req, res, next) {
     res.sendStatus(404);
 });
 
 router.post("/b:transactionId", async (req, res, next) => {
-    /* ------------------------- SQL QUERY STATEMENT------------------- */
-    const mainquery = "select * from (transactions natural join relationships) " + 
-      "join accounts on accountid = seller " +
-      "where transactionid = $1";
-     /* --------------------------------------------------------------- */
   
     let reviewerid = req.user.id;
     let transactionId = req.params.transactionId;
@@ -19,7 +15,7 @@ router.post("/b:transactionId", async (req, res, next) => {
     // SQL Query Parallel Execution
     try {
       let promises = [
-        db.db_promise(mainquery, [transactionId]),
+        db.db_promise(sql.sql_reviewPageB, [transactionId]),
       ]
   
       let results = await Promise.all(promises)
@@ -43,9 +39,7 @@ router.post("/b:transactionId", async (req, res, next) => {
 });
 
 router.post("/b:transactionId/submitreview", async function (req, res, next) {
-    /*--------------------- SQL Query Statement -------------------*/
-    const sql_insertReview = "select insertReviewShortcutB($1,$2,$3,$4)"
-    /* ---------------------------------------------------------- */
+
     if (!req.isAuthenticated()) {
       return res.sendStatus(403);
     }
@@ -56,7 +50,7 @@ router.post("/b:transactionId/submitreview", async function (req, res, next) {
     let reviewerid = req.user.id;
 
     try {
-      let rid = await db.db_promise(sql_insertReview, [star, reviewtext, transactionid, reviewerid])
+      let rid = await db.db_promise(sql.sql_insertReviewB, [star, reviewtext, transactionid, reviewerid])
     } catch (err) {
       return res.sendStatus(500); 
     }
@@ -64,11 +58,6 @@ router.post("/b:transactionId/submitreview", async function (req, res, next) {
   })
   
 router.post("/s:transactionId", async (req, res, next) => {
-    /* ------------------------- SQL QUERY STATEMENT------------------- */
-    const mainquery = "select * from (transactions natural join relationships) " + 
-      "join accounts on accountid = buyer " +
-      "where transactionid = $1";
-     /* --------------------------------------------------------------- */
   
     let reviewerid = req.user.id;
     let transactionId = req.params.transactionId;
@@ -76,7 +65,7 @@ router.post("/s:transactionId", async (req, res, next) => {
     // SQL Query Parallel Execution
     try {
       let promises = [
-        db.db_promise(mainquery, [transactionId]),
+        db.db_promise(sql.sql_reviewPageS, [transactionId]),
       ]
   
       let results = await Promise.all(promises)
@@ -100,9 +89,7 @@ router.post("/s:transactionId", async (req, res, next) => {
 });
 
 router.post("/s:transactionId/submitreview", async function (req, res, next) {
-    /*--------------------- SQL Query Statement -------------------*/
-    const sql_insertReview = "select insertReviewShortcutS($1,$2,$3,$4)"
-    /* ---------------------------------------------------------- */
+
     if (!req.isAuthenticated()) {
       return res.sendStatus(403);
     }
@@ -113,7 +100,7 @@ router.post("/s:transactionId/submitreview", async function (req, res, next) {
     let reviewerid = req.user.id;
 
     try {
-      let rid = await db.db_promise(sql_insertReview, [star, reviewtext, transactionid, reviewerid])
+      let rid = await db.db_promise(sql.sql_insertReviewS, [star, reviewtext, transactionid, reviewerid])
     } catch (err) {
       return res.sendStatus(500); 
     }

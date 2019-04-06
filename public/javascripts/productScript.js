@@ -47,6 +47,26 @@ $(document).ready(() => {
   });
 })
 
+$(document).ready(() => {
+  var url = "<%=productId/like%>";
+  $("#like-btn").one("click", function() {
+    var url = window.location.href.toString().split("#")[0] + "/like";
+    
+    $.post(url, function(results){
+      document.getElementById("like-btn").style.color = "red";
+      updated_likes = parseInt($('#like-btn').html().split(" ")[1]) + 1;
+      updated_str = $('#like-btn').html().split(" ")[0] + " " + updated_likes;
+      $('#like-btn').html(updated_str);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      if (jqXHR.status == 500) {
+        alert("You have liked this item before")
+      } else if (jqXHR.status == 403) {
+        alert("Please login to like this item")
+      }
+    });
+  });
+});
+
 
 function checkbidPrice(bidPrice) {
   console.log(price)

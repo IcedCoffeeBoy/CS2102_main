@@ -24,7 +24,12 @@
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="javascripts/newlistingScript.js"></script>
-        
+    
+    <!-- CSS and Javascript for date -->
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+
     <%- include navbar.ejs%>
 </head>
 
@@ -93,17 +98,19 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="ui form">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Enter a title for your listing" required>
         </div>
+        <br>
 
-        <div class="form-group">
+        <div class="ui form">
             <label for="description">Description</label>
             <textarea rows="10" class="form-control" id="description" name="description" placeholder="Describe your listing"></textarea>
         </div>
+        <br>
 
-        <div class="form-group">
+        <div class="ui form">
             <label>Listing Category</label>
             <% for (var i=0; i<categoryData.length; i++) { %>
                 <div class="radio">
@@ -114,11 +121,45 @@
                 </div>
             <% } %>
         </div>
+        <br>
 
-        <div class="form-group">
+        <div class="ui form">
             <label for="price">Price</label>
-            <input type="number" min="0.00" step="0.01" class="form-control" id="price" name="price" placeholder="0.00" onchange="set2DP" required>
+            <input type="number" min="0.00" step="0.01" class="field" id="price" name="price" placeholder="0.00" onchange="set2DP" required>
         </div>
+        <br>
+
+
+        <div class="ui form">
+            <div class="two fields">
+            <div class="field">
+                <label>Loan Start Date</label>
+                <div class="ui calendar" id="rangestart">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" id="loan_start" name="loan_start" placeholder="Start" required>
+                </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Loan End Date</label>
+                <div class="ui calendar" id="rangeend">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" id="loan_end"  name="loan_end" placeholder="End" required>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <br>
+        
+
+        <div class="ui form">
+            <label for="location">Collection Location</label>
+            <input type="text" class="form-control" id="location" name="location" required>
+        </div>
+        <br>
 
         <button type="submit" class="btn btn-primary">Add Listing</button>
     </form>

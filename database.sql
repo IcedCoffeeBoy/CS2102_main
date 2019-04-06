@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS viewhistory CASCADE;
 DROP TABLE IF EXISTS blocks CASCADE;
+drop table if exists likes cascade;
 
 
 --------------Entity------------------------
@@ -42,6 +43,9 @@ CREATE TABLE Items (
 	bidEndTime	TIMESTAMP,
 	catname		VARCHAR(80),
 	sold        INTEGER DEFAULT 0,
+	loanStart	TIMESTAMP,
+	loanEnd		TIMESTAMP,
+	location	VARCHAR(128),
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );
@@ -139,8 +143,17 @@ create table if not exists bids (
 	foreign key (userid) references accounts(accountid)
 );
 
-alter sequence bids_bidid_seq restart with 10000; 
+alter sequence bids_bidid_seq restart with 10000;
 
+--------------Entity------------------------
+create table if not exists likes (
+	likeid serial primary key,
+	likerid integer not null,
+	itemid integer not null,
+	foreign key (likerid) references accounts(accountid),
+	foreign key (itemid) references items on delete cascade,
+	unique(likerid, itemid)
+);
 
 -------------Relationship-----------------------
 create table if not exists blocks (

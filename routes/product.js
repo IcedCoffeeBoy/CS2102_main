@@ -18,7 +18,8 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(sql.sql_getProductImg, [itemid]),
       db.db_promise(sql.sql_getSellerReview, [itemid]),
       db.db_promise(sql.sql_getYouMayAlsoLike),
-      db.db_promise(sql.sql_getCurrentBid,[itemid,userid])
+      db.db_promise(sql.sql_getCurrentBid,[itemid,userid]),
+      db.db_promise(sql.sql_getLikes, [itemid])
     ]
 
     let results = await Promise.all(promises)
@@ -35,6 +36,7 @@ router.get("/:productId", async (req, res, next) => {
       revs: results[2],
       recs: results[3],
       bid: results[4][0].amount,
+      like: results[5][0].likes,
       productId: itemid,
       user: req.user,
       options: options 
@@ -65,6 +67,22 @@ router.post("/:productId/makebid", async function (req, res, next) {
   let buyerId = req.user.id;
   try {
     let rid = await db.db_promise(sql.sql_insertBid, [buyerId, bidPrice, itemid])
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+  return res.sendStatus(200);
+})
+
+router.post("/:productId/like", async function (req, res, next) {
+
+  if (!req.isAuthenticated()) {
+    return res.sendStatus(403);
+  }
+
+  let itemid = req.params.productId;
+  let likerId = req.user.id;
+  try {
+    let rid = await db.db_promise(sql.sql_insertLike, [likerId, itemid])
   } catch (err) {
     return res.sendStatus(500);
   }

@@ -32,6 +32,14 @@
         <p><%= message%></p>
     </div>
     <% } %>
+    <%
+    const getPlaceholderImg = () => {
+        return ('https://randomuser.me/api/portraits/med/'
+            + (Math.random()>0.5 ? 'men/' : 'women/')
+            + (Math.floor(Math.random() * 80)+10)
+            + '.jpg');
+    }
+    %>
 </head>
 
 <body>
@@ -48,6 +56,15 @@
                         class="glyphicon glyphicon-th"></span>Grid</a>
             </div>
         </div>
+        
+
+        <%if(data.length>0){ %>
+            <% if (title == "User Search") { %>
+                <h1><%= username %>'s Listings</h1>
+            <%} else { %>
+                <h1>Your Listings</h1>
+            <% } %>
+        <% } %>
         <div id="products" class="product-container">
             <% for(var i=0; i<data.length; i++) { %>
             <a class="item" href= <%= "../p/" + data[i].itemid %>>
@@ -141,6 +158,47 @@
                 </div>
             </a>
             <% } %>
+        </div>
+
+        <%if(biditems.length>0){ %>
+            <hr>
+        <% } %>
+
+        <% if (title == "User Search") {} else { %>
+        <div class="align-items-stretch flex-column">
+            <div class="main-title">
+                <h1>Reviews to You</h1>
+            </div>
+
+            
+            <% if (revs.length == 0) {%>
+            <div class="reviews-none">
+                <p>- There doesn't seem to be any reviews for you yet.- </p>
+            </div>
+            <% } %>
+            <% for(var i=0; i<revs.length; i++) { %>
+            <div class="reviews">
+                <div class="review-details">
+                <img src="<%=getPlaceholderImg()%>">
+                <div class="r-container">
+                    <p class="review-author"><%=revs[i].username%></p>
+                    <p class="review-date"><%=revs[i].rtime.toLocaleDateString("en-US", options)%></p>
+                    <div class="review-rating">
+                    <% for(var j=0; j<revs[i].star; j++) { %>
+                        <span class="review-star review-star--active">&#9733;</span>
+                    <% } %>
+                    <% for(var j=revs[i].star; j<5; j++) { %>
+                        <span class="review-star">&#9733;</span>
+                    <% } %>
+                    </div>
+                </div>
+                </div>
+                <div class="review-body">
+                    <p><%= revs[i].review%></p>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
         </div>
     </div>
 
