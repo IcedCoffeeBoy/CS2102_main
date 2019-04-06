@@ -46,6 +46,7 @@ CREATE TABLE Items (
 	loanStart	TIMESTAMP default now(),
 	loanEnd		TIMESTAMP default now() + interval '168 hour',
 	location	VARCHAR(128) default '4 Engineering Drive 4, Singapore 117955',
+	views		INTEGER DEFAULT 0,
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );

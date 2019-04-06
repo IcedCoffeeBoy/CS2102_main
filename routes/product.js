@@ -48,6 +48,9 @@ router.get("/:productId", async (req, res, next) => {
       return res.redirect("../op/" + itemid)
     }
 
+    results[0][0].loanstart = results[0][0].loanstart.toLocaleDateString("en-US", options);
+    results[0][0].loanend = results[0][0].loanend.toLocaleDateString("en-US", options);
+
     // Render page once all data is collected 
     res.render("product", {
       title: "productlisting",
