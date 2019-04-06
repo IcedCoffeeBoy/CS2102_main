@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS viewhistory CASCADE;
 DROP TABLE IF EXISTS blocks CASCADE;
 
+
 --------------Entity------------------------
 CREATE TABLE Accounts (
 	accountId	SERIAL PRIMARY KEY,
@@ -76,8 +77,9 @@ ALTER SEQUENCE relationships_rid_seq RESTART WITH 1000;
 create table if not exists messages (
 	msgid serial primary key,
 	userfrom integer,
-	timestamp timestamp default now(),
+	timestamp timestamp default (now() at time zone 'utc'),
 	rid integer,
+	msg text,
 	foreign key (userfrom) references accounts (accountid),
 	foreign key (rid) references relationships(rid)
 );
@@ -198,9 +200,24 @@ begin
 end;
 $$ language plpgsql;
 
+DROP FUNCTION insertmessageshortcut(integer,integer,integer,integer,text);
+
+create or replace function insertMessageShortcut (fromId integer, buyerId integer, sellerId integer, relItemId integer, msgContent text)
+returns integer as $$
+declare relId integer;
+begin
+	insert into relationships(seller,buyer,itemid) values (sellerId, buyerId, relItemId) on conflict do nothing; 
+	relId := (select rid from relationships where buyer = buyerId and seller = sellerId);
+	insert into messages(userfrom, rid, msg) values (fromId, relId, msgContent);
+	return relId;
+end;
+$$ language plpgsql;
+
 
 ------------------------Insert mocking data -------------------------
 insert into categories values ('Animals'),('Electronic'),('Automobile'),('Household') ON CONFLICT DO NOTHING;
+insert into accounts values (999,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
 
 -------------------------------- Complex query ----------------------------------------
 select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 

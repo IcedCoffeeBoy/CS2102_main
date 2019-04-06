@@ -1,3 +1,8 @@
+$(document).ready(() => {
+  google.charts.load('current', { packages: ['corechart', 'line'] });
+  google.charts.setOnLoadCallback(drawBackgroundColor);
+})
+
 $(document).ready(() =>
   $(".thumbnail").on("click", (event) => {
     var clicked = $(event.target).parent();
@@ -41,10 +46,35 @@ $(document).ready(() => {
         alert("No bidding is found for this item")
       } else if (jqXHR.status == 500 || jqXHR.status == 403) {
         alert("Server Error")
-      } 
+      }
     });
   });
 })
+
+
+
+function drawBackgroundColor() {
+  let path = $(location).attr('href');
+  var data = new google.visualization.DataTable();
+  data.addColumn('date', 'time');
+  data.addColumn('number', 'bid value');
+  $.get(path + '/getbiddinghistory', function (result) {
+    result.forEach((element) => {
+      data.addRows([[new Date(element.timestamp), parseFloat(element.amount)]]);
+    });
+    var options = {
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Bid Price'
+      },
+      backgroundColor: '#FFFFFF',
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  })
+}
 
 
 function checkbidPrice(bidPrice) {

@@ -5,3 +5,17 @@
     font-style: italic;
     color: darkblue;
 }
+
+.bid-btn {
+    color: #fff !important;
+}
+
+.btn-container > * {
+    font-size: 0.8em !important;
+}
+
+.pricetag button {
+    width: 100%;
+}
+  
+  
