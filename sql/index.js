@@ -35,14 +35,14 @@ var sql = {
         "WHERE buyer = $1 AND imgno = 0 AND i.sold <> 0 ORDER BY datestart",
     sql_insertview: "insert into viewHistory(itemid,userid) values ($1,$2)",
     sql_getUserReviews: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
-        "where revieweeid = $1 order by rtime",
+        "where revieweeid = $1 order by rtime desc",
 
     // Product
     sql_getProductInfo:
         "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1",
     sql_getProductImg: "select imgurl from images where itemid = $1",
     sql_getSellerReview: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
-        "where revieweeid = (select seller from items where itemid = $1) order by rtime",
+        "where revieweeid = (select seller from items where itemid = $1) order by rtime desc",
     sql_getYouMayAlsoLike: "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4",
     sql_getCurrentBid: "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2",
     sql_insertBid: "select insertBidshortcut($1,$2,$3)",

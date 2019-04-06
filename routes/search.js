@@ -46,14 +46,15 @@ router.get('/:userid', async (req, res, next) => {
     let data = await db.db_promise(sql.sql_getItems, [req.params.userid]);
 
     res.render('user', {
-      title: 'User Page',
+      title: "User Search",
       data,
       user: req.user,
       username,
       datejoined,
       biditems: [],
       solditems: [],
-      successfulbids: []
+      successfulbids: [],
+      revs: [],
     });
 
   } catch (err) {

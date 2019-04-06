@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
     let revs = results[5]
 
     res.render('user', {
-      title: 'User Page',
+      title: "User Page",
       data: data, user: req.user,
       username: req.user.username,
       datejoined: datejoined,

@@ -56,8 +56,14 @@
                         class="glyphicon glyphicon-th"></span>Grid</a>
             </div>
         </div>
+        
+
         <%if(data.length>0){ %>
-            <h1>Your Listings</h1>
+            <% if (title == "User Search") { %>
+                <h1><%= username %>'s Listings</h1>
+            <%} else { %>
+                <h1>Your Listings</h1>
+            <% } %>
         <% } %>
         <div id="products" class="product-container">
             <% for(var i=0; i<data.length; i++) { %>
@@ -158,10 +164,13 @@
             <hr>
         <% } %>
 
+        <% if (title == "User Search") {} else { %>
         <div class="align-items-stretch flex-column">
             <div class="main-title">
                 <h1>Reviews to You</h1>
             </div>
+
+            
             <% if (revs.length == 0) {%>
             <div class="reviews-none">
                 <p>- There doesn't seem to be any reviews for you yet.- </p>
@@ -189,6 +198,7 @@
                 </div>
             </div>
             <% } %>
+        <% } %>
         </div>
     </div>
 
