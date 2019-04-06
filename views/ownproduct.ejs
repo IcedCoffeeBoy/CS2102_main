@@ -98,15 +98,24 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Sold to <a class="text-seller" href="/search/<%=sold.buyer%>"><%=sold.buyername%></a>
         </div>
-        <div>
-            No. of bidders: <%=noOfbidders%>
-        </div class="p-2 m-2">
+        
+        <div class="text-desc p-2 m-2">
+                No. of bidders: <%=noOfbidders%>
+        </div>
+        <div class="text-desc p-2 m-2">
+            <b>Loan Start:</b> 
+            <%= data.loanstart.toLocaleDateString("en-US", options) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>Loan End:</b> 
+            <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
+            <b>Suggested Pickup Location:</b> <br>
+            <%= data.location %>
+        </div>
         <div class="text-desc p-2 m-2">
             <b>Item description:</b> <br/>
             <%= data.description %>
         </div>
         </div>
-        </div>
+    </div>
       <% } else {%>
       <div class="text-container align-items-stretch">
         <div class="text-title"><%=data.title%></div>
@@ -116,6 +125,14 @@
         </div>
         <div class="text-desc p-2 m-2">
             No. of bidders: <%=noOfbidders%>
+        </div>
+        <div class="text-desc p-2 m-2">
+            <b>Loan Start:</b> 
+            <%= data.loanstart.toLocaleDateString("en-US", options) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>Loan End:</b> 
+            <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
+            <b>Suggested Pickup Location:</b> <br>
+            <%= data.location %>
         </div>
         <div class="text-desc p-2 m-2">
             <b>Item description:</b> <br/>

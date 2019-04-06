@@ -7,26 +7,24 @@ router.get('/', async function (req, res, next) {
   // Query processing
   var type = req.query.searchdropdown;
   var query = "%" + req.query.query.toLowerCase() + "%";
-  var q = "";
-  if (type == "Users") {
-    q = sql.search_users;
-  } else {
-    q = sql.search_items;
-  }
 
   // SQL query execution and page rendering
   try {
-    let data = await db.db_promise(q, [query]);
-
-    if (type == "Users") {
+      if (type == "Users") {
       if (req.isAuthenticated()) {
+        let data = await db.db_promise(sql.search_users, [query]);
         res.render('users', { title: 'User Search', data: data, user: req.user });
       } else {
         req.flash("message", "Only login user can use this function");
         return res.redirect("../");
       }
     } else {
-      return res.render('main', { title: 'search', data: data, user: req.user });
+      let promises = [
+        db.db_promise(sql.search_itemsPopular, [query]),
+        db.db_promise(sql.search_itemsRated, [query])
+      ]
+      let data = await Promise.all(promises)
+      return res.render('main', { title: 'search', data: data[0], data2: data[1], user: req.user });
     }
   } catch (err) {
     console.log(err);

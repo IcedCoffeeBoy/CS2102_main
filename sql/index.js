@@ -19,8 +19,21 @@ var sql = {
   
   
     // Search
+    search_itemsPopular: 'select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) from (items natural join images) as r1 ' +
+      'left join relationships on r1.itemid = relationships.itemid ' +
+      'left join viewhistory on r1.itemid = viewhistory.itemid ' +
+      'where imgno=0 and sold=0 and lower(title) like $1 ' +
+      'group by r1.itemid,title,description,price,imgurl ' +
+      'order by count(rid) desc, count(viewid) desc',
+
+    search_itemsRated: 'select r1.itemid, title, description, price, imgurl, count(distinct likeid), count(distinct rid) from (items natural join images) as r1 ' +
+      'left join likes on r1.itemid = likes.itemid ' +
+      'left join relationships on r1.itemid = relationships.itemid ' +
+      'where imgno=0 and sold=0 and lower(title) like $1 ' +
+      'group by r1.itemid, title, description, price, imgurl ' +
+      'order by count(likeid) desc, count(rid) desc',
+    
     search_items: 'select title, description, price, imgurl,itemid from items natural join images where lower(title) like $1 and imgno = 0 and sold = 0',
-    search_categories: 'select catname from categories where lower(catname) like $1',
     search_users: 'select username,accountid from accounts where lower(username) like $1',
     
     // User Page
@@ -40,7 +53,7 @@ var sql = {
 
     // Product
     sql_getProductInfo:
-        "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1",
+        "select title, description, price, username, catname, accountid,sold, loanstart, loanend, location from items join accounts on items.seller = accounts.accountid where itemid = $1",
     sql_getProductImg: "select imgurl from images where itemid = $1",
     sql_getSellerReview: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
         "where revieweeid = (select seller from items where itemid = $1) order by rtime desc",
@@ -68,7 +81,7 @@ var sql = {
     sql_insertReviewB:"select insertReviewShortcutB($1,$2,$3,$4)",
     sql_insertReviewS:"select insertReviewShortcutS($1,$2,$3,$4)",
 
-    // New Listing
+    // List Item
     sql_getCategories: 'SELECT * FROM Categories',
     sql_insertItem: "INSERT INTO Items(title,description,price,seller,catname,loanstart,loanend,location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING itemid",
     sql_insertImage: "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)",
