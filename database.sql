@@ -43,9 +43,9 @@ CREATE TABLE Items (
 	bidEndTime	TIMESTAMP,
 	catname		VARCHAR(80),
 	sold        INTEGER DEFAULT 0,
-	loanStart	TIMESTAMP,
-	loanEnd		TIMESTAMP,
-	location	VARCHAR(128),
+	loanStart	TIMESTAMP default now(),
+	loanEnd		TIMESTAMP default now() + interval '168 hour',
+	location	VARCHAR(128) default '4 Engineering Drive 4, Singapore 117955',
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
 );
@@ -91,9 +91,9 @@ create table if not exists messages (
 --------------Entity------------------------
 create table if not exists transactions(
 	transactionid serial primary key,
-	dateStart date default CURRENT_DATE,
-	dateEnd date default CURRENT_DATE + 7,
-	amount numeric(32, 2),
+	dateStart timestamp not null,
+	dateEnd timestamp not null,
+	amount numeric(32, 2) not null,
 	rid integer not null unique
 );
 
@@ -128,7 +128,7 @@ create table if not exists qnas(
 	itemid integer,
 	userid integer,
 	comment text, 
-	date date,
+	timestamp timestamp,
 	foreign key (itemid) references items on delete cascade,
 	foreign key (userid) references accounts(accountid)
 );
@@ -201,17 +201,19 @@ $$ language plpgsql;
 
 create or replace function insertTransactionShortcut (item integer)
 returns integer as $$ 
-declare newseller integer; newbuyer integer;declare newrid integer; newamount integer;
+declare newseller integer; newbuyer integer;declare newrid integer; newamount integer; datestart timestamp; dateend timestamp;
 begin
 	newseller := (select seller from items where itemid = item);
 	newbuyer  := (select b.userid from bids b join relationships r on b.rid = r.rid and r.itemid = item order by b.amount desc limit 1);
 	newamount := (select price from items where itemid = item);
+	datestart := (select loanstart from items where itemid = item);
+	dateend   := (select loanend   from items where itemid = item);
 	if newbuyer = null then
 		return 0;
 	end if;
 	newrid := (select rid from relationships where buyer = newbuyer and seller = newseller and itemid = item);
 	update Items set sold = newrid where itemid = item;
-	insert into transactions(amount, rid) values (newamount,newrid);
+	insert into transactions(datestart, dateend, amount, rid) values (datestart, dateend, newamount,newrid);
 	return newrid;
 end;
 $$ language plpgsql;

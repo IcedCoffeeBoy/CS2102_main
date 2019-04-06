@@ -22,7 +22,7 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(sql.sql_getLikes, [itemid])
     ]
 
-    let results = await Promise.all(promises)
+  let results = await Promise.all(promises)
     let options = { year: 'numeric', month: 'long', day: 'numeric' }
     if (results[0][0].accountid == userid) {
       return res.redirect("../op/" + itemid)
