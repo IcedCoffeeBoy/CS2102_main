@@ -47,6 +47,7 @@ var sql = {
     sql_getSuccessfulBids: "SELECT * FROM (((Items i NATURAL JOIN Images) join transactions t on i.sold = t.rid) natural join relationships) join accounts on accountid = seller " + 
         "WHERE buyer = $1 AND imgno = 0 AND i.sold <> 0 ORDER BY datestart",
     sql_insertview: "insert into viewHistory(itemid,userid) values ($1,$2)",
+    sql_updateViews: "UPDATE Items SET views = views + 1 WHERE itemid = $1",
     sql_getUserReviews: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
         "where revieweeid = $1 order by rtime desc",
 
@@ -85,6 +86,27 @@ var sql = {
     sql_insertItem: "INSERT INTO Items(title,description,price,seller,catname,loanstart,loanend,location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING itemid",
     sql_insertImage: "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)",
 
+    // Recommender
+    sql_getRecommended: `WITH MostRecent AS (
+                            SELECT *
+                            FROM viewHistory NATURAL JOIN Items
+                            WHERE userid = $1
+                            ORDER BY timestamp DESC LIMIT 20
+                        ), RecommendedCat AS (
+                            SELECT catname, count(*) FROM MostRecent
+                            GROUP BY catname
+                        )
+                        SELECT itemid, title, description, price, imgurl, catname
+                        FROM (Items NATURAL JOIN Images) AS I1
+                        WHERE catname IN (SELECT catname FROM RecommendedCat)
+                        AND itemid IN (
+                            SELECT itemid FROM Items I2
+                            WHERE I2.catname = I1.catname AND I2.itemid != $2
+                            ORDER BY views DESC LIMIT (
+                                (SELECT count FROM RecommendedCat WHERE catname = I1.catname) / (SELECT sum(count) FROM RecommendedCat) * 10)
+                        )
+                        ORDER BY views DESC`,
+                        
 }
 
 module.exports = sql;
