@@ -19,7 +19,10 @@ const getSellerIdQuery = "select seller from items where itemid = $1"
 
 /* Routes */
 router.get('/', async (req, res, next) => {
-    res.render("chatpage")
+    res.render("chatpage", {
+        user: req.user,
+
+    })
 })
 
 router.post('/getChat', async (req, res, next) => {
