@@ -1,34 +1,24 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../db");
+var sql = require('../sql/index');
 
 router.get("/", function (req, res, next) {
   res.send("<h1>No product listing code provided!</h1>");
 });
 
 router.get("/:productId", async (req, res, next) => {
-  /* ------------------------- SQL QUERY STATEMENT------------------- */
-  const mainquery =
-    "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1";
-  const imgquery = "select imgurl from images where itemid = $1";
-  const revquery = "select star, review, username, timestamp as rtime from ((reviews natural join transactions natural join relationships) A join accounts B on A.buyer = B.accountid) " + 
-    "where itemid = $1 and reviewerid = buyer order by timestamp";
-  const sidequery = "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4";
-  const sql_insertview = "insert into viewHistory(itemid,userid) values ($1,$2)"
-  const sql_getcurrentbid = "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2"
-  /* --------------------------------------------------------------- */
-
   let itemid = req.params.productId;
   let userid = req.user.id;
 
   // SQL Query Parallel Execution
   try {
     let promises = [
-      db.db_promise(mainquery, [itemid]),
-      db.db_promise(imgquery, [itemid]),
-      db.db_promise(revquery, [itemid]),
-      db.db_promise(sidequery),
-      db.db_promise(sql_getcurrentbid,[itemid,userid])
+      db.db_promise(sql.sql_getProductInfo, [itemid]),
+      db.db_promise(sql.sql_getProductImg, [itemid]),
+      db.db_promise(sql.sql_getSellerReview, [itemid]),
+      db.db_promise(sql.sql_getYouMayAlsoLike),
+      db.db_promise(sql.sql_getCurrentBid,[itemid,userid])
     ]
 
     let results = await Promise.all(promises)
@@ -56,7 +46,7 @@ router.get("/:productId", async (req, res, next) => {
 
   if (req.isAuthenticated()) {
     userid = req.user.id;
-    db.query(sql_insertview, [itemid, userid], (err, data) => {
+    db.query(sql.sql_insertview, [itemid, userid], (err, data) => {
       if (err) {
         console.log("SQL error inserting view " + err);
       }
@@ -65,9 +55,7 @@ router.get("/:productId", async (req, res, next) => {
 });
 
 router.post("/:productId/makebid", async function (req, res, next) {
-  /*--------------------- SQL Query Statement -------------------*/
-  const sql_insertbid = "select insertBidshortcut($1,$2,$3)"
-  /* ---------------------------------------------------------- */
+
   if (!req.isAuthenticated()) {
     return res.sendStatus(403);
   }
@@ -76,7 +64,7 @@ router.post("/:productId/makebid", async function (req, res, next) {
   let bidPrice = req.body.bidPrice;
   let buyerId = req.user.id;
   try {
-    let rid = await db.db_promise(sql_insertbid, [buyerId, bidPrice, itemid])
+    let rid = await db.db_promise(sql.sql_insertBid, [buyerId, bidPrice, itemid])
   } catch (err) {
     return res.sendStatus(500);
   }

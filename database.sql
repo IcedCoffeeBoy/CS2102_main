@@ -90,7 +90,7 @@ create table if not exists transactions(
 	dateStart date default CURRENT_DATE,
 	dateEnd date default CURRENT_DATE + 7,
 	amount numeric(32, 2),
-	rid integer not null
+	rid integer not null unique
 );
 
 --------------Entity------------------------
@@ -223,7 +223,7 @@ begin
 end;
 $$ language plpgsql;
 
-DROP FUNCTION insertmessageshortcut(integer,integer,integer,integer,text);
+DROP function if exists insertmessageshortcut(integer,integer,integer,integer,text);
 
 create or replace function insertMessageShortcut (fromId integer, buyerId integer, sellerId integer, relItemId integer, msgContent text)
 returns integer as $$
@@ -240,6 +240,7 @@ $$ language plpgsql;
 ------------------------Insert mocking data -------------------------
 insert into categories values ('Animals'),('Electronic'),('Automobile'),('Household') ON CONFLICT DO NOTHING;
 insert into accounts values (110,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
+insert into accounts values (111,'bob','$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','bob@me.com');
 update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
 
 -------------------------------- Complex query ----------------------------------------
