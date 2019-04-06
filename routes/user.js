@@ -12,7 +12,8 @@ router.get('/', async (req, res, next) => {
       db.db_promise(sql.sql_getItems, [req.user.id]),
       db.db_promise(sql.sql_getBidItems, [req.user.id]),
       db.db_promise(sql.sql_getSoldItems, [req.user.id]),
-      db.db_promise(sql.sql_getSuccessfulBids, [req.user.id])
+      db.db_promise(sql.sql_getSuccessfulBids, [req.user.id]),
+      db.db_promise(sql.sql_getUserReviews, [req.user.id])
     ]);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let datejoineds = results[0];
@@ -22,6 +23,7 @@ router.get('/', async (req, res, next) => {
     let biditems = results[2]
     let solditems = results[3]
     let successfulbids = results[4]
+    let revs = results[5]
 
     res.render('user', {
       title: 'User Page',
@@ -31,7 +33,8 @@ router.get('/', async (req, res, next) => {
       biditems: biditems,
       solditems: solditems,
       successfulbids: successfulbids,
-      options: options
+      options: options,
+      revs: revs
     });
   } catch (err) {
     console.log(err)

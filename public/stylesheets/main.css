@@ -7,6 +7,10 @@
     margin-bottom:32px;
 }
 
+.hide {
+    display: none;
+}
+
 .item {
     display: flex;
     flex-flow: column;

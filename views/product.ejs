@@ -94,7 +94,7 @@
         <div class="text-bid">Current Highest Bid: $<%=data.price%></div>
         <%if (user == null) {%>
             <div class="d-flex btn-container">
-                <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
+                <a class="btn white-btn" href="#" role="button" style="flex:1" id="like-btn">&#x2764 <%=like%></a>
                 <a class="btn white-btn" href="#" role="button" style="flex:2">Chat</a>
                 <a class="btn white-btn" href="../" role="button" style="flex:2">Login to bid</a>
             </div>
@@ -105,7 +105,7 @@
                 <input type="number" id="bidPrice" name="bidPrice" min="<%=data.price%>" step="0.01" placeholder="Your bid">
             </div>
             <div class="d-flex btn-container">
-                <a class="btn white-btn" href="#" role="button" style="flex:1">&#x2764 <%=Math.floor(Math.random() * 10)%></a>
+                <a class="btn white-btn" href="#" role="button" style="flex:1" id="like-btn">&#x2764 <%=like%></a>
                 <a class="btn white-btn" id="main-chat-open-btn" href="#" role="button" style="flex:2">Chat</a>
                 <button type="submit" class="btn bid-btn primary-bg primary-bg-hover" href="#" role="button" style="flex:2">Make Bid</button>
             </div>
