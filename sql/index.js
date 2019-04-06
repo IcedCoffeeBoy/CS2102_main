@@ -1,4 +1,23 @@
 var sql = {
+    // Main
+    /* The items are sorted by bids and followed by views */
+    sql_getPopularItems:
+      'select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) from (items natural join images) as r1 ' +
+      'left join relationships on r1.itemid = relationships.itemid ' +
+      'left join viewhistory on r1.itemid = viewhistory.itemid ' +
+      'where imgno=0 and sold=0 ' +
+      'group by r1.itemid,title,description,price,imgurl ' +
+      'order by count(rid) desc, count(viewid) desc',
+    /* The items are sorted by likes and followed by bids */
+    sql_getTopRatedItems: 
+      'select r1.itemid, title, description, price, imgurl, count(distinct likeid), count(distinct rid) from (items natural join images) as r1 ' +
+      'left join likes on r1.itemid = likes.itemid ' +
+      'left join relationships on r1.itemid = relationships.itemid ' +
+      'where imgno=0 and sold=0 ' +
+      'group by r1.itemid, title, description, price, imgurl ' +
+      'order by count(likeid) desc, count(rid) desc',
+  
+  
     // Search
     search_items: 'select title, description, price, imgurl,itemid from items natural join images where lower(title) like $1 and imgno = 0 and sold = 0',
     search_categories: 'select catname from categories where lower(catname) like $1',
@@ -15,16 +34,20 @@ var sql = {
     sql_getSuccessfulBids: "SELECT * FROM (((Items i NATURAL JOIN Images) join transactions t on i.sold = t.rid) natural join relationships) join accounts on accountid = seller " + 
         "WHERE buyer = $1 AND imgno = 0 AND i.sold <> 0 ORDER BY datestart",
     sql_insertview: "insert into viewHistory(itemid,userid) values ($1,$2)",
+    sql_getUserReviews: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
+        "where revieweeid = $1 order by rtime desc",
 
     // Product
     sql_getProductInfo:
         "select title, description, price, username, catname, accountid,sold from items join accounts on items.seller = accounts.accountid where itemid = $1",
     sql_getProductImg: "select imgurl from images where itemid = $1",
     sql_getSellerReview: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
-        "where revieweeid = (select seller from items where itemid = $1) order by timestamp",
+        "where revieweeid = (select seller from items where itemid = $1) order by rtime desc",
     sql_getYouMayAlsoLike: "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4",
     sql_getCurrentBid: "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2",
     sql_insertBid: "select insertBidshortcut($1,$2,$3)",
+    sql_getLikes: "select count(likeid) as likes from likes where itemid = $1",
+    sql_insertLike: "insert into likes(likerid, itemid) values ($1, $2) ",
 
     // Own Product
     sql_getNoBidders: "select count(distinct rid) as counts from bids natural join relationships where itemid=$1",
@@ -34,10 +57,15 @@ var sql = {
     sql_getSellerId: "select seller from items where itemid=$1",
     sql_getBiddingHistory: "select timestamp,amount from bids natural join relationships where itemid=$1 ",
 
-    // New Listing
-    sql_getCategories: "SELECT * FROM Categories",
-    sql_insertItem: "INSERT INTO Items(title,description,price,seller,catname,loanstart,loanend,location) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING itemid",
-    sql_insertImage: "INSERT INTO Images(imgurl,itemid,imgno) VALUES ($1,$2,$3)"
+    // Review
+    sql_reviewPageB: "select * from (transactions natural join relationships) " + 
+      "join accounts on accountid = seller " +
+      "where transactionid = $1",
+    sql_reviewPageS: "select * from (transactions natural join relationships) " + 
+      "join accounts on accountid = buyer " +
+      "where transactionid = $1",
+    sql_insertReviewB:"select insertReviewShortcutB($1,$2,$3,$4)",
+    sql_insertReviewS:"select insertReviewShortcutS($1,$2,$3,$4)",
 
 }
 
