@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
+/* SQL Queries */
 const msgInsertQuery = "select insertMessageShortcut($1, $2, $3, $4, $5)"
 const msgPollAllQuery = ("select timestamp, userfrom, msg from messages "
         + "where rid = (select rid from relationships where buyer = $1 "
@@ -14,6 +15,12 @@ const msgPollQuery = ("select timestamp, msg from messages "
         + "and timestamp > $4 "
         + "order by timestamp")
 const getSellerIdQuery = "select seller from items where itemid = $1"
+
+
+/* Routes */
+router.get('/', async (req, res, next) => {
+    res.render("chatpage")
+})
 
 router.post('/getChat', async (req, res, next) => {
     try {
