@@ -192,10 +192,11 @@
                     window.setTimeout(() => {location.reload()}, 1000)
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     
-                if (jqXHR.status == 500 || jqXHR.status == 403) {
-                    $('#popout-msg').html("<p>Failure!<br /> Please comment after 20 seconds</p>");
-                    $('.hover_bkgr_fricc').show();
-                } 
+                if (jqXHR.status == 500) {
+                    popmsg("<p>Failure!<br /> Please comment after 20 seconds</p>");
+                } else if (jqXHR.status == 403) {
+                    popmsg("<p>Failure!<br /> Please login to add comment</p>");
+                }
                 });
                 console.log(data)
             })

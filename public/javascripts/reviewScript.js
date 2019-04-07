@@ -72,13 +72,11 @@ StarContainer.addEventListener('mouseleave', function() {
     }
     var url = $(this).attr('action');
     $.post(url, data, function (result) {
-        $('#popout-msg').html("<p>Successful Review!<br />Redirecting...</p>");
-        $('.hover_bkgr_fricc').show();
+        popmsg("<p>Successful Review!<br />Redirecting...</p>");
         window.setTimeout(() => { history.back()}, 1000)
       }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 500 || jqXHR.status == 403) {
-          $('#popout-msg').html("<p>Failure!<br />Multiple reviews are not allowed for single transaction </p>");
-          $('.hover_bkgr_fricc').show();
+          popmsg("<p>Failure!<br />Multiple reviews are not allowed for single transaction </p>");
         } 
       });
 
