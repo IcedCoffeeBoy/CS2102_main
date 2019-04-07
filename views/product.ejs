@@ -121,9 +121,9 @@
         </div>
         <div class="text-desc p-2 m-2">
             <b>Loan Start:</b> 
-            <%= data.loanstart %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <%= data.loanstart.toLocaleDateString("en-US", options) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <b>Loan End:</b> 
-            <%= data.loanend %> <br><br>
+            <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
             <b>Suggested Pickup Location:</b> <br>
             <%= data.location %>
         </div>

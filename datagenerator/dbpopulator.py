@@ -71,6 +71,27 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=Non
 
     db.commit()
     print("Successfully insert new images")
+    
+    # --------- Add likes ---------
+    # Obtain list of user IDs
+    db.cursor.execute("SELECT accountid FROM Accounts")
+    uid = [row[0] for row in db.cursor.fetchall()]
+
+    # Obtain list of item ids
+    db.cursor.execute("SELECT itemid FROM Items")
+    items = [row[0] for row in db.cursor.fetchall()]
+
+    # Generate and insert like entries
+    base_sql_like_insert = "INSERT INTO Likes (likerid, itemid) VALUES " + build_empty_sql_insert(2)
+
+    for item in items:
+        numLikers = random.randint(0,len(uid))
+        likers = random.sample(uid, k=numLikers)
+        for liker in likers:
+            db.cursor.execute(base_sql_like_insert, (liker, item))
+                
+    db.commit()
+    print("Successfully insert new likes")
 
     # ------------- Closing connection ---------------
     print("Closing connection...")
