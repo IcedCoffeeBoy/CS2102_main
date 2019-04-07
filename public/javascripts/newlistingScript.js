@@ -1,59 +1,60 @@
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        
+
         var id = input.id;
         id = id.substring(id.length - 1, id.length);
-        reader.onload = function(e) {
-            $('#image-upload-wrap-'+id).hide();
-            $('#file-upload-image-'+id).attr('src', e.target.result);
-            $('#file-upload-content-'+id).show();
+        reader.onload = function (e) {
+            $('#image-upload-wrap-' + id).hide();
+            $('#file-upload-image-' + id).attr('src', e.target.result);
+            $('#file-upload-content-' + id).show();
         };
-    
+
         reader.readAsDataURL(input.files[0]);
     } else {
         removeUpload(id);
     }
 }
-        
+
 function removeUpload(input) {
     var id = input.id;
     id = id.substring(id.length - 1, id.length);
-    $('#file-upload-input-'+id).replaceWith($('#file-upload-input-'+id).clone());
-    $('#file-upload-content-'+id).hide();
-    $('#image-upload-wrap-'+id).show();
+    $('#file-upload-input-' + id).replaceWith($('#file-upload-input-' + id).clone());
+    $('#file-upload-content-' + id).hide();
+    $('#image-upload-wrap-' + id).show();
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     var dropElems = document.getElementsByClassName("image-upload-wrap");
-    for (var i=0; i<dropElems.length; i++) {
+    for (var i = 0; i < dropElems.length; i++) {
         elem = dropElems[i];
-        elem.addEventListener("dragover", function() {
+        elem.addEventListener("dragover", function () {
             this.classList.add("image-dropping");
         });
-        elem.addEventListener("dragleave", function() {
+        elem.addEventListener("dragleave", function () {
             this.classList.remove("image-dropping");
         });
     }
 });
 
 
-$(document).ready(function() {
-    $('input:radio[name="category"]:first').attr('checked','checked');
+$(document).ready(function () {
+    $('input:radio[name="category"]:first').attr('checked', 'checked');
 });
 
 
-$(document).ready(function() {
-    $('#newlisting-form').submit(function (){
+$(document).ready(function () {
+    $('#newlisting-form').submit(function () {
         $.ajax({
-            complete: function() {
-                alert('Listing added!');
+            complete: function () {
+                let msg = "<p>Success!<br/>Listing added!</p>"
+                popmsg(msg);
             }
         });
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#rangestart').calendar({
         type: 'date',
         endCalendar: $('#rangeend'),

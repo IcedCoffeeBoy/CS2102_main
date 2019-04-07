@@ -40,13 +40,13 @@ $(document).ready(() => {
     $('.accept_offer_class').hide()
     var url = $(this).attr('action');
     $.post(url, function (result) {
-      $('#popout-msg').html("<p>Successful Transaction! <br />Leave a review to the buyer?</p>");
-      $('.hover_bkgr_fricc').show();
+      let msg = "<p>Successful Transaction! <br />Leave a review to the buyer?</p>"
+      popmsg(msg);
       window.setTimeout(() => { location.reload() }, 1000)
     }).fail(function (jqXHR, textStatus, errorThrown) {
       if (jqXHR.status = 404) {
-      $('#popout-msg').html("<p>Failure! <br />No bidding is found for this item</p>");
-      $('.hover_bkgr_fricc').show();
+        let msg = "<p>Failure! <br />No bidding is found for this item</p>"
+        popmsg(msg);
       } else if (jqXHR.status == 500 || jqXHR.status == 403) {
         alert("Server Error")
       }

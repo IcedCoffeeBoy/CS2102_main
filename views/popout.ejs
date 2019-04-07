@@ -79,6 +79,23 @@
             <div id="popout-msg"></div>
         </div>
     </div>
+
+    <script>
+        function popmsg(msg){
+            $('#popout-msg').html(msg);
+            $('.hover_bkgr_fricc').show();
+        }
+        $(document).ready(()=>{
+            $('.hover_bkgr_fricc').click(function () {
+                location.reload()
+            });
+            
+            $('.popupCloseButton').click(function () {
+                location.reload()
+            });
+        })
+    </script>
 </body>
 
 </html>
+
