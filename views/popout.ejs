@@ -23,7 +23,7 @@
             height:100%;
             vertical-align:middle;
         }
-        .hover_bkgr_fricc > div {
+       .hover_bkgr_fricc  > div {
             background-color:#ff7867;
             color: white;
             font-weight: bold;
@@ -92,6 +92,10 @@
             let string = "<p>"+title+"</br>"+msg+"<p>"
             $('#popout-msg').html(string);
             $('.hover_bkgr_fricc').show();
+        }
+
+        function set_popout_colour(colour){
+            $(".hover_bkgr_fricc  > div").css("background-color",colour)
         }
 
         $(document).ready(()=>{

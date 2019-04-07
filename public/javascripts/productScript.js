@@ -37,7 +37,8 @@ $(document).ready(() => {
           } 
         });
       } else {
-        popmsg("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>")
+        set_popout_colour("#8B0000")
+        pop_msg("Failure!","Ensure your bid is higher than the currrent bid")
       }
 
     }
