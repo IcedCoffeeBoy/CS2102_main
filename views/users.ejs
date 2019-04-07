@@ -21,54 +21,79 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
     <%- include ./navbar.ejs%>
+    <%
+    const getPlaceholderImg = () => {
+        return ('https://randomuser.me/api/portraits/med/'
+            + (Math.random()>0.5 ? 'men/' : 'women/')
+            + (Math.floor(Math.random() * 80)+10)
+            + '.jpg');
+    }
+    %>
 </head>
 
 <body>
 <div class="container-fluid">
-    <div class="well well-sm">
-        <strong>Display</strong>
-        <div class="btn-group">
-            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-                </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-th"></span>Grid</a>
-        </div>
-    </div>
     <div>
-        <h2>Items Listed</h2>
+        <h2>Users Registered</h2>
     </div>
-    <div id="products" class="row list-group">
+    <div id="products" class="product-container">
         <% for(var i=0; i<data.length; i++) { %>
-        <div class="item  col-xs-4 col-lg-4">
-            <div class="thumbnail">
-                <img class="group list-group-image" src= "<%= data[i].imgurl %>" alt=""  />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading">
+        <div class="item">
+            
+                
+                <div class="item-top">
+                    <img src= "<%=getPlaceholderImg()%>"/>
+                    <div class="title">
                         <%= data[i].username %>
-                    </h4>
-                    <p class="group inner list-group-item-text">
-                         <%= data[i].description %>
-                    </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead">
-                             <%= data[i].price %>
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success primary-bg primary-border primary-bg-hover" href="../search/<%=data[i].accountid%>">See details</a>
+                    </div>
+                    <div class="stars pull-right">
+                        <div class="star-rating-container">
+                            <div class="star-rating star-rating-on" style="width:<%=rating[i].mark*20%>%"></div>
+                            <div class="star-rating star-rating-off"></div>
                         </div>
                     </div>
+        
+                    <div class="btn btn-success primary-bg primary-border primary-bg-hover">
+                        <a href="../search/<%=data[i].accountid%>">See details</a>
+                    </div>
+                    
                 </div>
-            </div>
+            
         </div>
         <% } %>
     </div>
+    <style>
+        /* rating stars */
+        .star-rating-container {
+            font-family: icomoon;
+            font-size: 32px;
+            color: #ff5e00;
+            position: relative;
+            display: inline-block;
+            opacity: 0.7;
+            text-shadow: 1px 1px grey;
+        }
+        .star-rating:before {
+                content: "★★★★★";
+            }
+        .star-rating-on {
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .star-rating-off {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgb(128, 122, 122);
+        }
 
-    <script>
-        $(document).ready(function () {
-            $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
-            $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
-        });
-    </script>
+        .stars {
+            position: relative;
+            margin-inline-end: 4%;
+            top: -10px;
+        }
+    </style>
 <body>
 </html>

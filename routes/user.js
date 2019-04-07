@@ -13,7 +13,8 @@ router.get('/', async (req, res, next) => {
       db.db_promise(sql.sql_getBidItems, [req.user.id]),
       db.db_promise(sql.sql_getSoldItems, [req.user.id]),
       db.db_promise(sql.sql_getSuccessfulBids, [req.user.id]),
-      db.db_promise(sql.sql_getUserReviews, [req.user.id])
+      db.db_promise(sql.sql_getUserReviews, [req.user.id]),
+      db.db_promise(sql.sql_getUserRating, [req.user.id])
     ]);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     let datejoineds = results[0];
@@ -34,6 +35,8 @@ router.get('/', async (req, res, next) => {
       solditems: solditems,
       successfulbids: successfulbids,
       options: options,
+      crating: results[6][0].crating,
+      sellerRating: parseFloat(results[6][0].rating).toFixed(1),
       revs: revs
     });
   } catch (err) {

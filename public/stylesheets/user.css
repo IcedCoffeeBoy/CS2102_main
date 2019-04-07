@@ -83,5 +83,36 @@
     font-size: 0.85em;
   }
   
+/* rating stars */
+
+.star-rating-container {
+  font-family: icomoon;
+  font-size: 50px;
+  color: #ff5e00;
+  position: relative;
+  display: inline-block;
+  opacity: 0.7;
+  text-shadow: 1px 1px grey;
+}
+.star-rating:before {
+      content: "★★★★★";
+  }
+.star-rating-on {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.star-rating-off {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgb(128, 122, 122);
+}
+
+.stars {
+  position: relative;
+  margin-inline-end: 7%;
+  }
   
   

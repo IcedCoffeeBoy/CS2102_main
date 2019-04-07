@@ -20,6 +20,8 @@
     
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333333;
+
+    z-index: 1000;
 }
 
 .absolute-btn {

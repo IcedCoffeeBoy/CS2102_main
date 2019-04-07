@@ -77,6 +77,7 @@ StarContainer.addEventListener('mouseleave', function() {
       }).fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 500 || jqXHR.status == 403) {
           popmsg("<p>Failure!<br />Multiple reviews are not allowed for single transaction </p>");
+          window.setTimeout(() => { history.back()}, 1000)
         } 
       });
 

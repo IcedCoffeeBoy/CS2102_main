@@ -308,4 +308,3 @@ where imgno=0
 group by r1.itemid,title,description,price,imgurl
 order by count(rid) desc, count(viewid) desc;
 ----------------------------------------------------------------------------------------
-

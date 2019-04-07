@@ -48,20 +48,26 @@
         <h1><%= username %></h1>
         <p>Joined since: <%=datejoined%></p>
 
-        <div class="well well-sm">
-            <strong>Display</strong>
-            <div class="btn-group">
-                <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-                    </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                        class="glyphicon glyphicon-th"></span>Grid</a>
-            </div>
+        <div class="stars">
+        <div class="star-rating-container">
+            <div class="star-rating star-rating-on" style="width:<%=sellerRating*20%>%"></div>
+            <div class="star-rating star-rating-off"></div>
         </div>
+        <br>
+        Reviews: <%=sellerRating%>/5.0 (<%=crating%>)
+        </div>
+        
+        
         
 
         <%if(data.length>0){ %>
             <% if (title == "User Search") { %>
+                <hr>
+                <br>
                 <h1><%= username %>'s Listings</h1>
             <%} else { %>
+                <hr>
+                <br>
                 <h1>Your Listings</h1>
             <% } %>
         <% } %>
