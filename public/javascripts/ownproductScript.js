@@ -54,8 +54,6 @@ $(document).ready(() => {
   });
 })
 
-
-
 function drawBackgroundColor() {
   let path = $(location).attr('href');
   var data = new google.visualization.DataTable();

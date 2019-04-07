@@ -29,7 +29,7 @@ $(document).ready(() => {
         var data = $(this).serialize();
         var url = $(this).attr('action');
         $.post(url, data, function (result) {
-          popmsg("<p>Success!<br />Successfully added bid</p>");
+          pop_msg("Success!","Successfully added bid");
           window.setTimeout(() => { location.reload() }, 5000)
         }).fail(function (jqXHR, textStatus, errorThrown) {
           if (jqXHR.status == 500 || jqXHR.status == 403) {
