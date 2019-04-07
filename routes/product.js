@@ -9,7 +9,7 @@ router.get("/", function (req, res, next) {
 
 router.get("/:productId", async (req, res, next) => {
   let itemid = req.params.productId;
-  let userid = req.user.id;
+  let userid;
 
   // Insert view first
   if (req.isAuthenticated()) {

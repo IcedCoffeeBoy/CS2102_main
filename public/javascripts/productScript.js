@@ -62,7 +62,8 @@ $(document).ready(() => {
       if (jqXHR.status == 500) {
         alert("You have liked this item before")
       } else if (jqXHR.status == 403) {
-        alert("Please login to like this item")
+        $('#popout-msg').html("<p>Failure!<br />Please login to like this item</p>");
+        $('.hover_bkgr_fricc').show();
       }
     });
   });
