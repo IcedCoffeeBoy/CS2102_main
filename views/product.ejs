@@ -36,16 +36,11 @@
             + '.jpg');
     }
     %>
+    <%- include popout.ejs%>
 </head>
 
 <body>
-    <div class="hover_bkgr_fricc">
-        <span class="helper"></span>
-        <div>   
-            <div class="popupCloseButton">X</div>
-           <div id="popout-msg"></div>
-        </div>
-    </div>
+    
 
 <input type="hidden" id="price" value=<%=data.price%>>
   <div class="column-xs-12 ml-4 mr-4">
