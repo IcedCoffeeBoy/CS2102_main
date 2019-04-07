@@ -85,6 +85,15 @@
             $('#popout-msg').html(msg);
             $('.hover_bkgr_fricc').show();
         }
+
+
+        /*Popout the message */
+        function pop_msg(title,msg){
+            let string = "<p>"+title+"</br>"+msg+"<p>"
+            $('#popout-msg').html(string);
+            $('.hover_bkgr_fricc').show();
+        }
+
         $(document).ready(()=>{
             $('.hover_bkgr_fricc').click(function () {
                 location.reload()
@@ -94,6 +103,7 @@
                 location.reload()
             });
         })
+       
     </script>
 </body>
 
