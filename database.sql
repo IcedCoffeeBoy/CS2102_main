@@ -45,7 +45,7 @@ CREATE TABLE Items (
 	sold        INTEGER DEFAULT 0,
 	loanStart	TIMESTAMP default now(),
 	loanEnd		TIMESTAMP default now() + interval '168 hour',
-	location	VARCHAR(128) default '4 Engineering Drive 4, Singapore 117955',
+	location	VARCHAR(128) default '4 Engineering Drive 4, Singapore 117585',
 	views		INTEGER DEFAULT 0,
 	FOREIGN KEY (seller) REFERENCES Accounts,
 	FOREIGN KEY (catname) REFERENCES Categories
@@ -186,6 +186,26 @@ before insert or update on viewhistory
 for each row
 execute procedure checkSelleritem();
 
+------Trigger for inserting new bids-------------
+create or replace function checkBids()
+returns trigger as $$ 
+declare itemseller integer; declare itemprice integer; declare lastbidtime timestamp;
+begin
+	itemseller := (select i.seller from items i join relationships r on i.itemid = r.itemid where r.rid = new.rid);
+	if (new.userid = itemseller) then raise exception 'Please do not bid your own item'; return null; end if;
+	itemprice  := (select price from items i  join relationships r on i.itemid = r.itemid where r.rid = new.rid);
+	if (new.amount <= itemprice) then raise exception 'Please bid higher than current price'; return null; end if;
+	lastbidtime:= (select timestamp from bids where rid = new.rid order by timestamp desc limit 1);
+	if (lastbidtime + interval '00:00:20' > now()) then raise exception 'Please bid after 20 seconds'; return null; end if;
+	return new;
+end;
+$$ language plpgsql;
+
+create trigger biddingtrigger
+before insert or update on bids
+for each row
+execute procedure checkBids();
+
 
 ---------------------------------- Function ----------------------------------------------
 create or replace function insertBidshortcut (newBuyer integer,bidPrice numeric, newitemid integer)
@@ -195,9 +215,13 @@ begin
 	newSeller := (select seller from Items where Items.itemid= newitemid);
 	insert into relationships(seller,buyer,itemid) values (newSeller,newBuyer,newitemid) on conflict do nothing; 
 	newrid := (select rid from relationships where buyer=newBuyer and itemid=newitemid);
-	update Items set price = bidPrice where Items.itemid = newitemid;
 	insert into bids(userid,rid,amount) values (newBuyer, newrid,bidPrice);
+	update Items set price = bidPrice where Items.itemid = newitemid;
 	return newrid;
+	exception 
+	when others then
+		raise exception 'Please bid after 20 seconds';
+		return newrid;
 end;
 $$ language plpgsql;
 

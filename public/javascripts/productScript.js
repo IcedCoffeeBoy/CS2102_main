@@ -20,24 +20,30 @@ $(document).ready(() =>
 $(document).ready(() => {
   $(".bid-form").submit(function (event) {
     event.preventDefault();
-    let bidPrice = $("#bidPrice").val()
-    let price= $("#price").val()
-    if (checkbidPrice(bidPrice) && bidPrice>price) {
-      var data = $(this).serialize();
-      var url = $(this).attr('action');
-      $.post(url, data, function (result) {
-        $('#popout-msg').html("<p>Success!<br />Successfully added bid</p>");
-        $('.hover_bkgr_fricc').show();
-        window.setTimeout(() => { location.reload() }, 5000)
-      }).fail(function (jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status == 500 || jqXHR.status == 403) {
-          $('#popout-msg').html("<p>Failure!<br />Something has went wrong</p>");
-          $('.hover_bkgr_fricc').show();
-        } 
-      });
-    } else {
-      $('#popout-msg').html("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>");
+    var bidPrice = $("#bidPrice").val()
+    var price= $("#price").val()
+    if (!checkbidPrice(bidPrice)) {
+      $('#popout-msg').html("<p>Failure!<br />Ensure your bid is valid number</p>");
       $('.hover_bkgr_fricc').show();
+    } else {
+      if (parseFloat(bidPrice)>parseFloat(price)) {
+        var data = $(this).serialize();
+        var url = $(this).attr('action');
+        $.post(url, data, function (result) {
+          $('#popout-msg').html("<p>Success!<br />Successfully added bid</p>");
+          $('.hover_bkgr_fricc').show();
+          window.setTimeout(() => { location.reload() }, 5000)
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+          if (jqXHR.status == 500 || jqXHR.status == 403) {
+            $('#popout-msg').html("<p>Failure!<br />Please bid after 20 seconds</p>");
+            $('.hover_bkgr_fricc').show();
+          } 
+        });
+      } else {
+        $('#popout-msg').html("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>");
+        $('.hover_bkgr_fricc').show();
+      }
+
     }
   })
 
@@ -52,7 +58,7 @@ $(document).ready(() => {
 
 $(document).ready(() => {
   $("#like-btn").one("click", function() {
-    var url = window.location.href.toString() + "/like";
+    var url = window.location.href.toString().split("#")[0] + "/like";
     $.post(url, function(results){
       document.getElementById("like-btn").style.color = "red";
       updated_likes = parseInt($('#like-btn').html().split(" ")[1]) + 1;
@@ -60,7 +66,8 @@ $(document).ready(() => {
       $('#like-btn').html(updated_str);
     }).fail(function (jqXHR, textStatus, errorThrown) {
       if (jqXHR.status == 500) {
-        alert("You have liked this item before")
+        $('#popout-msg').html("<p>Failure!<br />You have liked this item before</p>");
+        $('.hover_bkgr_fricc').show();
       } else if (jqXHR.status == 403) {
         $('#popout-msg').html("<p>Failure!<br />Please login to like this item</p>");
         $('.hover_bkgr_fricc').show();
@@ -71,7 +78,6 @@ $(document).ready(() => {
 
 
 function checkbidPrice(bidPrice) {
-  console.log(price)
-  let re = /[0-9]+(\.[0-9][0-9]?)?/
+  var re = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
   return re.test(bidPrice)
 }
