@@ -23,37 +23,26 @@ $(document).ready(() => {
     var bidPrice = $("#bidPrice").val()
     var price= $("#price").val()
     if (!checkbidPrice(bidPrice)) {
-      $('#popout-msg').html("<p>Failure!<br />Ensure your bid is valid number</p>");
-      $('.hover_bkgr_fricc').show();
+     popmsg("<p>Failure!<br/>Ensure your bid is valid number</p>")
     } else {
       if (parseFloat(bidPrice)>parseFloat(price)) {
         var data = $(this).serialize();
         var url = $(this).attr('action');
         $.post(url, data, function (result) {
-          $('#popout-msg').html("<p>Success!<br />Successfully added bid</p>");
-          $('.hover_bkgr_fricc').show();
+          popmsg("<p>Success!<br />Successfully added bid</p>");
           window.setTimeout(() => { location.reload() }, 5000)
         }).fail(function (jqXHR, textStatus, errorThrown) {
           if (jqXHR.status == 500 || jqXHR.status == 403) {
-            $('#popout-msg').html("<p>Failure!<br />Please bid after 20 seconds</p>");
-            $('.hover_bkgr_fricc').show();
+            popmsg("<p>Failure!<br />Please bid after 20 seconds</p>");
           } 
         });
       } else {
-        $('#popout-msg').html("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>");
-        $('.hover_bkgr_fricc').show();
+        popmsg("<p>Failure!<br />Ensure your bid is higher than the currrent bid</p>")
       }
 
     }
   })
 
-  $('.hover_bkgr_fricc').click(function () {
-    location.reload()
-  });
-
-  $('.popupCloseButton').click(function () {
-    location.reload()
-  });
 })
 
 $(document).ready(() => {
@@ -66,11 +55,9 @@ $(document).ready(() => {
       $('#like-btn').html(updated_str);
     }).fail(function (jqXHR, textStatus, errorThrown) {
       if (jqXHR.status == 500) {
-        $('#popout-msg').html("<p>Failure!<br />You have liked this item before</p>");
-        $('.hover_bkgr_fricc').show();
+        popmsg("<p>Failure!<br />You have liked this item before</p>")
       } else if (jqXHR.status == 403) {
-        $('#popout-msg').html("<p>Failure!<br />Please login to like this item</p>");
-        $('.hover_bkgr_fricc').show();
+        popmsg("<p>Failure!<br />Please login to like this item</p>")
       }
     });
   });
@@ -81,3 +68,4 @@ function checkbidPrice(bidPrice) {
   var re = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
   return re.test(bidPrice)
 }
+
