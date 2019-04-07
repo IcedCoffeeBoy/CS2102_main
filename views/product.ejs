@@ -86,10 +86,10 @@
         </div>
         <div class="text-desc p-2 m-2">
             <b>Loan Start:</b> 
-            <%= data.loanstart %>
+            <%= data.loanstart.toLocaleDateString("en-US", options) %>
             <br>
             <b>Loan End:</b> 
-            <%= data.loanend %> <br><br>
+            <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
             <b>Suggested Pickup Location:</b> <br>
             <%= data.location %>
         </div>
@@ -140,7 +140,7 @@
         
         <div class="text-desc p-2 m-2">
             <b>Loan Start:</b> 
-            <%= data.loanstart %><br>
+            <%= data.loanstart.toLocaleDateString("en-US", options) %><br>
             <b>Loan End:</b> 
             <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
             <b>Suggested Pickup Location:</b> <br>
