@@ -12,8 +12,12 @@ router.get('/', async function (req, res, next) {
   try {
       if (type == "Users") {
       if (req.isAuthenticated()) {
-        let data = await db.db_promise(sql.search_users, [query]);
-        res.render('users', { title: 'User Search', data: data, user: req.user });
+        let promises = [
+          db.db_promise(sql.search_users, [query]),
+          db.db_promise(sql.search_usersRating, [query])
+        ]
+        let data = await Promise.all(promises)
+        res.render('users', { title: 'User Search', data: data[0], rating: data[1], user: req.user });
       } else {
         req.flash("message", "Only login user can use this function");
         return res.redirect("../");
@@ -42,6 +46,7 @@ router.get('/:userid', async (req, res, next) => {
 
     // Retrieve user listing data
     let data = await db.db_promise(sql.sql_getItems, [req.params.userid]);
+    let sellerRating = await db.db_promise(sql.sql_getUserRating, [req.params.userid]);
 
     res.render('user', {
       title: "User Search",
@@ -53,6 +58,8 @@ router.get('/:userid', async (req, res, next) => {
       solditems: [],
       successfulbids: [],
       revs: [],
+      sellerRating: parseFloat(sellerRating[0].rating).toFixed(1),
+      crating: sellerRating[0].crating,
     });
 
   } catch (err) {

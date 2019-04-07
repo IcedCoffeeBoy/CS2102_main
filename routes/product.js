@@ -40,7 +40,8 @@ router.get("/:productId", async (req, res, next) => {
       db.db_promise(sql.sql_getRecommended, [userid,itemid]),
       db.db_promise(sql.sql_getCurrentBid,[itemid,userid]),
       db.db_promise(sql.sql_getLikes, [itemid]),
-      db.db_promise(sql.sql_getComments, [itemid])
+      db.db_promise(sql.sql_getComments, [itemid]),
+      db.db_promise(sql.sql_getSellerRating, [itemid])
     ]
 
   let results = await Promise.all(promises)
@@ -52,6 +53,10 @@ router.get("/:productId", async (req, res, next) => {
     results[0][0].loanstart = results[0][0].loanstart.toLocaleDateString("en-US", options);
     results[0][0].loanend = results[0][0].loanend.toLocaleDateString("en-US", options);
 
+    let rating = parseFloat(results[7][0].rating);
+    if (isNaN(rating)) {rating = 0;}
+    rating = rating.toFixed(1);
+
     // Render page once all data is collected 
     res.render("product", {
       title: "productlisting",
@@ -62,6 +67,8 @@ router.get("/:productId", async (req, res, next) => {
       bid: results[4][0].amount,
       like: results[5][0].likes,
       comment: results[6],
+      crating: results[7][0].crating,
+      sellerRating: rating,
       productId: itemid,
       user: req.user,
       options: options

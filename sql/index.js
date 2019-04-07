@@ -34,7 +34,9 @@ var sql = {
       'order by count(likeid) desc, count(rid) desc',
     
     search_items: 'select title, description, price, imgurl,itemid from items natural join images where lower(title) like $1 and imgno = 0 and sold = 0',
-    search_users: 'select username,accountid from accounts where lower(username) like $1',
+    search_users: 'select username,accountid from accounts where lower(username) like $1 order by username',
+    search_usersRating: 'select coalesce(avg(star),0) as mark from accounts left join reviews on accountid = revieweeid ' +
+      'group by username having lower(username) like $1 order by username',
     
     // User Page
     sql_getItems: 'SELECT * FROM Items i NATURAL JOIN Images WHERE seller = $1 AND imgno = 0 AND sold = 0 ORDER BY timeListed DESC',
@@ -50,6 +52,8 @@ var sql = {
     sql_updateViews: "UPDATE Items SET views = views + 1 WHERE itemid = $1",
     sql_getUserReviews: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
         "where revieweeid = $1 order by rtime desc",
+    sql_getUserRating: "select coalesce(avg(star), 0) as rating, count(reviewid) as crating from reviews where revieweeid = $1",
+    
 
     // Product
     sql_getProductInfo:
@@ -57,6 +61,7 @@ var sql = {
     sql_getProductImg: "select imgurl from images where itemid = $1",
     sql_getSellerReview: "select star, review, username, timestamp as rtime from reviews join accounts on reviewerid = accountid " + 
         "where revieweeid = (select seller from items where itemid = $1) order by rtime desc",
+    sql_getSellerRating: "select avg(star) as rating, count(reviewid) as crating from reviews where revieweeid = (select distinct seller from items where itemid = $1 limit 1)",
     sql_getYouMayAlsoLike: "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4",
     sql_getCurrentBid: "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2",
     sql_insertBid: "select insertBidshortcut($1,$2,$3)",
