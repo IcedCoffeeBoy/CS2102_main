@@ -142,7 +142,7 @@
             <b>Loan Start:</b> 
             <%= data.loanstart %><br>
             <b>Loan End:</b> 
-            <%= data.loanend %> <br><br>
+            <%= data.loanend.toLocaleDateString("en-US", options) %> <br><br>
             <b>Suggested Pickup Location:</b> <br>
             <%= data.location %>
         </div>

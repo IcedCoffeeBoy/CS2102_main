@@ -17,15 +17,6 @@ router.get("/:productId", async (req, res, next) => {
     db.query(sql.sql_insertview, [itemid, userid], (err, data) => {
       if (err) {
         console.log("SQL error inserting view " + err);
-      } else {
-
-        // NEED TO IMPLEMENT UPDATE TRIGGER SIMILAR TO VIEWHISTORY
-        db.query(sql.sql_updateViews, [itemid], (err, data) => {
-          if (err) {
-            console.log("SQL error updating view " + err);
-          }
-        });
-
       }
     });
   }
@@ -50,8 +41,7 @@ router.get("/:productId", async (req, res, next) => {
       return res.redirect("../op/" + itemid)
     }
 
-    results[0][0].loanstart = results[0][0].loanstart.toLocaleDateString("en-US", options);
-    results[0][0].loanend = results[0][0].loanend.toLocaleDateString("en-US", options);
+    console.log(results[3])
 
     let rating = parseFloat(results[7][0].rating);
     if (isNaN(rating)) {rating = 0;}

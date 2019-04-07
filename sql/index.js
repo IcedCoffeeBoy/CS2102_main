@@ -98,22 +98,28 @@ var sql = {
                             SELECT *
                             FROM viewHistory NATURAL JOIN Items
                             WHERE userid = $1
-                            ORDER BY timestamp DESC LIMIT 20
+                            ORDER BY timestamp DESC LIMIT 10
                         ), RecommendedCat AS (
                             SELECT catname, count(*) FROM MostRecent
                             GROUP BY catname
+                        ), ItemsLikes AS (
+                          SELECT DISTINCT itemid, title, description, price, catname,
+                            COALESCE((SELECT count(likeid) FROM Likes L GROUP BY L.itemid HAVING L.itemid = I.itemid),0) AS likes
+                          FROM Items I
                         )
-                        SELECT itemid, title, description, price, imgurl, catname
-                        FROM (Items NATURAL JOIN Images) AS I1
-                        WHERE catname IN (SELECT catname FROM RecommendedCat)
+                        SELECT DISTINCT itemid, title, description, price, imgurl, catname, likes
+                        FROM (ItemsLikes NATURAL JOIN Images) AS I1
+                        WHERE imgno = 0
+                        AND catname IN (SELECT catname FROM RecommendedCat)
                         AND itemid IN (
-                            SELECT itemid FROM Items I2
+                            SELECT itemid FROM ItemsLikes I2
                             WHERE I2.catname = I1.catname AND I2.itemid != $2
-                            ORDER BY views DESC LIMIT (
-                                (SELECT count FROM RecommendedCat WHERE catname = I1.catname) / (SELECT sum(count) FROM RecommendedCat) * 10)
+                            ORDER BY likes DESC LIMIT (
+                              (SELECT count FROM RecommendedCat WHERE catname = I1.catname) / (SELECT sum(count) FROM RecommendedCat) * 5
+                          )
                         )
-                        ORDER BY views DESC`,
-                        
+                        ORDER BY likes desc`,
+  
 }
 
 module.exports = sql;
