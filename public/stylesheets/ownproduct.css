@@ -1,3 +1,7 @@
+.container {
+  font-family: Nunito, Arial sans-serif;
+}
+
 .chart-container {
   width: 100%;
   text-align: center;

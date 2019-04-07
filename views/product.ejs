@@ -134,6 +134,8 @@
       </div>
       <% } %>
     </div>
+</div>
+
     <div class="container align-items-stretch flex-column">
         <div class="main-title">
             <p>Reviews to the Seller</p>
@@ -141,6 +143,7 @@
         <% if (revs.length == 0) {%>
         <div class="reviews-none">
             <p>- There doesn't seem to be any reviews for this item yet.- </p>
+            <br>
         </div>
         <% } %>
         <% for(var i=0; i<revs.length; i++) { %>
@@ -165,8 +168,17 @@
             </div>
         </div>
         <% } %>
+        <hr>
     </div>
+    
+
+    <div class="container align-items-stretch flex-column">
+        <div class="main-title">
+            <p>Public Comments</p>
+        </div>
+        <%- include comment.ejs%>
     </div>
+
     <div class="container">
         <div class="main-title">
             <p>You may also like</p>

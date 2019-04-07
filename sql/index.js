@@ -60,8 +60,10 @@ var sql = {
     sql_getYouMayAlsoLike: "select itemid, title, description, price, imgurl from items natural join images where imgno=0 limit 4",
     sql_getCurrentBid: "select coalesce(max(amount),0) as amount from bids natural join relationships where itemid=$1 and buyer=$2",
     sql_insertBid: "select insertBidshortcut($1,$2,$3)",
-    sql_getLikes: "select count(likeid) as likes from likes where itemid = $1",
     sql_insertLike: "insert into likes(likerid, itemid) values ($1, $2) ",
+    sql_insertComment: "insert into qnas(itemid, userid, comment) values ($1, $2, $3)",
+    sql_getLikes: "select count(likeid) as likes from likes where itemid = $1",
+    sql_getComments: "select * from qnas join accounts on userid = accountid where itemid = $1 order by timestamp desc",
 
     // Own Product
     sql_getNoBidders: "select count(distinct rid) as counts from bids natural join relationships where itemid=$1",

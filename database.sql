@@ -129,7 +129,7 @@ create table if not exists qnas(
 	itemid integer,
 	userid integer,
 	comment text, 
-	timestamp timestamp,
+	timestamp timestamp default now(),
 	foreign key (itemid) references items on delete cascade,
 	foreign key (userid) references accounts(accountid)
 );
@@ -205,6 +205,22 @@ create trigger biddingtrigger
 before insert or update on bids
 for each row
 execute procedure checkBids();
+
+------Trigger for inserting new comments-------------
+create or replace function checkComments()
+returns trigger as $$ 
+declare lastcommenttime timestamp;
+begin
+	lastcommenttime:= (select timestamp from comment where itemid = new.itemid and userid = new.userid order by timestamp desc limit 1);
+	if (lastcommenttime + interval '00:00:20' > now()) then raise exception 'Please comment after 20 seconds'; return null; end if;
+	return new;
+end;
+$$ language plpgsql;
+
+create trigger commenttrigger
+before insert or update on qnas
+for each row
+execute procedure checkComments();
 
 
 ---------------------------------- Function ----------------------------------------------

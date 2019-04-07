@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <style> 
+        /* Popup box BEGIN */
+
+        .comment {
+            overflow: hidden;
+            padding: 0 0 1em;
+            border-bottom: 1px solid #ddd;
+            margin: 0 0 1em;
+            *zoom: 1;
+            width: 100%;
+            margin: 20px auto;
+            font: 16px/1.4 Arial, sans-serif;
+        }
+
+        .comment-img {
+            float: left;
+            margin-right: 33px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .comment-img img {
+            display: block;
+        }
+
+        .comment-body {
+            overflow: hidden;
+            
+        }
+
+        .comment .text {
+            padding: 10px;
+            border-radius: 5px;
+            background: #fff;
+            background: #f3eae2;
+        }
+
+        .comment .text p:last-child {
+            margin: 0;
+        }
+
+        .comment .attribution {
+            margin: 0.5em 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Decoration */
+
+
+        .comment {
+            margin-inline-start: 2%;
+            width: 97%;
+            position: relative;
+        }
+        .comment:before,
+        .comment .text:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 65px;
+        }
+
+        .comments:before {
+            width: 3px;
+            top: -20px;
+            bottom: -20px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .comment:before {
+            width: 15px;
+            height: 15px;
+            border: 4px solid #fff;
+            border-radius: 100px;
+            margin: 14px 0 0 -6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.2), inset 0 1px 1px rgba(0,0,0,0.1);
+            background: #ccc;
+        }
+
+        .comment:hover:before {
+            background: orange;
+        }
+
+        .comment .text:before {
+            top: 18px;
+            left: 78px;
+            width: 9px;
+            height: 9px;
+            border-width: 0 0 1px 1px;
+            border-style: solid;
+            border-color: #e5e5e5;
+            background: #fff;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+        }
+        #comment-form {
+            width: 70%;
+            margin-inline-start: 2%;
+        }
+
+        #submit {
+            width: 20%;
+            margin-left: 1.5%;
+        }
+
+        #comment-form .help-block {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 85%;
+        }
+
+        #submitInfo {
+            margin-left: 1.5%;
+        }
+    </style>   
+</head>
+
+<body>
+    <% if (comment.length == 0) {%>
+    <div class="reviews-none">
+        <p>- Be the first to comment! Post questions & answers about this item here - </p>
+        <br>
+        <hr>
+        <br>
+    </div>
+    <% } %>
+    <% for(var i=0; i<comment.length; i++) { %>
+        <div class="comment">
+            <a class="comment-img">
+                <img src="<%=getPlaceholderImg()%>" width="50" height="50">
+            </a>
+            <div class="comment-body">
+                <div class="text">
+                <p><%=comment[i].comment%></p>
+                </div>
+                <p class="attribution">
+                    by <a href="/search/<%=comment[i].userid%>"><%=comment[i].username%></a> at
+                    &nbsp;<%=comment[i].timestamp.toLocaleTimeString()%> <%=comment[i].timestamp.toLocaleDateString("en-US", options)%>
+                </p>
+            </div>
+        </div>
+    <% } %>
+
+    <div class="main-title">
+        <p>Your Comments</p>
+    </div>
+
+    <form id="comment-form" method="post" action=<%=productId + "/submitcomment" %>>
+    <div class="form-group">
+        <label class="control-label" for="review"></label>
+        <textarea class="form-control" rows="9" placeholder="What do you want to say about the item?" name="comment" id="comment" required></textarea>
+    </div>
+    <a href="" id="submit" class="btn bid-btn primary-bg">Submit</a>
+    <input id="submitForm" type="submit" style="display:none;">
+    <span id="reviewInfo" class="help-block pull-right">
+        <span id="remaining">999</span> Characters remaining
+    </span>
+    <span id="submitInfo" class="help-block">
+        By clicking <strong>Submit</strong>, I authorize the sharing of my comments on the web.
+    </span>
+    </form>
+    <br>
+    <hr>
+
+    <script>
+        $(document).ready(()=>{
+            var review = document.getElementById('comment-form');
+            var remaining = document.getElementById('remaining');
+            review.addEventListener('input', function(e) {
+                review.value = (e.target.value.slice(0,999));
+                remaining.innerHTML = (999-e.target.value.length);
+            })
+
+            var form = document.getElementById("comment-form")
+        
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let data = {
+                comment: form['comment'].value,
+                }
+                var url = $(this).attr('action');
+                $.post(url, data, function (result) {
+                    window.setTimeout(() => {location.reload()}, 1000)
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    
+                if (jqXHR.status == 500 || jqXHR.status == 403) {
+                    $('#popout-msg').html("<p>Failure!<br /> Please comment after 20 seconds</p>");
+                    $('.hover_bkgr_fricc').show();
+                } 
+                });
+                console.log(data)
+            })
+
+            document.getElementById('submit').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('submitForm').click();
+            })
+        
+        })
+    </script>
+
+
+
+</body>
+
+</html>

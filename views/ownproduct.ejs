@@ -108,7 +108,6 @@
             <%= data.description %>
         </div>
         </div>
-    </div>
       <% } else {%>
       <div class="text-container align-items-stretch">
         <div class="text-title"><%=data.title%></div>
@@ -132,16 +131,17 @@
             <%= data.description %>
         </div>
        </div>
-      </div>
-      <% } %>
       
-    <div class="chart-container">
+      <% } %>
+    </div>
+</div> 
+    <div class="container chart-container">
         <div class="main-title">
             <p>Bidding History</p>
         </div>
       <div id="chart_div"></div>
     </div>
-    <div class="d-flex align-items-stretch flex-column">
+    <div class="container align-items-stretch flex-column">
         <div class="main-title">
             <p>Reviews for You</p>
         </div>
@@ -155,16 +155,15 @@
             <div class="review-details">
             <img src="<%=getPlaceholderImg()%>">
             <div class="r-container">
-                    <p class="review-author"><%=revs[i].username%></p>
-                    <p class="review-date"><%=revs[i].rtime.toLocaleDateString("en-US", options)%></p>
-                    <div class="review-rating">
-                    <% for(var j=0; j<revs[i].star; j++) { %>
-                        <span class="review-star review-star--active">&#9733;</span>
-                    <% } %>
-                    <% for(var j=revs[i].star; j<5; j++) { %>
-                        <span class="review-star">&#9733;</span>
-                    <% } %>
-                    </div>
+                <p class="review-author"><%=revs[i].username%></p>
+                <p class="review-date"><%=revs[i].rtime.toLocaleDateString("en-US", options)%></p>
+                <div class="review-rating">
+                <% for(var j=0; j<revs[i].star; j++) { %>
+                    <span class="review-star review-star--active">&#9733;</span>
+                <% } %>
+                <% for(var j=revs[i].star; j<5; j++) { %>
+                    <span class="review-star">&#9733;</span>
+                <% } %>
                 </div>
             </div>
             </div>
@@ -173,7 +172,12 @@
             </div>
         </div>
         <% } %>
+        <hr>
     </div>
+    <div class="container align-items-stretch flex-column">
+        <div class="main-title">
+            <p>Public Comments</p>
+        </div>
+        <%- include comment.ejs%>
     </div>
-  </div>
 </body>
