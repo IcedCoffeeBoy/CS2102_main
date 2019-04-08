@@ -36,7 +36,7 @@ router.get("/:productId", async (req, res, next) => {
     ]
 
   let results = await Promise.all(promises)
-    let options = { year: 'numeric', month: 'long', day: 'numeric' }
+    let options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: "Asia/Shanghai"}
     if (results[0][0].accountid == userid) {
       return res.redirect("../op/" + itemid)
     }

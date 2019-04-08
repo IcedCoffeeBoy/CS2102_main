@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
       db.db_promise(sql.sql_getUserReviews, [req.user.id]),
       db.db_promise(sql.sql_getUserRating, [req.user.id])
     ]);
-    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: "Asia/Shanghai" };
     let datejoineds = results[0];
     datejoined = datejoineds[0].datejoined.toLocaleDateString("en-US", options);
 

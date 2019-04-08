@@ -24,7 +24,7 @@ router.get("/:productId", async (req, res, next) => {
     ]
 
     let results = await Promise.all(promises)
-    let options = { year: 'numeric', month: 'long', day: 'numeric' }
+    let options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: "Asia/Shanghai"}
     // Avoid non-owner access the owner-product page
     if (results[0][0].accountid != req.user.id) {
       return res.sendStatus(404)

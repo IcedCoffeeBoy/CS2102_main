@@ -144,7 +144,7 @@
                 </div>
                 <p class="attribution">
                     by <a href="/search/<%=comment[i].userid%>"><%=comment[i].username%></a> at
-                    &nbsp;<%=comment[i].timestamp.toLocaleTimeString()%> <%=comment[i].timestamp.toLocaleDateString("en-US", options)%>
+                    &nbsp;<%=comment[i].timestamp.toLocaleTimeString('en-US', {timeZone: "Asia/Shanghai"})%> <%=comment[i].timestamp.toLocaleDateString("en-US", options)%>
                 </p>
             </div>
         </div>
