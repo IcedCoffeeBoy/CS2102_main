@@ -73,14 +73,6 @@
         <div class="bidding-closed"> 
             <button type="submit" class="btn bid-btn primary-bg" href="#" role="button">Bidding Closed</button>
         </div>
-        <div class="stars pull-right">
-        <div class="star-rating-container">
-            <div class="star-rating star-rating-on" style="width:<%=sellerRating*20%>%"></div>
-            <div class="star-rating star-rating-off"></div>
-        </div>
-        <br>
-        Reviews: <%=sellerRating%>/5.0 (<%=crating%>)
-        </div>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a> 
         </div>
@@ -125,14 +117,6 @@
         <%if (bid > 0){%>
             <div class="p-2 m-2">Your current bid: $<%=bid%></div>
         <%}%>
-        <div class="stars pull-right">
-        <div class="star-rating-container">
-            <div class="star-rating star-rating-on" style="width:<%=sellerRating*20%>%"></div>
-            <div class="star-rating star-rating-off"></div>
-        </div>
-        <br>
-        Reviews: <%=sellerRating%>/5.0 (<%=crating%>)
-        </div>
         <div class="p-2 m-2">
             Sold by <a class="text-seller" href="/search/<%=data.accountid%>"><%=data.username%></a>
         </div>
@@ -156,9 +140,16 @@
 </div>
 
     <div class="container align-items-stretch flex-column">
-        <div class="main-title" id="review-title">
-            <p>Reviews to the Seller</p> 
-            
+        <div class="main-title review-title" id="review-title">
+            <p>Reviews to the Seller </p>
+            <span><%=sellerRating%>/5.0</span>
+            <div class="stars">
+                <div class="star-rating-container">
+                    <div class="star-rating star-rating-on" style="width:<%=sellerRating*20%>%"></div>
+                    <div class="star-rating star-rating-off"></div>
+                </div>
+            </div>
+            <span>(<%=crating%>)</span>
         </div>
         
         <% if (revs.length == 0) {%>

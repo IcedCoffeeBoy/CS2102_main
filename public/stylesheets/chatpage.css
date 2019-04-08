@@ -6,7 +6,7 @@
 }
 
 .chat-window {
-    margin: 5%;
+    margin: 3%;
     display: flex;
     flex-flow: row;
     height: 80vh;
