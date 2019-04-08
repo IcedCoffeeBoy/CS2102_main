@@ -5,11 +5,14 @@ import itemdata
 from faker import Faker
 
 
-def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, add_likes=True, url=None):
+def db_populate(n=100, script_path=None, add_users=True, add_items=True, add_reviews=True, add_likes=True, url=None):
     if (url is None):
         db = DBConnector(dbname="postgres", user="postgres", host="localhost", pw="****")
     else:
         db = DBConnector(url=url)
+
+    if (script_path is not None):
+        db.execute_script(script_path)
 
     # Instantiate data generator
     gen = DataGenerator()
@@ -20,10 +23,7 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, add_lik
     base_sql_insert = ("INSERT INTO Accounts (username, password, email, admin, status) VALUES "
                        + build_empty_sql_insert(5))
 
-    #Always create a bob account
-    db.cursor.execute(base_sql_insert, ("bob", password, "bob@gmail.com", False, "Active"))
-
-    for i in range(n-1):
+    for i in range(n):
         u = gen.create_user_profile()
         db.cursor.execute(base_sql_insert, (u["user"], password, u["email"], False, "Active"))
 
@@ -134,6 +134,11 @@ class DBConnector:
     def close(self):
         self.cursor.close()
         self.conn.close()
+
+    def execute_script(self, path):
+        self.cursor.execute(open(path, "r").read())
+        self.commit()
+        print("Successfully executed script at %s" % path)
 
 
 class DataGenerator:
