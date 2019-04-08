@@ -3,21 +3,20 @@ var router = express.Router();
 var db = require('../db');
 var multer = require('multer');
 var path = require('path');
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './public/images/uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, req.user.username + "_" + Date.now() + path.extname(file.originalname));
-  }
-});
-var upload = multer({ storage: storage })
+var multerGoogleStorage = require("multer-google-storage");
+var upload = multer({
+  storage: multerGoogleStorage.storageEngine({
+    filename: function (req, file, callback) {
+      callback(null, req.user.username + "_" + Date.now() + path.extname(file.originalname));
+    }
+  })
+})
 const sql = require('../sql/index');
 
 router.get('/', async function (req, res, next) {
   try {
     let categoryData = await db.db_promise(sql.sql_getCategories);
-    res.render('newlisting', { title: 'New Listing', categoryData: categoryData, user: req.user });   
+    res.render('newlisting', { title: 'New Listing', categoryData: categoryData, user: req.user });
   } catch (err) {
     console.log(err);
     res.sendStatus(404);
@@ -43,7 +42,7 @@ router.post('/upload', upload.array('image', 4), async function (req, res, next)
     // Insert image entries in parallel.
     // All SQL queries must be complete (via Promise.all) before this step is deemed successful.
     let promises = req.files.map(async (img, idx) => {
-      let imagePath = 'images/uploads/' + img.filename;
+      let imagePath = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/` + img.filename;
       db.db_promise(sql.sql_insertImage, [imagePath, data[0].itemid, idx]);
     })
     await Promise.all(promises);

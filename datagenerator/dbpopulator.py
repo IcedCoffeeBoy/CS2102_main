@@ -5,7 +5,7 @@ import itemdata
 from faker import Faker
 
 
-def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=None):
+def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, add_likes=True, url=None):
     if (url is None):
         db = DBConnector(dbname="postgres", user="postgres", host="localhost", pw="****")
     else:
@@ -19,7 +19,11 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=Non
     # --------- Add users ---------
     base_sql_insert = ("INSERT INTO Accounts (username, password, email, admin, status) VALUES "
                        + build_empty_sql_insert(5))
-    for i in range(n):
+
+    #Always create a bob account
+    db.cursor.execute(base_sql_insert, ("bob", password, "bob@gmail.com", False, "Active"))
+
+    for i in range(n-1):
         u = gen.create_user_profile()
         db.cursor.execute(base_sql_insert, (u["user"], password, u["email"], False, "Active"))
 
@@ -71,7 +75,7 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=Non
 
     db.commit()
     print("Successfully insert new images")
-    
+
     # --------- Add likes ---------
     # Obtain list of user IDs
     db.cursor.execute("SELECT accountid FROM Accounts")
@@ -85,11 +89,11 @@ def db_populate(n=100, add_users=True, add_items=True, add_reviews=True, url=Non
     base_sql_like_insert = "INSERT INTO Likes (likerid, itemid) VALUES " + build_empty_sql_insert(2)
 
     for item in items:
-        numLikers = random.randint(0,len(uid))
+        numLikers = random.randint(0, len(uid))
         likers = random.sample(uid, k=numLikers)
         for liker in likers:
             db.cursor.execute(base_sql_like_insert, (liker, item))
-                
+
     db.commit()
     print("Successfully insert new likes")
 
