@@ -13,6 +13,7 @@ var upload = multer({
 })
 const sql = require('../sql/index');
 
+
 router.get('/', async function (req, res, next) {
   try {
     let categoryData = await db.db_promise(sql.sql_getCategories);
