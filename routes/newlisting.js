@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../db');
 var multer = require('multer');
 var path = require('path');
-var multerGoogleStorage = require("multer-google-storage");
+var multerGoogleStorage = require("../multer-google-storage");
 var upload = multer({
   storage: multerGoogleStorage.storageEngine({
     filename: function (req, file, callback) {
@@ -26,15 +26,14 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/upload', upload.array('image', 4), async function (req, res, next) {
-  var seller = req.user.id;
-  var title = req.body.title;
-  var description = req.body.description;
-  var price = req.body.price;
-  var category = req.body.category;
-  var loanStart = req.body.loan_start;
-  var loanEnd = req.body.loan_end;
-  var location = req.body.location;
-  console.log(req.body);
+  let seller = req.user.id;
+  let title = req.body.title;
+  let description = req.body.description;
+  let price = req.body.price;
+  let category = req.body.category;
+  let loanStart = req.body.loan_start;
+  let loanEnd = req.body.loan_end;
+  let  location = req.body.location;
 
   try {
     // Insert item entry
