@@ -10,7 +10,10 @@ var flash = require('connect-flash');
 require('dotenv').load()
 var db = require('./db');
 var initpassport = require('./initpassport');
+var makeKeyfileJson = require('./keyfileBuilder');
 
+// Make Google app credentials keyfile json
+makeKeyfileJson('keyfile.json');
 
 // View routes 
 var indexRouter = require('./routes/index');
