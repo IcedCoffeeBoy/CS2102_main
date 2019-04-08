@@ -8,7 +8,8 @@ var upload = multer({
   storage: multerGoogleStorage.storageEngine({
     filename: function (req, file, callback) {
       callback(null, req.user.username + "_" + Date.now() + path.extname(file.originalname));
-    }
+    },
+    keyFilename: "./keyfile.json"
   })
 })
 const sql = require('../sql/index');
