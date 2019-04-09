@@ -96,7 +96,7 @@ $(document).ready(() => {
     }
 
     getNewMessages(false)
-    var getNewMessageTimer = setInterval(getNewMessages, 3000)
+    var getNewMessageTimer = setInterval(getNewMessages, 10000)
 })
 
 

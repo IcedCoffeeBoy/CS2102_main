@@ -1,304 +1,319 @@
 .container {
-  font-family: Nunito, Arial sans-serif;
+    font-family: Nunito, Arial sans-serif;
 }
 
 .grid {
-  display: flex;
-  flex-direction: column;
-  flex-flow: row wrap;
+    display: flex;
+    flex-direction: column;
+    flex-flow: row wrap;
 }
 
 .breadcrumb-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 1rem 0 0 0;
-  list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    list-style: none;
 }
 
 .breadcrumb-list li {
-  font-size: 0.85rem;
-  letter-spacing: 0.125rem;
-  text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.125rem;
+    text-transform: uppercase;
 }
 
 .breadcrumb-item.active {
-  color: #333;
+    color: #333;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  content: "/";
-  display: inline-block;
-  padding: 0 0.5rem;
-  color: #d5d5d5;
+    content: "/";
+    display: inline-block;
+    padding: 0 0.5rem;
+    color: #d5d5d5;
 }
 
 .white-btn {
-  color: #8f939c;
-  background: transparent;
+    color: #8f939c;
+    background: transparent;
 }
 
 .form-group {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  margin: 10px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin: 10px;
 }
 
 .form-group strong {
-  margin: 0px 4px 0px 4px;
+    margin: 0px 4px 0px 4px;
 }
 
 .form-group input {
-  flex: 1;
+    flex: 1;
 }
 
 .bid-btn {
-  color: #fff;
-
+    color: #fff;
 }
 
 .text-container {
-  flex: 1;
-  margin: 1em;
-  background-color: #f5f5f5;
-  font-size: 1em;
-  color: #4b4d52;
+    flex: 1;
+    margin: 1em;
+    background-color: #f5f5f5;
+    font-size: 1em;
+    color: #4b4d52;
 }
 
 .text-title {
-  padding: 1em;
-  padding-bottom: 0em;
-  font-size: 2em;
+    padding: 1em;
+    padding-bottom: 0em;
+    font-size: 2em;
 }
 
 .text-bid {
-  text-align: center;
-  margin: 0.5em;
+    text-align: center;
+    margin: 0.5em;
 }
 
 .btn-container > * {
-  font-size: 0.8em !important;
+    font-size: 0.8em !important;
 }
 
 .text-seller {
-  text-decoration: underline;
-  color: #00539c;
+    text-decoration: underline;
+    color: #00539c;
 }
 
 .text-desc {
-  flex: 1;
+    flex: 1;
 }
 
 .text-desc p {
-  font-weight:bold;
+    font-weight: bold;
 }
 
 .image-gallery {
-  margin: 1em auto;
-  display: table;
-  flex: 1.5;
+    margin: 1em auto;
+    display: table;
+    flex: 1.5;
 }
 
 .primary,
 .thumbnails {
-  display: table-cell;
+    display: table-cell;
 }
 
 .thumbnails {
-  width: 20%;
+    width: 20%;
 }
 
 .primary {
-  width: 600px;
-  height: 400px;
-  background-color: #cccccc;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+    width: 600px;
+    height: 400px;
+    background-color: #cccccc;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .thumbnail:hover .thumbnail-image,
 .selected .thumbnail-image {
-  outline: none;
-  border: 2px solid transparent;
-  border-color: #9ecaed;
-  box-shadow: 0 0 10px #9ecaed;
+    outline: none;
+    border: 2px solid transparent;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
 }
 
 .thumbnail-image {
-  width: 100px;
-  height: 100px;
-  margin: 20px auto;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  border: 2px solid transparent;
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
 }
 
 .main-title {
-  flex: 1;
-  align-items: flex-start;
-  text-align: left;
-  padding: 1.5em;
-  padding-bottom: 0em;
+    flex: 1;
+    align-items: flex-start;
+    text-align: left;
+    padding: 1.5em;
+    padding-bottom: 0em;
+    margin-bottom: 1em;
 }
 .main-title p {
-  text-align: left;
-  font-size: 1.5em;
-  color: #333;
+    text-align: left;
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 0;
+}
+
+.review-title {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.review-title p {
+    margin-right: 1em;
+}
+
+.review-title span {
+    font-size: 1.1em;
+    color: #807a7a;
 }
 
 .reviews {
-  flex: 1;
-  flex-direction: row;
-  flex-shrink: 1;
-  padding: 0.5em 1.5em;
+    flex: 1;
+    flex-direction: row;
+    flex-shrink: 1;
+    padding: 0.5em 1.5em;
 }
 
 .review-details {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 .review-details img {
-  width: 54px;
-  height: 54px;
-  margin-right: 24px;
-  margin-right: 1.5em;
-  border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    margin-right: 24px;
+    margin-right: 1.5em;
+    border-radius: 50%;
 }
 .review-details p {
-  margin: 0;
+    margin: 0;
 }
 
 .review-author {
-  font-weight: bold;
+    font-weight: bold;
 }
 .review-date {
-  color: #b6c2cc;
+    color: #b6c2cc;
 }
 .review-star {
-  color: #b6c2cc;
+    color: #b6c2cc;
 }
 .review-star--active {
-  color: #ff7867;
+    color: #ff7867;
 }
 
 .review-body {
-  flex: 1;
+    flex: 1;
 }
 
 .review-body .review-title + p {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .recomm-img {
-  margin-bottom:1em;
-  width:100%;
-  object-fit: cover;
+    margin-bottom: 1em;
+    width: 100%;
+    object-fit: cover;
 }
 
 .product-container {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  font-size: 1em;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    font-size: 1em;
 }
 
 .item img {
-  height: 160px;
+    height: 160px;
 }
 
 .recomm-text {
-  font-size:1em !important;
+    font-size: 1em !important;
 }
 
 .recomm-btn-text {
-  font-size:0.8em !important;
+    font-size: 0.8em !important;
 }
 
 .reviews-none {
-  flex: 1;
+    flex: 1;
 }
 
 .reviews-none p {
-  text-align: center;
-  font-style: italic;
-  font-size: 0.85em;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.85em;
 }
-
 
 /* Popup box BEGIN */
-.hover_bkgr_fricc{
-  background:rgba(0,0,0,.4);
-  cursor:pointer;
-  display:none;
-  height:100%;
-  position:fixed;
-  text-align:center;
-  top:0;
-  width:100%;
-  z-index:10000;
-  font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.15em;
+.hover_bkgr_fricc {
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.15em;
 }
 
-.hover_bkgr_fricc .helper{
-  display:inline-block;
-  height:100%;
-  vertical-align:middle;
+.hover_bkgr_fricc .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
 .hover_bkgr_fricc > div {
-  background-color:#ff7867;
-  color: white;
-  font-weight: bold;
-  box-shadow: 10px 10px 60px #555;
-  display: inline-block;
-  height: auto;
-  max-width: 551px;
-  min-height: 100px;
-  vertical-align: middle;
-  width: 60%;
-  position: relative;
-  border-radius: 8px;
-  padding: 15px 5%;
+    background-color: #ff7867;
+    color: white;
+    font-weight: bold;
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    height: auto;
+    max-width: 551px;
+    min-height: 100px;
+    vertical-align: middle;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
 }
 .popupCloseButton {
-  background-color: #bbb;
-  border: 3px solid #999;
-  border-radius: 50px;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: bold;
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  font-size: 20px;
-  line-height: 30px;
-  width: 30px;
-  height: 30px;
-  text-align: center;
+    background-color: #bbb;
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 20px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
 }
 .popupCloseButton:hover {
-  background-color: #ddd;
+    background-color: #ddd;
 }
 .trigger_popup_fricc {
-  cursor: pointer;
-  font-size: 20px;
-  margin: 20px;
-  display: inline-block;
-  font-weight: bold;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 20px;
+    display: inline-block;
+    font-weight: bold;
 }
 
 .bidding-closed button {
-  width: 100%;
+    width: 100%;
 }
 
 /* rating stars */
 
 .star-rating-container {
     font-family: icomoon;
-    font-size: 32px;
+    font-size: 1.6em;
     color: #ff5e00;
     position: relative;
     display: inline-block;
@@ -306,8 +321,8 @@
     text-shadow: 1px 1px grey;
 }
 .star-rating:before {
-        content: "★★★★★";
-    }
+    content: "★★★★★";
+}
 .star-rating-on {
     position: relative;
     z-index: 10;
@@ -322,11 +337,5 @@
 }
 
 .stars {
-  position: relative;
-  margin-inline-end: 7%;
+    margin: 0 0.5em 0 0.5em;
 }
-  
-
-
-  
-

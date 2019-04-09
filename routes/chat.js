@@ -21,7 +21,6 @@ const getSellerIdQuery = "select seller from items where itemid = $1"
 router.get('/', async (req, res, next) => {
     res.render("chatpage", {
         user: req.user,
-
     })
 })
 
@@ -36,7 +35,6 @@ router.post('/getChat', async (req, res, next) => {
             let sqlParams = [req.user.id, sellerId[0].seller, req.body.itemId]
             var rawMsgs = await db.db_promise(msgPollAllQuery, sqlParams)
         } else {
-            console.log("Retrieving user's new msgs", req.body.tstamp)
             let sqlParams = [req.user.id, sellerId[0].seller, req.body.itemId, req.body.tstamp]
             var rawMsgs = await db.db_promise(msgPollQuery, sqlParams)
         }
@@ -91,10 +89,6 @@ router.post('/sendChat', async (req, res, next) => {
         console.log(err)
         res.sendStatus(500)
     }
-})
-
-router.post('/', (req, res, next) => {
-    res.render('chat', { user: req.user })
 })
 
 module.exports = router;
