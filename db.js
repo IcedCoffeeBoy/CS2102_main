@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+var sql = require('./sql/index');
 
 /* 
 If you stuck at connection please ensure that your postreqsql is running 
@@ -59,6 +60,11 @@ pool.db_promise_check = function (sql, args) {
             }
         })
     });
+}
+
+pool.db_checkadmin = async function (userid){
+    let result = await pool.db_promise_check(sql.sql_checkadmin, [userid]);
+    return result;
 }
 
 
