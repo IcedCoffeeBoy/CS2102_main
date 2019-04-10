@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var editproductRouter = require('./editlisting');
 
 
 router.get('/', async function (req, res, next) {
     const sql_getallitems = 'select * from items';
+    const sql_getallusers = "select * from accounts"
     let userid = req.user.id;
 
     //Check if user is admin
@@ -13,15 +15,15 @@ router.get('/', async function (req, res, next) {
     }
     try {
         let item = await db.db_promise(sql_getallitems);
-        res.render('admin', { user: req.user, item: item });
-    } catch(err){
+        let user = await db.db_promise(sql_getallusers);
+        res.render('admin', { user: req.user, item: item, user: user });
+    } catch (err) {
         console.log(err)
         res.sendStatus(500);
     }
 })
 
 router.get('/delete/:productId', async function (req, res, next) {
-    const sql_checkadmin = "select 1 from accounts where accountid=$1 and admin=true";
     const sql_delitem = "delete from items where itemid=$1"
 
     let userid = req.user.id;
@@ -41,5 +43,7 @@ router.get('/delete/:productId', async function (req, res, next) {
     return res.sendStatus(200);
 
 })
+
+router.use('/p', editproductRouter);
 
 module.exports = router;

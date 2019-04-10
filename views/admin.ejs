@@ -28,6 +28,10 @@
     <script src="/javascripts/adminScript.js"></script>
     <%-include navbar.ejs%>
     <%- include popout.ejs%>
+    <%function todate(sql_date){
+        let options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: "Asia/Shanghai" };
+        return sql_date.toLocaleDateString("en-US", options);
+    }%>
 </head>
 
 <body>
@@ -41,6 +45,7 @@
         <th scope="col">price</th>
         <th scope="col">seller</th>
         <th scope="col">Delete</th>
+        <th scope="col">Edit</th>
         </tr>
     </thead>
     <tbody>
@@ -50,13 +55,36 @@
             <td><%=item[i].title%></td>
             <td><%=item[i].price%></td>
             <td><%=item[i].seller%></td>
-            <!-- <td><a href='/admin/delete/<%=item[i].itemid%>'>Del</a></td> -->
             <td><a class="delete-item" href="admin/delete/<%=item[i].itemid%>">del<a></td>
+            <td><a href='/admin/p/<%=item[i].itemid%>'>edit</a></td>
         </tr>
         <%}%>
-    </tbody>
-    
-</table>
+    </tbody>   
+    </table>
+
+     <h1>List of users: </h1>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">accountid</th>
+        <th scope="col">username</th>
+        <th scope="col">email</th>
+        <th scope="col">datejoined</th>
+        <th scope="col">admin</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0; i<user.length; i++){%>
+        <tr>
+            <th scope="row"><a href='/search/<%=user[i].accountid%>'><%=user[i].accountid%></a></th>
+            <td><%=user[i].username%></td>
+            <td><%=user[i].email%></td>
+            <td><%=todate(user[i].datejoined)%></td>
+            <td><%=user[i].admin%></td>
+        </tr>
+        <%}%>
+    </tbody>   
+    </table>
 </div>
 
 </body>
