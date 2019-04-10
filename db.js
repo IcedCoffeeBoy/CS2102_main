@@ -29,6 +29,7 @@ pool.connect(function (err) {
     }
 });
 
+/* ------------------ Additional function to use --------------------- */
 
 // Return a Promise object after a query is made 
 pool.db_promise = function (sql, args) {
@@ -62,10 +63,12 @@ pool.db_promise_check = function (sql, args) {
     });
 }
 
+// Check if the user is admin
 pool.db_checkadmin = async function (userid){
     let result = await pool.db_promise_check(sql.sql_checkadmin, [userid]);
     return result;
 }
 
+/* ---------------------------------------------------------------------------- */
 
 module.exports = pool;  
