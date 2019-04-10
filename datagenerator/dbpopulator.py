@@ -131,14 +131,15 @@ class DBConnector:
         self.conn.commit()
         self.cursor = self.conn.cursor()
 
-    def close(self):
-        self.cursor.close()
-        self.conn.close()
-
     def execute_script(self, path):
         self.cursor.execute(open(path, "r").read())
         self.commit()
         print("Successfully executed script at %s" % path)
+        
+    def close(self):
+        self.cursor.close()
+        self.conn.close()
+
 
 
 class DataGenerator:

@@ -298,6 +298,7 @@ insert into categories values ('Animals'),('Electronic'),('Automobile'),('Househ
 insert into accounts values (201,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
 insert into accounts values (202,'bob','$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','bob@me.com');
 update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
+update accounts set admin=true where username='1234';
 
 -------------------------------- Complex query ----------------------------------------
 select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 
@@ -308,3 +309,4 @@ where imgno=0
 group by r1.itemid,title,description,price,imgurl
 order by count(rid) desc, count(viewid) desc;
 ----------------------------------------------------------------------------------------
+
