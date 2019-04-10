@@ -13,10 +13,8 @@
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -35,30 +33,30 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    <h1>List of items: </h1>
-    <table class="table table-striped">
-    <thead>
-        <tr>
-        <th scope="col">itemid</th>
-        <th scope="col">title</th>
-        <th scope="col">price</th>
-        <th scope="col">seller</th>
-        <th scope="col">Delete</th>
-        <th scope="col">Edit</th>
-        </tr>
-    </thead>
-    <tbody>
-        <%for(var i=0; i<item.length; i++){%>
-        <tr>
-            <th scope="row"><a href='/p/<%=item[i].itemid%>'><%=item[i].itemid%></a></th>
-            <td><%=item[i].title%></td>
-            <td><%=item[i].price%></td>
-            <td><%=item[i].seller%></td>
-            <td><a class="delete-item" href="admin/delete/<%=item[i].itemid%>">del<a></td>
-            <td><a href='/admin/p/<%=item[i].itemid%>'>edit</a></td>
-        </tr>
-        <%}%>
+    <div class="container-fluid">
+        <h1>List of items: </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">itemid</th>
+                    <th scope="col">title</th>
+                    <th scope="col">price</th>
+                    <th scope="col">seller</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var i=0; i<item.length; i++){%>
+                <tr>
+                    <th scope="row"><a href='/p/<%=item[i].itemid%>'><%=item[i].itemid%></a></th>
+                    <td><%=item[i].title%></td>
+                    <td><%=item[i].price%></td>
+                    <td><%=item[i].seller%></td>
+                    <td><a class="delete-item" href="admin/delete/<%=item[i].itemid%>">del<a></td>
+                    <td><a href='/admin/p/<%=item[i].itemid%>'>edit</a></td>
+                </tr>
+                <%}%>
     </tbody>   
     </table>
 
@@ -76,15 +74,21 @@
     </thead>
     <tbody>
         <%for(var i=0; i<users.length; i++){%>
-        <tr>
-            <th scope="row"><a href='/search/<%=users[i].accountid%>'><%=users[i].accountid%></a></th>
-            <td><%=users[i].username%></td>
-            <td><%=users[i].email%></td>
-            <td><%=todate(users[i].datejoined)%></td>
-            <td><%=users[i].admin%></td>
-            <td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td>
-        </tr>
-        <%}%>
+                <tr>
+                    <th scope="row"><a href='/search/<%=users[i].accountid%>'><%=users[i].accountid%></a></th>
+                    <td><%=users[i].username%></td>
+                    <td><%=users[i].email%></td>
+                    <td><%=todate(users[i].datejoined)%></td>
+                    <td><%=users[i].admin%></td>
+                    <!--<td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td> -->
+                    <td>
+                        <form class="delete-form" action="../admin/deleteuser/<%=users[i].accountid%>" method="GET"
+                            onsubmit="return confirm('Are you sure you want to delete?');">
+                            <input type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+                <%}%>
     </tbody>   
     </table>
 </div>
