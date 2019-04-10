@@ -81,7 +81,7 @@ ALTER SEQUENCE relationships_rid_seq RESTART WITH 1000;
 create table if not exists messages (
 	msgid serial primary key,
 	userfrom integer,
-	timestamp timestamp default now(),
+	timestamp timestamp default (now() at time zone 'utc'),
 	rid integer,
 	msg text,
 	foreign key (userfrom) references accounts (accountid),
@@ -220,6 +220,23 @@ create trigger commenttrigger
 before insert or update on qnas
 for each row
 execute procedure checkComments();
+
+------Trigger for inserting new messages-------------
+create or replace function checkMsgSender()
+returns trigger as $$ 
+declare user1 integer; user2 integer;
+begin
+	user1 := (select buyer from relationships where rid = new.rid);
+	user2 := (select seller from relationships where rid = new.rid);
+	if (new.userfrom <> user1 and new.userfrom <> user2) then raise exception 'Sender does not belong to the relationship'; return null; end if;
+	return new;
+end;
+$$ language plpgsql;
+
+create trigger messagetrigger
+before insert or update on messages
+for each row
+execute procedure checkMsgSender();
 
 
 ---------------------------------- Function ----------------------------------------------
