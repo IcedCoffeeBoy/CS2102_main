@@ -74,13 +74,13 @@
         </tr>
     </thead>
     <tbody>
-        <%for(var i=0; i<user.length; i++){%>
+        <%for(var i=0; i<users.length; i++){%>
         <tr>
-            <th scope="row"><a href='/search/<%=user[i].accountid%>'><%=user[i].accountid%></a></th>
-            <td><%=user[i].username%></td>
-            <td><%=user[i].email%></td>
-            <td><%=todate(user[i].datejoined)%></td>
-            <td><%=user[i].admin%></td>
+            <th scope="row"><a href='/search/<%=users[i].accountid%>'><%=users[i].accountid%></a></th>
+            <td><%=users[i].username%></td>
+            <td><%=users[i].email%></td>
+            <td><%=todate(users[i].datejoined)%></td>
+            <td><%=users[i].admin%></td>
         </tr>
         <%}%>
     </tbody>   
