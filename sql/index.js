@@ -122,7 +122,8 @@ var sql = {
     
     // Edit Listing
     sql_getItemInfo: 'SELECT * FROM Items WHERE itemid = $1',
-    sql_updateItem: "UPDATE Items SET title=$1, description=$2, price=$3, catname=$4, loanstart=$5, loanend=$6, location=$7 WHERE itemid=$8 RETURNING itemid",
+    sql_updateItem: "UPDATE Items SET title=$1, description=$2, price=$3, catname=$4, loanstart=$5, loanend=$6, location=$7 WHERE itemid=$8",
+    sql_updateImage: "UPDATE Images SET imgurl=$1 WHERE itemid = $2 and imgno = $3",
     sql_deleteItem: 'DELETE FROM Items WHERE itemid = $1',
 
     //Check admin staus
