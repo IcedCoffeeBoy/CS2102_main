@@ -5,8 +5,8 @@ var editproductRouter = require('./editlisting');
 
 
 router.get('/', async function (req, res, next) {
-    const sql_getallitems = 'select * from items';
-    const sql_getallusers = "select * from accounts"
+    const sql_getallitems = 'select * from items order by itemid';
+    const sql_getallusers = "select * from accounts order by accountid"
     let userid = req.user.id;
 
     //Check if user is admin
