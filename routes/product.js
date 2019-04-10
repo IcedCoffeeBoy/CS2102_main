@@ -41,8 +41,6 @@ router.get("/:productId", async (req, res, next) => {
       return res.redirect("../op/" + itemid)
     }
 
-    console.log(results[3])
-
     let rating = parseFloat(results[7][0].rating);
     if (isNaN(rating)) {rating = 0;}
     rating = rating.toFixed(1);

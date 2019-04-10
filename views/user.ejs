@@ -73,19 +73,24 @@
         <% } %>
         <div id="products" class="product-container">
             <% for(var i=0; i<data.length; i++) { %>
-            <a class="item" href= <%= "../p/" + data[i].itemid %>>
-                <div class="item-top">
-                    <div><img src= "<%= data[i].imgurl %>" alt="<%= data[i].title%>" /></div>
-                    <div class="title"><%= data[i].title %></div>                </div>
-                <div class="item-btm">
-                    <div class="pricetag">
-                        $<%= data[i].price %>
+            <div>
+                <a class="item" href= <%= "../p/" + data[i].itemid %>>
+                    <div class="item-top">
+                        <div><img src= "<%= data[i].imgurl %>" alt="<%= data[i].title%>" /></div>
+                        <div class="title"><%= data[i].title %></div>                </div>
+                    <div class="item-btm">
+                        <div class="pricetag">
+                            $<%= data[i].price %>
+                        </div>
+                        <div class="view-btn primary-bg primary-bg-hover primary-border">
+                            View Item
+                        </div>
                     </div>
-                    <div class="view-btn primary-bg primary-bg-hover primary-border">
-                        View Item
-                    </div>
+                </a>
+                <div>
+                    <a class="edit-btn" href= <%= "../e/" + data[i].itemid %> >Edit Listing</a>
                 </div>
-            </a>
+            </div>
             <% } %>
         </div>
         <%if(data.length>0){ %>

@@ -28,6 +28,8 @@ var chatRouter = require('./routes/chat');
 var ownproductRouter = require('./routes/ownproduct');
 var reviewRouter = require('./routes/review');
 var userAuth = require('./userAuth');
+var editListingRouter = require('./routes/editlisting');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -77,9 +79,11 @@ app.use(bodyParser.urlencoded({
 
 /*----------Routes-----------------*/
 app.use('/', indexRouter);
-app.use('/main', mainRouter)
+app.use('/main', mainRouter);
+app.use('/admin', adminRouter);
 app.use('/search', searchRouter);
 app.use('/newlisting', userAuth, newlistingRouter);
+app.use('/e', userAuth, editListingRouter);
 app.use('/p', productRouter);
 app.use('/op', ownproductRouter);
 // app.use('/search/items', searchItemRouter);

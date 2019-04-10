@@ -119,7 +119,14 @@ var sql = {
                           )
                         )
                         ORDER BY likes desc`,
-  
+    
+    // Edit Listing
+    sql_getItemInfo: 'SELECT * FROM Items WHERE itemid = $1',
+    sql_updateItem: "UPDATE Items SET title=$1, description=$2, price=$3, catname=$4, loanstart=$5, loanend=$6, location=$7 WHERE itemid=$8 RETURNING itemid",
+    sql_deleteItem: 'DELETE FROM Items WHERE itemid = $1',
+
+    //Check admin staus
+    sql_checkadmin: "select 1 from accounts where accountid=$1 and admin=true",
 }
 
 module.exports = sql;
