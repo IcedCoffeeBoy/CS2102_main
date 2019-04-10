@@ -81,25 +81,3 @@
 #outbid-text {
     color: #c00000
 }
-
-.edit-btn {
-    background-color: #1460a7;
-    border-color: #1460a7;
-    width:100px;
-    border-radius: 8px;
-    padding:4px;
-    text-align: center;
-    color: white;
-    float: right;
-    margin-right: 20px;
-    margin-top: 8px;
-    font-size: 0.9em;
-    font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.edit-btn:hover {
-    color: #ffffff;
-    text-decoration: none;
-    transition:0.5s ease all;
-    background-color: #0f4272;
-}
