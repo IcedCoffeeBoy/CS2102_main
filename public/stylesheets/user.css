@@ -115,4 +115,26 @@
   margin-inline-end: 7%;
   }
   
-  
+.view-btn:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.edit-btn {
+  background-color: #1460a7;
+  border-color: #1460a7;
+  width:100px;
+  border-radius: 8px;
+  padding:4px;
+  text-align: center;
+  color: white;
+  float: right;
+  margin-left: 1em;
+}
+
+.edit-btn:hover {
+  color: #ffffff;
+  text-decoration: none;
+  transition:0.5s ease all;
+  background-color: #0f4272;
+}
