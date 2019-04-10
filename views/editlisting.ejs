@@ -43,7 +43,7 @@
         <div class ="image-upload-container">
         <div class="file-upload">
             <div class="image-upload-wrap" id="image-upload-wrap-1">
-                <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" id="file-upload-input-1" name="image" required/>
+                <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" id="file-upload-input-1" name="image"/>
                 <h1>1</h1>
             </div>
             
@@ -169,6 +169,10 @@
     </form>
 </div>
 </body>
+
+<span id="temp" hidden>
+    <%= JSON.stringify(imgurls); %>
+</span>
 
 <script>
     var catname = "<%= item["catname"] %>";

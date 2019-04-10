@@ -27,7 +27,7 @@ router.get('/:productId', async function (req, res, next) {
       productId: req.params.productId,
       categoryData: results[0],
       item: results[1][0],
-      imgurl: results[2],
+      imgurls: results[2],
       user: req.user
     });
   } catch (err) {
@@ -53,11 +53,11 @@ router.post('/:productId/upload', upload.array('image', 4), async function (req,
 
     // Insert image entries in parallel.
     // All SQL queries must be complete (via Promise.all) before this step is deemed successful.
-    // let promises = req.files.map(async (img, idx) => {
-    //   let imagePath = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/` + img.filename;
-    //   db.db_promise(sql.sql_insertImage, [imagePath, data[0].itemid, idx]);
-    // })
-    // await Promise.all(promises);
+    let promises = req.files.map(async (img, idx) => {
+      let imagePath = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/` + img.filename;
+      db.db_promise(sql.sql_updateImage, [imagePath, req.params.productId, idx]);
+    })
+    await Promise.all(promises);
   } catch (err) {
     console.log("SQL error when updating item.")
     res.sendStatus(404);

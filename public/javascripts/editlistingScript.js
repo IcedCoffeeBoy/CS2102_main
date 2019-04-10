@@ -38,6 +38,18 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    var imgurls = JSON.parse($('#temp').text());
+    $('#temp').remove();
+    for (var i=0; i < imgurls.length; i++) {
+        var id = i + 1;
+        $('#image-upload-wrap-' + id).hide();
+        $('#file-upload-image-' + id).attr('src', imgurls[i]['imgurl']);
+        $('#file-upload-content-' + id).show();
+    }
+});
+
+
+$(document).ready(function () {
     $('#editlisting-form').submit(function () {
         $.ajax({
             complete: function () {
