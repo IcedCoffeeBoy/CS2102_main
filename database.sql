@@ -1,5 +1,6 @@
 /* ----- DROP TABLES ----- */
 DROP TABLE IF EXISTS Accounts CASCADE;
+drop table if exists adminaccounts cascade;
 DROP TABLE IF EXISTS Categories CASCADE;
 DROP TABLE IF EXISTS Items 	CASCADE;
 DROP TABLE IF EXISTS Images CASCADE;
@@ -21,11 +22,15 @@ CREATE TABLE Accounts (
 	password	VARCHAR(500) NOT NULL,
 	email		VARCHAR(128) NOT NULL UNIQUE,
 	datejoined  date default CURRENT_DATE,
-	admin		BOOLEAN DEFAULT FALSE,
 	status		VARCHAR(20) DEFAULT 'Active'
 );
 
 ALTER SEQUENCE Accounts_accountId_seq RESTART WITH 100;
+
+create table adminaccounts(
+	accountId integer primary key,
+	foreign key (accountId) references accounts on delete cascade
+);
 
 --------------Entity------------------------
 CREATE TABLE Categories (
@@ -298,7 +303,7 @@ insert into categories values ('Animals'),('Electronic'),('Automobile'),('Househ
 insert into accounts values (201,1234,'$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','lol@me.com');
 insert into accounts values (202,'bob','$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu','bob@me.com');
 update accounts set password = '$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu';
-update accounts set admin=true where username='1234';
+insert into adminaccounts values (201);
 
 -------------------------------- Complex query ----------------------------------------
 select r1.itemid,title,description,price,imgurl, count(distinct rid), count(distinct viewid) 

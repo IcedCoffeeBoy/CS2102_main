@@ -20,12 +20,12 @@ def db_populate(n=100, script_path=None, add_users=True, add_items=True, add_rev
     # Password is 1234 for all acounts
     password = "$2a$10$0OwHhC5Pyu4E9aOwjQpSG.FdrgZa2wN.6FJFRusdgAt6OuvhO50gu"
     # --------- Add users ---------
-    base_sql_insert = ("INSERT INTO Accounts (username, password, email, admin, status) VALUES "
-                       + build_empty_sql_insert(5))
+    base_sql_insert = ("INSERT INTO Accounts (username, password, email, status) VALUES "
+                       + build_empty_sql_insert(4))
 
     for i in range(n):
         u = gen.create_user_profile()
-        db.cursor.execute(base_sql_insert, (u["user"], password, u["email"], False, "Active"))
+        db.cursor.execute(base_sql_insert, (u["user"], password, u["email"], "Active"))
 
     print("Sucessfully create %i user accounts" % n)
     db.commit()

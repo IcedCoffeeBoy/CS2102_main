@@ -126,7 +126,7 @@ var sql = {
     sql_deleteItem: 'DELETE FROM Items WHERE itemid = $1',
 
     //Check admin staus
-    sql_checkadmin: "select 1 from accounts where accountid=$1 and admin=true",
+    sql_checkadmin: "select 1 from adminaccounts where accountid=$1",
 }
 
 module.exports = sql;

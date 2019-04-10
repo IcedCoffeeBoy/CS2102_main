@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -22,86 +22,86 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-    <style>
-        .hover_bkgr_fricc {
-            background: rgba(0, 0, 0, .4);
-            cursor: pointer;
-            display: none;
-            height: 100%;
-            position: fixed;
-            text-align: center;
-            top: 0;
-            width: 100%;
-            z-index: 10000;
-            font-family: Nunito, Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 1.15em;
-        }
-
-        .hover_bkgr_fricc .helper {
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-        }
-
-        .hover_bkgr_fricc>div {
-            background-color: #ff7867;
-            color: white;
-            font-weight: bold;
-            box-shadow: 10px 10px 60px #555;
-            display: inline-block;
-            height: auto;
-            max-width: 551px;
-            min-height: 100px;
-            vertical-align: middle;
-            width: 60%;
-            position: relative;
-            border-radius: 8px;
-            padding: 15px 5%;
-        }
-
-        .popupCloseButton {
-            background-color: #bbb;
-            border: 3px solid #999;
-            border-radius: 50px;
-            cursor: pointer;
-            display: inline-block;
-            font-weight: bold;
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 20px;
-            line-height: 30px;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-        }
-
-        .popupCloseButton:hover {
-            background-color: #ddd;
-        }
-
-        .trigger_popup_fricc {
-            cursor: pointer;
-            font-size: 20px;
-            margin: 20px;
-            display: inline-block;
-            font-weight: bold;
-        }
-
-        .bidding-closed button {
-            width: 100%;
-        }
-    </style>
+    <!--JavaScript -->
+    <script src="/javascripts/adminScript.js"></script>
+    <%-include navbar.ejs%>
+    <%- include popout.ejs%>
+    <%function todate(sql_date){
+        let options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: "Asia/Shanghai" };
+        return sql_date.toLocaleDateString("en-US", options);
+    }%>
 </head>
 
 <body>
-    <div class="hover_bkgr_fricc">
+    <div class="hover_bkgr_fricc" id="warning-popout">
         <span class="helper"></span>
         <div>
             <div class="popupCloseButton">X</div>
-            <div id="popout-msg"></div>
+            <div id="warning-msg">Deleting the user will delete all information. Are you sure to continue?</div>
+            <button id="yes-btn">Yes</button>
+            <button id="no-btn">No</button>
         </div>
     </div>
+    <div class="container-fluid">
+        <h1>List of items: </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">itemid</th>
+                    <th scope="col">title</th>
+                    <th scope="col">price</th>
+                    <th scope="col">seller</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var i=0; i<item.length; i++){%>
+                <tr>
+                    <th scope="row"><a href='/p/<%=item[i].itemid%>'><%=item[i].itemid%></a></th>
+                    <td><%=item[i].title%></td>
+                    <td><%=item[i].price%></td>
+                    <td><%=item[i].seller%></td>
+                    <td><a class="delete-item" href="admin/delete/<%=item[i].itemid%>">del<a></td>
+                    <td><a href='/admin/p/<%=item[i].itemid%>'>edit</a></td>
+                </tr>
+                <%}%>
+    </tbody>   
+    </table>
+
+     <h1>List of users: </h1>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">accountid</th>
+        <th scope="col">username</th>
+        <th scope="col">email</th>
+        <th scope="col">datejoined</th>
+        <th scope="col">admin</th>
+        <th scope="col">delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0; i<users.length; i++){%>
+                <tr>
+                    <th scope="row"><a href='/search/<%=users[i].accountid%>'><%=users[i].accountid%></a></th>
+                    <td><%=users[i].username%></td>
+                    <td><%=users[i].email%></td>
+                    <td><%=todate(users[i].datejoined)%></td>
+                    <td><%=users[i].admin%></td>
+                    <!--<td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td> -->
+                    <td>
+                        <form name="delete-form" action="/deleteuser/<%=users[i].accountid%>" method="GET"
+                            onsubmit="return confirm('Are you sure you want to delete?');">
+                            <input type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+                <%}%>
+    </tbody>   
+    </table>
+</div>
+
 </body>
 
 </html>
