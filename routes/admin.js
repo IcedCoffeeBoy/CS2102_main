@@ -44,6 +44,20 @@ router.get('/delete/:productId', async function (req, res, next) {
 
 })
 
-router.use('/p', editproductRouter);
+router.use('/p', checkAdmin, editproductRouter);
+
+
+function checkAdmin(req, res, next) {
+    if(req.user==null){
+        return res.sendStatus(403);
+    }
+    let userid = req.user.id;
+    //Check if user is admin
+    if (db.db_checkadmin(userid)) {
+        return next();
+    } else {
+        return res.sendStatus(403);
+    }
+}
 
 module.exports = router;
