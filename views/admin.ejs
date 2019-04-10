@@ -57,7 +57,7 @@
                     <td><%=item[i].title%></td>
                     <td><%=item[i].price%></td>
                     <td><%=item[i].seller%></td>
-                    <td><a class="delete-item" href="admin/delete/<%=item[i].itemid%>">del<a></td>
+                    <td><a class="delete-item" href="/delete/<%=item[i].itemid%>">del<a></td>
                     <td><a href='/admin/p/<%=item[i].itemid%>'>edit</a></td>
                 </tr>
                 <%}%>
@@ -72,7 +72,6 @@
         <th scope="col">username</th>
         <th scope="col">email</th>
         <th scope="col">datejoined</th>
-        <th scope="col">admin</th>
         <th scope="col">delete</th>
         </tr>
     </thead>
@@ -83,14 +82,7 @@
                     <td><%=users[i].username%></td>
                     <td><%=users[i].email%></td>
                     <td><%=todate(users[i].datejoined)%></td>
-                    <td><%=users[i].admin%></td>
-                    <!--<td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td> -->
-                    <td>
-                        <form class="delete-form" action="../admin/deleteuser/<%=users[i].accountid%>" method="GET"
-                            onsubmit="return confirm('Are you sure you want to delete?');">
-                            <input type="submit" value="delete">
-                        </form>
-                    </td>
+                    <td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td>
                 </tr>
                 <%}%>
     </tbody>   
