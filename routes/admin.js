@@ -11,10 +11,13 @@ router.get('/', async function (req, res, next) {
     if (!db.db_checkadmin(userid)) {
         return res.sendStatus(403);
     }
-
-    let item = await db.db_promise(sql_getallitems);
-
-    res.render('admin', { user: req.user, item: item });
+    try {
+        let item = await db.db_promise(sql_getallitems);
+        res.render('admin', { user: req.user, item: item });
+    } catch(err){
+        console.log(err)
+        res.sendStatus(500);
+    }
 })
 
 router.get('/delete/:productId', async function (req, res, next) {
