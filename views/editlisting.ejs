@@ -163,6 +163,10 @@
 
         <button type="submit" class="btn btn-primary">Update Listing</button>
     </form>
+
+    <form action="<%=productId%>/delete" method="post" id="deletelisting-form" onsubmit="return confirm('Confirm delete listing?')">
+            <button type="submit" class="btn delete-listing">Delete Listing</button>
+    </form>
 </div>
 </body>
 

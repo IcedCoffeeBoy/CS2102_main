@@ -59,11 +59,26 @@ router.post('/:productId/upload', upload.array('image', 4), async function (req,
     // })
     // await Promise.all(promises);
   } catch (err) {
-    console.log("SQL error when inserting item.")
+    console.log("SQL error when updating item.")
     res.sendStatus(404);
   }
-  req.flash("message", "Sucessfully added item.");
+  req.flash("message", "Sucessfully updated item.");
   res.redirect('/user');
 })
+
+
+
+router.post("/:productId/delete", async function (req, res, next) {
+
+  try {
+    let _ = await db.db_promise(sql.sql_deleteItem, [req.params.productId])
+  } catch (err) {
+    console.log("SQL error when deleting item.")
+    res.sendStatus(404);
+  }
+  req.flash("message", "Sucessfully deleted item.");
+  res.redirect('/user');
+})
+
 
 module.exports = router;
