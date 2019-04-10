@@ -71,6 +71,7 @@
         <th scope="col">email</th>
         <th scope="col">datejoined</th>
         <th scope="col">admin</th>
+        <th scope="col">delete</th>
         </tr>
     </thead>
     <tbody>
@@ -81,6 +82,7 @@
             <td><%=users[i].email%></td>
             <td><%=todate(users[i].datejoined)%></td>
             <td><%=users[i].admin%></td>
+            <td><a class="delete-user" href="admin/deleteuser/<%=users[i].accountid%>">del<a></td>
         </tr>
         <%}%>
     </tbody>   

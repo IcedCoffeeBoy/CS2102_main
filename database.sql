@@ -46,7 +46,7 @@ CREATE TABLE Items (
 	loanStart	TIMESTAMP default now(),
 	loanEnd		TIMESTAMP default now() + interval '168 hour',
 	location	VARCHAR(128) default '4 Engineering Drive 4, Singapore 117585',
-	FOREIGN KEY (seller) REFERENCES Accounts,
+	FOREIGN KEY (seller) REFERENCES Accounts(accountid) on delete cascade,
 	FOREIGN KEY (catname) REFERENCES Categories
 );
 
@@ -68,8 +68,8 @@ create table if not exists relationships (
 	seller integer not null,
 	buyer integer not null,
 	itemid integer not null,
-	foreign key (seller) references accounts (accountid),
-	foreign key (buyer) references accounts(accountid),
+	foreign key (seller) references accounts (accountid) on delete cascade,
+	foreign key (buyer) references accounts(accountid) on delete cascade,
 	foreign key (itemid) references items on delete cascade,
 	unique(seller,buyer,itemid),
 	check(seller is distinct from buyer)
@@ -84,8 +84,8 @@ create table if not exists messages (
 	timestamp timestamp default now(),
 	rid integer,
 	msg text,
-	foreign key (userfrom) references accounts (accountid),
-	foreign key (rid) references relationships(rid)
+	foreign key (userfrom) references accounts (accountid) on delete cascade,
+	foreign key (rid) references relationships(rid) on delete cascade
 );
 
 --------------Entity------------------------
@@ -117,7 +117,7 @@ create table if not exists viewHistory(
 	timestamp timestamp default now(),
 	userid integer,
 	foreign key (itemid) references items on delete cascade,
-	foreign key (userid) references accounts(accountid)
+	foreign key (userid) references accounts(accountid) on delete cascade
 );
 
 alter sequence viewHistory_viewid_seq restart with 10;
@@ -130,7 +130,7 @@ create table if not exists qnas(
 	comment text, 
 	timestamp timestamp default now(),
 	foreign key (itemid) references items on delete cascade,
-	foreign key (userid) references accounts(accountid)
+	foreign key (userid) references accounts(accountid) on delete cascade
 );
 
 --------------Entity------------------------
@@ -140,7 +140,7 @@ create table if not exists bids (
 	rid integer not null,
 	timestamp timestamp default now(),
 	amount numeric(32, 2),
-	foreign key (userid) references accounts(accountid)
+	foreign key (userid) references accounts(accountid) on delete cascade
 );
 
 alter sequence bids_bidid_seq restart with 10000;
@@ -151,7 +151,7 @@ create table if not exists likes (
 	likerid integer not null,
 	itemid integer not null,
 	timestamp timestamp default now(),
-	foreign key (likerid) references accounts(accountid),
+	foreign key (likerid) references accounts(accountid) on delete cascade,
 	foreign key (itemid) references items on delete cascade,
 	unique(likerid, itemid)
 );
@@ -161,8 +161,8 @@ create table if not exists blocks (
 	blocker integer not null,
 	blockee integer not null,
 	primary key (blocker, blockee),
-	foreign key (blocker) references accounts(accountid),
-	foreign key (blockee) references accounts(accountid),
+	foreign key (blocker) references accounts(accountid) on delete cascade,
+	foreign key (blockee) references accounts(accountid) on delete cascade,
 	check(blocker is distinct from blockee)
 );
 
@@ -309,4 +309,3 @@ where imgno=0
 group by r1.itemid,title,description,price,imgurl
 order by count(rid) desc, count(viewid) desc;
 ----------------------------------------------------------------------------------------
-

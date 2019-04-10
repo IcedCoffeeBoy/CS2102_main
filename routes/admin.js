@@ -39,9 +39,27 @@ router.get('/delete/:productId', async function (req, res, next) {
         console.log("Error deleting item " + err);
         return res.sendStatus(500);
     }
-
     return res.sendStatus(200);
+})
 
+router.get('/deleteuser/:deluserid', async function (req, res, next) {
+    const sql_deluser = "delete from accounts where accountid=$1"
+
+    let userid = req.user.id;
+    let deluserid = req.params.deluserid;
+
+    try {
+        //Check if user is admin
+        if (!db.db_checkadmin(userid)) {
+            console.log("user not admin")
+            return res.sendStatus(403);
+        }
+        await db.db_promise(sql_deluser, [deluserid]);
+    } catch (err) {
+        console.log("Error deleting item " + err);
+        return res.sendStatus(500);
+    }
+    return res.sendStatus(200);
 })
 
 router.use('/p', checkAdmin, editproductRouter);
