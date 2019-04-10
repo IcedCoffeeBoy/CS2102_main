@@ -102,7 +102,34 @@ textarea {
 }
 
 
+/* Delete listing */
+.delete-listing {
+  margin-top: 20px;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all .2s ease;
+  outline: none;
+  font-weight: 700;
+}
 
+.delete-listing:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}
+
+.delete-listing:active {
+  border: 0;
+  transition: all .2s ease;
+}
+
+
+/* Radio */
 .radio {
   margin: 0.0rem;
 }
