@@ -23,8 +23,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script>var ts="<%=new Date(latestTimestamp).toISOString()%>";</script>
     <script src="javascripts/chatpageScript.js"></script>
-
     <% include navbar.ejs %>
 </head>
 
@@ -37,32 +38,35 @@
                     <i class="fa fa-search"></i>
                 </div>
                 <div class="chat-list">
-                    <div class="user">
-                        <img src="https://placekitten.com/320/240" />
+                    <%for (var i=0;i<users.length;i++) {%>
+                    <div class="user" uidx="<%=i%>" uid="<%=users[i].userid%>" iid="<%=users[i].itemid%>">
+                        <img class="uimg" src="https://placekitten.com/320/240" />
                         <div class="user-details">
-                            bob
+                            <p class="username"><%=users[i].username%></p>
+                            <p class="item-subtitle"><%=users[i].title%></p>
                         </div>
                     </div>
-                    <div class="user">
-                        <img src="https://placekitten.com/350/240" />
-                        <div class="user-details">
-                            1234
-                        </div>
-                    </div>
+                    <%}%>
                 </div>
             </div>
             <div class="chat-content">
                 <div class="chat-title">
-                    <img src="https://placekitten.com/320/240" />
+                    <img src="<%=users.length > 0 ? "https://placekitten.com/320/240" : "images/userimg.png"%>" />
                     <div class="user-details">
-                        bob
+                        <p class="username"><%=users.length > 0 ? users[0].username : ""%></p>
+                        <p class="item-subtitle"><%=users.length > 0 ? users[0].title : ""%></p>
                     </div>
                 </div>
-                <div id="cwnd" class="chatwindow">
-                    <div class="msg msg-yours">
-                        Still under construction...
-                    </div>
+                <%for (var i=0;i<users.length;i++) {%>
+                <div uid="<%=users[i].userid%>" iid="<%=users[i].itemid%>" id="cwnd<%=i%>" class="chatwindow" <%= i==0 ? '' : 'hidden'%>>
+                    <%for (var j=0;j<msgs.length;j++) {%>
+                    <%if (users[i].rid == msgs[j].rid) {%>
+                        <div class="msg <%=msgs[j].userid == user ? 'msg-yours' : 'msg-theirs'%>">
+                            <%=msgs[j].msg%>
+                        </div>
+                    <%}}%>
                 </div>
+                <%}%>
                 <div class="chatbox">
                     <input placeholder="Enter text here..." />
                     <div class="chat-send-btn">

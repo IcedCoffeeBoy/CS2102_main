@@ -31,6 +31,9 @@
 .chat-search {
     margin-top: 1em;
     height: 3em;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
 }
 
 .chat-search input {
@@ -80,9 +83,22 @@
 
 .user-details {
     flex: 1;
-    padding: 8px 10px;
+    padding: 0px 10px;
+    margin: 0px;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 }
 
+.user-details p {
+    margin-bottom: 0.125em;
+}
+
+.user-details .item-subtitle {
+    font-size: 0.8em;
+    font-style: italic;
+}
 
 .chat-content {
     display: flex;
@@ -126,6 +142,7 @@
     border-radius: 16px;
     clear: both;
     font-size: 0.85em;
+    overflow-wrap: break-word;
 }
 
 .msg-yours {
@@ -134,7 +151,7 @@
 }
 
 .msg-theirs {
-    background-color: #ececec;
+    background-color: #dddddd;
     float: left;
 }
 

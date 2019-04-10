@@ -39,6 +39,7 @@
     color: white;
 
     font-size: 1.5em;
+    z-index: 999;
 }
 
 .chat-top {
@@ -79,9 +80,10 @@
 .chatwindow {
     flex-flow: column wrap;
     overflow-y: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
     font-size: 1em;
     flex: 1;
+    max-width: 100%;
 }
 
 
@@ -98,6 +100,7 @@
     border-radius: 16px;
     clear: both;
     font-size: 0.85em;
+    overflow-wrap: break-word;
 }
 
 .msg-yours {

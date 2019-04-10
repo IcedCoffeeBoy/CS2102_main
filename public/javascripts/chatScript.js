@@ -71,8 +71,10 @@ $(document).ready(() => {
 
         let msgs = await $.post('../chat/getChat', msgPollParams)
         currentTimestamp = msgs.pop()
+        console.log("Server time: " + currentTimestamp)
 
         if (msgs.length != 0) {
+            console.log(msgs[0].timestamp)
             displayNewInboundMessage(msgs)
         }
     }
@@ -95,7 +97,7 @@ $(document).ready(() => {
         $('#cwnd').scrollTop($('#cwnd')[0].scrollHeight)
     }
 
-    getNewMessages(false)
+    getNewMessages()
     var getNewMessageTimer = setInterval(getNewMessages, 10000)
 })
 
