@@ -1,10 +1,9 @@
 Travis: [![Build Status](https://travis-ci.com/IcedCoffeeBoy/CS2102_main.svg?token=R58Qz9FF5hsKVa8iMxVV&branch=master)](https://travis-ci.com/IcedCoffeeBoy/CS2102_main)
 
-# CS2102_main 
-## Offical Url
-`https://cs2102postreg.herokuapp.com`
+# Welcome to my stuff sharing website  
+Offical Url: `https://cs2102postreg.herokuapp.com`
 
-## Stuff sharing website
+## Sample images
 ![Alt text](sample_images/Capture1.PNG)
 ![Alt text](sample_images/Capture3.PNG)
 ![Alt text](sample_images/sample2.PNG)
