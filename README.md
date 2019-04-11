@@ -10,7 +10,7 @@ Offical Url: `https://cs2102postreg.herokuapp.com`
 
 
 # Instruction on how to start localhost
-run `npm install`
+run `npm install` <br>
 run `npm start` <br>
 Go to any internet browser, enter `http://localhost:3000/`
 
