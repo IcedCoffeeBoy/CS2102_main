@@ -161,6 +161,10 @@
         </div>
         <br>
 
+
+        <input type="number" id="ori_num_img" name="ori_num_img" value="<%= imgurls.length %>" hidden></input>
+        <input type="number" id="num_img" name="num_img" value="0" hidden></input>
+
         <button type="submit" class="btn btn-primary">Update Listing</button>
     </form>
 
@@ -168,11 +172,12 @@
             <button type="submit" class="btn delete-listing">Delete Listing</button>
     </form>
 </div>
-</body>
 
 <span id="temp" hidden>
     <%= JSON.stringify(imgurls); %>
 </span>
+
+</body>
 
 <script>
     var catname = "<%= item["catname"] %>";
