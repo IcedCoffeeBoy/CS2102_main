@@ -8,6 +8,9 @@ function readURL(input) {
             $('#image-upload-wrap-' + id).hide();
             $('#file-upload-image-' + id).attr('src', e.target.result);
             $('#file-upload-content-' + id).show();
+
+            $('#num_img').val(parseInt($('#num_img').val())+1);
+            console.log($('#num_img').val());
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -22,6 +25,9 @@ function removeUpload(input) {
     $('#file-upload-input-' + id).replaceWith($('#file-upload-input-' + id).clone());
     $('#file-upload-content-' + id).hide();
     $('#image-upload-wrap-' + id).show();
+
+    $('#num_img').val(parseInt($('#num_img').val())-1);
+    console.log($('#num_img').val());
 }
 
 $(document).ready(function () {
@@ -39,12 +45,15 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     var imgurls = JSON.parse($('#temp').text());
-    $('#temp').remove();
     for (var i=0; i < imgurls.length; i++) {
+        var imgurl = imgurls[i]['imgurl'];
         var id = i + 1;
         $('#image-upload-wrap-' + id).hide();
-        $('#file-upload-image-' + id).attr('src', imgurls[i]['imgurl']);
+        $('#file-upload-image-' + id).attr('src', imgurl);
         $('#file-upload-content-' + id).show();
+
+        $('#num_img').val(i+1);
+        console.log($('#num_img').val());
     }
 });
 

@@ -43,9 +43,12 @@ router.post('/:productId/upload', upload.array('image', 4), async function (req,
   let category = req.body.category;
   let loanStart = req.body.loan_start;
   let loanEnd = req.body.loan_end;
-  let  location = req.body.location;
+  let location = req.body.location;
+  let oriNumImages = req.body.ori_num_img;
+  let numImages = req.body.num_img;
 
   console.log(req.body)
+  console.log(req.files)
   try {
     // Insert item entry
     let sqlInsertArgs = [title, description, price, category, loanStart, loanEnd, location, req.params.productId];
@@ -55,7 +58,14 @@ router.post('/:productId/upload', upload.array('image', 4), async function (req,
     // All SQL queries must be complete (via Promise.all) before this step is deemed successful.
     let promises = req.files.map(async (img, idx) => {
       let imagePath = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/` + img.filename;
-      db.db_promise(sql.sql_updateImage, [imagePath, req.params.productId, idx]);
+      console.log("idx: " + idx)
+      if (parseInt(idx + oriNumImages + 1) >= parseInt(numImages)) {
+        console.log("Inserting: " + idx)
+        db.db_promise(sql.sql_insertImage, [imagePath, req.params.productId, idx + oriNumImages]);
+      } else {
+        console.log("Updating: " + idx)
+        db.db_promise(sql.sql_updateImage, [imagePath, req.params.productId, idx]);
+      }
     })
     await Promise.all(promises);
   } catch (err) {
