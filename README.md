@@ -1,16 +1,19 @@
 Travis: [![Build Status](https://travis-ci.com/IcedCoffeeBoy/CS2102_main.svg?token=R58Qz9FF5hsKVa8iMxVV&branch=master)](https://travis-ci.com/IcedCoffeeBoy/CS2102_main)
 
 # CS2102_main 
+## Offical Url
+`https://cs2102postreg.herokuapp.com`
 
-## Instruction on how to start
+## Stuff sharing website
+![Alt text](sample_images/Capture1.png)
+![Alt text](sample_images/Capture3.png)
+![Alt text](sample_images/sample2.png)
+
+
+# Instruction on how to start localhost
 run `npm install`
-
-## To start local host 
 run `npm start` <br>
 Go to any internet browser, enter `http://localhost:3000/`
-
-## Online depolyment 
-run `https://cs2102postreg.herokuapp.com`
 
 ## Postregsql connection error
 If you stuck at connection please ensure that your postreqsql is running  <br>
