@@ -5,9 +5,9 @@ Travis: [![Build Status](https://travis-ci.com/IcedCoffeeBoy/CS2102_main.svg?tok
 `https://cs2102postreg.herokuapp.com`
 
 ## Stuff sharing website
-![Alt text](sample_images/Capture1.png)
-![Alt text](sample_images/Capture3.png)
-![Alt text](sample_images/sample2.png)
+![Alt text](sample_images/Capture1.PNG)
+![Alt text](sample_images/Capture3.PNG)
+![Alt text](sample_images/sample2.PNG)
 
 
 # Instruction on how to start localhost
