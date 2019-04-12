@@ -18,3 +18,8 @@ Go to any internet browser, enter `http://localhost:3000/`
 If you stuck at connection please ensure that your postreqsql is running  <br>
 Run start postreqsql <br>
 Ensure that the correct user, host, database, password, port is used <br>
+
+## Populating the database using PYTHON
+To populate the database please execute the python file `main.py` <br>
+run `cd datagenerator` <br>
+run `py main.py`
