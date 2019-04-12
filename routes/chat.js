@@ -56,7 +56,7 @@ router.get("/", async (req, res, next) => {
     res.render("chatpage", {
         msgs: msgs,
         users: users,
-        user: req.user.id,
+        user: req.user,
         latestTimestamp: latestTimestamp[0].ts
     });
 });

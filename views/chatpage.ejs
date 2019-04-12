@@ -57,16 +57,20 @@
                         <p class="item-subtitle"><%=users.length > 0 ? users[0].title : ""%></p>
                     </div>
                 </div>
+                <%if (users.length == 0) {%>
+                <div uid="-1" iid="-1" id="cwnd-1" class="chatwindow">
+                </div>
+                <%} else {%>
                 <%for (var i=0;i<users.length;i++) {%>
                 <div uid="<%=users[i].userid%>" iid="<%=users[i].itemid%>" id="cwnd<%=i%>" class="chatwindow" <%= i==0 ? '' : 'hidden'%>>
                     <%for (var j=0;j<msgs.length;j++) {%>
                     <%if (users[i].rid == msgs[j].rid) {%>
-                        <div class="msg <%=msgs[j].userid == user ? 'msg-yours' : 'msg-theirs'%>">
+                        <div class="msg <%=msgs[j].userid == user.id ? 'msg-yours' : 'msg-theirs'%>">
                             <%=msgs[j].msg%>
                         </div>
                     <%}}%>
                 </div>
-                <%}%>
+                <%}}%>
                 <div class="chatbox">
                     <input placeholder="Enter text here..." />
                     <div class="chat-send-btn">

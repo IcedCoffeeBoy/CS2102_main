@@ -111,6 +111,7 @@ body{
   text-align: center;
   padding-top: 5%;
   font-family: 'Merriweather', serif;
-  font: bold;
+  font-weight: bold;
+  color: #ee5b3e;
 }
 
