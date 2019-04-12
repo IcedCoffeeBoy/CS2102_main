@@ -4,14 +4,29 @@ var db = require('../db');
 var multer = require('multer');
 var path = require('path');
 var multerGoogleStorage = require("../multer-google-storage");
-var upload = multer({
-  storage: multerGoogleStorage.storageEngine({
+if (process.env.GCLOUD_PROJECT) {
+  var multerGoogleStorage = require("../multer-google-storage");
+  var upload = multer({
+    storage: multerGoogleStorage.storageEngine({
+      filename: function (req, file, callback) {
+        callback(null, req.user.username + "_" + Date.now() + path.extname(file.originalname));
+      },
+      keyFilename: "./keyfile.json"
+    })
+  })
+  var pathfile = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/`
+} else {
+  var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+      callback(null, './public/images/uploads');
+    },
     filename: function (req, file, callback) {
       callback(null, req.user.username + "_" + Date.now() + path.extname(file.originalname));
-    },
-    keyFilename: "./keyfile.json"
+    }
   })
-})
+  var upload = multer({ storage: storage })
+  var pathfile = 'images/uploads/'
+}
 const sql = require('../sql/index');
 
 
@@ -57,7 +72,7 @@ router.post('/:productId/upload', upload.array('image', 4), async function (req,
     // Insert image entries in parallel.
     // All SQL queries must be complete (via Promise.all) before this step is deemed successful.
     let promises = req.files.map(async (img, idx) => {
-      let imagePath = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/` + img.filename;
+      let imagePath = pathfile + img.filename;
       console.log("idx: " + idx)
       if (parseInt(idx + oriNumImages + 1) >= parseInt(numImages)) {
         console.log("Inserting: " + idx)
