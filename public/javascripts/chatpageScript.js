@@ -58,9 +58,13 @@ $(document).ready(() => {
             .getAttribute("src");
 
         $(".chat-title>img").attr("src", imgSrc);
-        $(".chat-title>.user-details").text(
+        $(".chat-title>.user-details>.username").text(
             e.currentTarget.querySelector(".user-details>.username").textContent
         );
+        $(".chat-title>.user-details>.item-subtitle").text(
+            e.currentTarget.querySelector(".user-details>.item-subtitle").textContent
+        );
+
 
         $(".chatwindow").each((i, cwnd) => {
             if (
