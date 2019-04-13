@@ -6,7 +6,7 @@ makeKeyfileJson = (keyfilePath) => {
     if (err) {
       var encoded = process.env.ENCODED_GOOGLE_CREDENTIALS
       if (!encoded) {
-          console.log("Warning: Could not find credentials environment variable!")
+          console.log("Warning: Could not find credentials environment variable! Google cloud storage not available")
           return
       }
       var decoded = Buffer.from(encoded, 'base64').toString('binary');

@@ -58,6 +58,7 @@ var MulterGoogleCloudStorage = /** @class */ (function () {
         });
         this.gcsBucket = this.gcobj.bucket(opts.bucket);
         this.options = opts;
+        console.log("Succcesfully connected to google-cloud storage")
     }
     MulterGoogleCloudStorage.prototype.getFilename = function (req, file, cb) {
         cb(null, "_" + file.originalname);
