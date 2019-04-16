@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Page Title -->
+    <title>Stuff Sharing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS for Styling -->
+    <link rel='stylesheet' href='/stylesheets/themes.css' />
+    <link rel='stylesheet' href='/stylesheets/main.css' />
+    <link rel='stylesheet' href='/stylesheets/user.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- JavaScript for Interactivity -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <script src="javascripts/userScript.js"></script>
+
+    <%- include navbar.ejs%>
+    <% if (message.length>0) { %>
+    <div class="alert alert-success" role="alert" id="added-alert">
+        <button type="button" class="close" data-dismiss="success" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <p><%= message%></p>
+    </div>
+    <% } %>
+    <%
+    const getPlaceholderImg = () => {
+        return ('https://randomuser.me/api/portraits/med/'
+            + (Math.random()>0.5 ? 'men/' : 'women/')
+            + (Math.floor(Math.random() * 80)+10)
+            + '.jpg');
+    }
+    %>
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <h1><%= username %></h1>
+        <p>Joined since: <%=datejoined%></p>
+
+        <div class="stars">
+        <div class="star-rating-container">
+            <div class="star-rating star-rating-on" style="width:<%=sellerRating*20%>%"></div>
+            <div class="star-rating star-rating-off"></div>
+        </div>
+        <br>
+        Reviews: <%=sellerRating%>/5.0 (<%=crating%>)
+        </div>
+        
+        
+        
+
+        <%if(data.length>0){ %>
+            <% if (title == "User Search") { %>
+                <hr>
+                <br>
+                <h1><%= username %>'s Listings</h1>
+            <%} else { %>
+                <hr>
+                <br>
+                <h1>Your Listings</h1>
+            <% } %>
+        <% } %>
+        <div id="products" class="product-container">
+            <% for(var i=0; i<data.length; i++) { %>
+            <div>
+                <div class="item">
+                    <div class="item-top">
+                        <div><img src= "<%= data[i].imgurl %>" alt="<%= data[i].title%>" /></div>
+                        <div class="title"><%= data[i].title %></div>                </div>
+                    <div class="item-btm">
+                        <div class="pricetag">
+                            $<%= data[i].price %>
+                        </div>
+                        <a class="view-btn primary-bg primary-bg-hover primary-border" href= <%= "../p/" + data[i].itemid %>>
+                            View Item
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+            <% } %>
+        </div>
+        <%if(data.length>0){ %>
+            <hr>
+        <% } %>
+
+        <%if(solditems.length>0){ %>
+            <h1>Shared items</h1>
+        <% } %>
+        <div id="biditems" class="product-container">
+            <% for(var i=0; i<solditems.length; i++) { %>
+            <a class="item" href= <%= "../op/" + solditems[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= solditems[i].imgurl %>" alt="<%= solditems[i].title%>" /></div>
+                    <div class="title"><%= solditems[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        <p> This item is shared at $<%=solditems[i].price%></p>
+                        <p> From <%=solditems[i].datestart.toLocaleDateString("en-US", options)%> 
+                            to <%=solditems[i].dateend.toLocaleDateString("en-US", options)%></p>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+        <%if(solditems.length>0){ %>
+            <hr>
+        <% } %>
+
+        <%if(successfulbids.length>0){ %>
+            <h1>Successful Bids</h1>
+        <% } %>
+        <div id="biditems" class="product-container">
+            <% for(var i=0; i<successfulbids.length; i++) { %>
+            <a class="item">
+                <div class="item-top">
+                    <div><img src= "<%= successfulbids[i].imgurl %>" alt="<%= successfulbids[i].title%>" /></div>
+                    <div class="title"><%= successfulbids[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                        <p> Successful bidded at $<%=successfulbids[i].amount%></p>
+                        <form method="post" action= <%= "review/b" + successfulbids[i].transactionid %>>
+                            <button class="btn bid-btn primary-bg">
+                                Leave a Review to <%=successfulbids[i].username%>?
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+        <%if(successfulbids.length>0){ %>
+            <hr>
+        <% } %>
+
+        <%if(biditems.length>0){ %>
+            <h1>Bidded items</h1>
+        <% } %>
+        <div id="biditems" class="product-container">
+            <% for(var i=0; i<biditems.length; i++) { %>
+            <a class="item" href= <%= "../p/" + biditems[i].itemid %>>
+                <div class="item-top">
+                    <div><img src= "<%= biditems[i].imgurl %>" alt="<%= biditems[i].title%>" /></div>
+                    <div class="title"><%= biditems[i].title %></div>                </div>
+                <div class="item-btm">
+                    <div class="pricetag">
+                    <% if(biditems[i].amount >= biditems[i].price) { %>
+                        <p> You have the highest bid at $<%=biditems[i].amount%></p>
+                    <%} else { %>
+                        <p>Current Highest bid: $<%= biditems[i].price %></p>
+                        <p id="outbid-text">Your bid is $<%=biditems[i].amount%></p>
+                    <% } %>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+        <%if(biditems.length>0){ %>
+            <hr>
+        <% } %>
+
+        <% if (title == "User Search") {} else { %>
+        <div class="align-items-stretch flex-column">
+            <div class="main-title">
+                <h1>Reviews to You</h1>
+            </div>
+
+            
+            <% if (revs.length == 0) {%>
+            <div class="reviews-none">
+                <p>- There doesn't seem to be any reviews for you yet.- </p>
+            </div>
+            <% } %>
+            <% for(var i=0; i<revs.length; i++) { %>
+            <div class="reviews">
+                <div class="review-details">
+                <img src="<%=getPlaceholderImg()%>">
+                <div class="r-container">
+                    <p class="review-author"><%=revs[i].username%></p>
+                    <p class="review-date"><%=revs[i].rtime.toLocaleDateString("en-US", options)%></p>
+                    <div class="review-rating">
+                    <% for(var j=0; j<revs[i].star; j++) { %>
+                        <span class="review-star review-star--active">&#9733;</span>
+                    <% } %>
+                    <% for(var j=revs[i].star; j<5; j++) { %>
+                        <span class="review-star">&#9733;</span>
+                    <% } %>
+                    </div>
+                </div>
+                </div>
+                <div class="review-body">
+                    <p><%= revs[i].review%></p>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#list').click(function (event) { event.preventDefault(); $('#products .item').addClass('list-group-item'); });
+            $('#grid').click(function (event) { event.preventDefault(); $('#products .item').removeClass('list-group-item'); $('#products .item').addClass('grid-group-item'); });
+        });
+
+        window.setTimeout(function () {
+            $("#added-alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    </script>
+    <body>
+
+</html>

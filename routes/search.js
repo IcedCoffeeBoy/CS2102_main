@@ -48,7 +48,7 @@ router.get('/:userid', async (req, res, next) => {
     let data = await db.db_promise(sql.sql_getItems, [req.params.userid]);
     let sellerRating = await db.db_promise(sql.sql_getUserRating, [req.params.userid]);
 
-    res.render('user', {
+    res.render('searchuser', {
       title: "User Search",
       data,
       user: req.user,
